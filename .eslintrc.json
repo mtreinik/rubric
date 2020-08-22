@@ -1,0 +1,39 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "plugins": [
+    "prettier",
+    "react"
+    //"jest"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
+
+  ],
+  "ignorePatterns": [
+    "webpack.config.js",
+    "node_modules",
+    "dist"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "import/no-commonjs": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
