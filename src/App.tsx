@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {AppBar, Button, CssBaseline, Grid} from '@material-ui/core/'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import Clickable from "./Clickable"
 
 const theme = createMuiTheme({
   palette: {
@@ -17,12 +18,17 @@ const App = () => {
         TODO toolbar
       </AppBar>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
-          TODO content
+          <h1>Rubric</h1>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={8}>
+          <Clickable value="kiinnostava"/>
+          <span> / </span>
+          <Clickable value="omaperäinen"/>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={4}>
             <Grid item><Button variant="outlined" color="secondary">Tyhjennä</Button></Grid>
             <Grid item><Button variant="contained">Poista valinta</Button></Grid>
             <Grid item><Button variant="contained" color="primary">Valitse ja kopioi</Button></Grid>

@@ -1,0 +1,8 @@
+.clickable {
+    border: 1px solid #fafafa;
+    padding: 4px 6px 4px 6px;
+    border-radius: 10px;
+}
+.clickable:hover {
+    border: 1px solid black;
+}
