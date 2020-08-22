@@ -2,6 +2,20 @@ import * as React from 'react'
 import {AppBar, Button, CssBaseline, Grid} from '@material-ui/core/'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import Clickable from "./Clickable"
+import {ReactNode, ReactNodeArray} from "react"
+
+type JoinedReactNodeArray = (ReactNode|ReactNodeArray)[]
+type IndexToReactNode = (index: number) => ReactNode
+type TextToReactNode = (text: string) => ReactNode
+
+function joinReactNodes(array: any, separatorGetter: IndexToReactNode): JoinedReactNodeArray {
+  return array.reduce((result: JoinedReactNodeArray, item: ReactNode, index: number) =>
+    [result, separatorGetter(index), item])
+}
+
+function createSeparatedReactNodes(array: string[], textToReactNode: TextToReactNode, separatorGetter: IndexToReactNode): JoinedReactNodeArray {
+  return joinReactNodes(array.map(textToReactNode), separatorGetter)
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -56,6 +70,11 @@ const App = () => {
     setSelectionEnabled(false)
   })
 
+  const clickables = createSeparatedReactNodes(
+    ["erinomainen", "kiitettävä", "hyvä", "tyydyttävä", "välttävä", "heikko"],
+    value => <Clickable key={value} value={value}/>,
+    index => <span key={"separator" + index}> / </span>)
+
   return <React.Fragment>
     <CssBaseline/>
     <ThemeProvider theme={theme}>
@@ -69,24 +88,24 @@ const App = () => {
         </Grid>
         <Grid item xs={12}>
           <div id="content">
-            <div>&nbsp;</div>
-            <div>
-              <Clickable value="kiinnostava"/>
-              <span> / </span>
-              <Clickable value="omaperäinen"/>
+            <div className="sectionTitle">OSIO A: KANSILEHTI</div>
+            <div className="criterion">
+              <span className="criterionTitle">otsikointi</span>
+              <span> </span>
+              {clickables}
             </div>
           </div>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
             <Grid item>
-              <Button onClick={reload} variant="outlined" color="secondary">Tyhjennä</Button>
+              <Button onClick={selectElement('content')} variant="contained" color="primary">Valitse ja kopioi</Button>
             </Grid>
             <Grid item>
               <Button onClick={unselectAll} variant="contained">Poista valinta</Button>
             </Grid>
             <Grid item>
-              <Button onClick={selectElement('content')} variant="contained" color="primary">Valitse ja kopioi</Button>
+              <Button onClick={reload} variant="outlined" color="secondary">Tyhjennä</Button>
             </Grid>
           </Grid>
         </Grid>
