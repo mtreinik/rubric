@@ -11,7 +11,6 @@
   "plugins": [
     "prettier",
     "react"
-    //"jest"
   ],
   "extends": [
     "eslint:recommended",
