@@ -4,28 +4,26 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Clickable from './Clickable'
 import { ReactNode, ReactNodeArray } from 'react'
 
-type JoinedReactNodeArray = (ReactNode | ReactNodeArray)[]
+type JoinedReactNode = ReactNode | ReactNodeArray
 type IndexToReactNode = (index: number) => ReactNode
 type TextToReactNode = (text: string) => ReactNode
 
 function joinReactNodes(
-  array: any,
+  array: ReactNode[],
   separatorGetter: IndexToReactNode
-): JoinedReactNodeArray {
-  return array.reduce(
-    (result: JoinedReactNodeArray, item: ReactNode, index: number) => [
-      result,
-      separatorGetter(index),
-      item,
-    ]
-  )
+): JoinedReactNode[] {
+  return array.reduce((previous: ReactNode, item: ReactNode, index: number) => [
+    previous,
+    separatorGetter(index),
+    item,
+  ]) as (React.ReactNode | React.ReactNodeArray)[]
 }
 
 function createSeparatedReactNodes(
   array: string[],
   textToReactNode: TextToReactNode,
   separatorGetter: IndexToReactNode
-): JoinedReactNodeArray {
+): JoinedReactNode[] {
   return joinReactNodes(array.map(textToReactNode), separatorGetter)
 }
 
@@ -77,7 +75,7 @@ const selectElement = (elementId: string) => () => {
   document.execCommand('copy')
 }
 
-const App = () => {
+const App = (): ReactNode => {
   React.useEffect(() => {
     setSelectionEnabled(false)
   })

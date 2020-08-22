@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 
 interface Props {
   value: string
@@ -39,7 +39,7 @@ function getStyle(status: number): StyleCSS {
   }
 }
 
-const Clickable = (props: Props) => {
+const Clickable = (props: Props): ReactNode => {
   const [status, setStatus] = useState(0)
   const style = getStyle(status)
   return (
