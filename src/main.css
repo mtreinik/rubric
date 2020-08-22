@@ -1,42 +1,42 @@
 #content {
-    margin-left: 1em;
-    margin-right: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .sectionTitle {
-    font-weight: bold;
-    padding-bottom: 0.5em;
+  font-weight: bold;
+  padding-bottom: 0.5em;
 }
 
 .criterion {
-    padding-left: 2em;
-    padding-bottom: 0.4em;
+  padding-left: 2em;
+  padding-bottom: 0.4em;
 }
 
 .criterionTitle {
-    font-weight: bold;
-    padding-right: 1em;
+  font-weight: bold;
+  padding-right: 1em;
 }
 
 .noselect .clickable {
-    border: 1px solid
+  border: 1px solid;
 }
 
 .clickable {
-    border-color: #fafafa;
-    padding: 4px 6px 4px 6px;
-    border-radius: 10px;
+  border-color: #fafafa;
+  padding: 4px 6px 4px 6px;
+  border-radius: 10px;
 }
 
 .clickable:hover {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

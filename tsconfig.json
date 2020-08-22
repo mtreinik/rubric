@@ -2,11 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "target": "es5",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "module": "esnext",

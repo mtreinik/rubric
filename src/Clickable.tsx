@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 
 interface Props {
   value: string
@@ -11,16 +11,20 @@ const DO_NOT_SHOW_BORDER = false
 type ShowBorderType = typeof SHOW_BORDER | typeof DO_NOT_SHOW_BORDER
 
 interface StyleCSS {
-  background: string,
-  borderColor: string,
+  background: string
+  borderColor: string
   fontWeight: FontWeightType
 }
 
-function getStyleCSS(color: string, fontWeight: FontWeightType, showBorder: ShowBorderType): StyleCSS {
+function getStyleCSS(
+  color: string,
+  fontWeight: FontWeightType,
+  showBorder: ShowBorderType
+): StyleCSS {
   return {
     background: color,
     borderColor: showBorder === SHOW_BORDER ? '#a0a0a0' : '#fafafa',
-    fontWeight: fontWeight
+    fontWeight: fontWeight,
   }
 }
 
@@ -38,14 +42,17 @@ function getStyle(status: number): StyleCSS {
 const Clickable = (props: Props) => {
   const [status, setStatus] = useState(0)
   const style = getStyle(status)
-  return <span style={style}
-               className="clickable"
-               onClick={() => {
-                 setStatus((status + 1) % 3);
-               }}>
-
+  return (
+    <span
+      style={style}
+      className="clickable"
+      onClick={() => {
+        setStatus((status + 1) % 3)
+      }}
+    >
       {props.value.trim()}
-      </span>
+    </span>
+  )
 }
 
 export default Clickable

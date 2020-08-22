@@ -8,10 +8,7 @@
     "es6": true,
     "browser": true
   },
-  "plugins": [
-    "prettier",
-    "react"
-  ],
+  "plugins": ["prettier", "react"],
   "extends": [
     "eslint:recommended",
     "prettier",
@@ -19,13 +16,8 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript"
-
   ],
-  "ignorePatterns": [
-    "webpack.config.js",
-    "node_modules",
-    "dist"
-  ],
+  "ignorePatterns": ["webpack.config.js", "node_modules", "dist"],
   "rules": {
     "prettier/prettier": "error",
     "import/no-commonjs": "error"

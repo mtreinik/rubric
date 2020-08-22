@@ -1,27 +1,39 @@
 import * as React from 'react'
-import {AppBar, Button, CssBaseline, Grid} from '@material-ui/core/'
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
-import Clickable from "./Clickable"
-import {ReactNode, ReactNodeArray} from "react"
+import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import Clickable from './Clickable'
+import { ReactNode, ReactNodeArray } from 'react'
 
-type JoinedReactNodeArray = (ReactNode|ReactNodeArray)[]
+type JoinedReactNodeArray = (ReactNode | ReactNodeArray)[]
 type IndexToReactNode = (index: number) => ReactNode
 type TextToReactNode = (text: string) => ReactNode
 
-function joinReactNodes(array: any, separatorGetter: IndexToReactNode): JoinedReactNodeArray {
-  return array.reduce((result: JoinedReactNodeArray, item: ReactNode, index: number) =>
-    [result, separatorGetter(index), item])
+function joinReactNodes(
+  array: any,
+  separatorGetter: IndexToReactNode
+): JoinedReactNodeArray {
+  return array.reduce(
+    (result: JoinedReactNodeArray, item: ReactNode, index: number) => [
+      result,
+      separatorGetter(index),
+      item,
+    ]
+  )
 }
 
-function createSeparatedReactNodes(array: string[], textToReactNode: TextToReactNode, separatorGetter: IndexToReactNode): JoinedReactNodeArray {
+function createSeparatedReactNodes(
+  array: string[],
+  textToReactNode: TextToReactNode,
+  separatorGetter: IndexToReactNode
+): JoinedReactNodeArray {
   return joinReactNodes(array.map(textToReactNode), separatorGetter)
 }
 
 const theme = createMuiTheme({
   palette: {
-    primary: {main: '#2e7d32'},
-    secondary: {main: '#ff1744'}
-  }
+    primary: { main: '#2e7d32' },
+    secondary: { main: '#ff1744' },
+  },
 })
 
 const reload = () => {
@@ -62,7 +74,7 @@ const selectElement = (elementId: string) => () => {
   selection.removeAllRanges()
   setSelectionEnabled(true)
   selection.addRange(range)
-  document.execCommand("copy")
+  document.execCommand('copy')
 }
 
 const App = () => {
@@ -71,47 +83,58 @@ const App = () => {
   })
 
   const clickables = createSeparatedReactNodes(
-    ["erinomainen", "kiitettävä", "hyvä", "tyydyttävä", "välttävä", "heikko"],
-    value => <Clickable key={value} value={value}/>,
-    index => <span key={"separator" + index}> / </span>)
+    ['erinomainen', 'kiitettävä', 'hyvä', 'tyydyttävä', 'välttävä', 'heikko'],
+    (value) => <Clickable key={value} value={value} />,
+    (index) => <span key={'separator' + index}> / </span>
+  )
 
-  return <React.Fragment>
-    <CssBaseline/>
-    <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        TODO toolbar
-      </AppBar>
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <AppBar position="static">TODO toolbar</AppBar>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <h1>Rubric</h1>
-        </Grid>
-        <Grid item xs={12}>
-          <div id="content">
-            <div className="sectionTitle">OSIO A: KANSILEHTI</div>
-            <div className="criterion">
-              <span className="criterionTitle">otsikointi</span>
-              <span> </span>
-              {clickables}
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <h1>Rubric</h1>
+          </Grid>
+          <Grid item xs={12}>
+            <div id="content">
+              <div className="sectionTitle">OSIO A: KANSILEHTI</div>
+              <div className="criterion">
+                <span className="criterionTitle">otsikointi</span>
+                <span> </span>
+                {clickables}
+              </div>
             </div>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={4}>
-            <Grid item>
-              <Button onClick={selectElement('content')} variant="contained" color="primary">Valitse ja kopioi</Button>
-            </Grid>
-            <Grid item>
-              <Button onClick={unselectAll} variant="contained">Poista valinta</Button>
-            </Grid>
-            <Grid item>
-              <Button onClick={reload} variant="outlined" color="secondary">Tyhjennä</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item>
+                <Button
+                  onClick={selectElement('content')}
+                  variant="contained"
+                  color="primary"
+                >
+                  Valitse ja kopioi
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={unselectAll} variant="contained">
+                  Poista valinta
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={reload} variant="outlined" color="secondary">
+                  Tyhjennä
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
-  </React.Fragment>
+      </ThemeProvider>
+    </React.Fragment>
+  )
 }
 
 export default App
