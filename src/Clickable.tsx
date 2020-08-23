@@ -1,57 +1,31 @@
-import React, { ReactNode, useState } from 'react'
+import React, { useState } from 'react'
 
 interface Props {
   value: string
 }
 
-type FontWeightType = 'normal' | 'bold'
-
-const SHOW_BORDER = true
-const DO_NOT_SHOW_BORDER = false
-type ShowBorderType = typeof SHOW_BORDER | typeof DO_NOT_SHOW_BORDER
-
-interface StyleCSS {
-  background: string
-  borderColor: string
-  fontWeight: FontWeightType
-}
-
-function getStyleCSS(
-  color: string,
-  fontWeight: FontWeightType,
-  showBorder: ShowBorderType
-): StyleCSS {
-  return {
-    background: color,
-    borderColor: showBorder === SHOW_BORDER ? '#a0a0a0' : '#fafafa',
-    fontWeight: fontWeight,
-  }
-}
-
-function getStyle(status: number): StyleCSS {
+function getClasses(status: number): string {
   switch (status) {
     case 1:
-      return getStyleCSS('#80ff80', 'bold', SHOW_BORDER)
+      return 'clickable full'
     case 2:
-      return getStyleCSS('#ffff40', 'normal', SHOW_BORDER)
-    default:
-      return getStyleCSS('#fafafa', 'normal', DO_NOT_SHOW_BORDER)
+      return 'clickable partial'
   }
+  return 'clickable'
 }
 
 const Clickable = (props: Props): JSX.Element => {
   const [status, setStatus] = useState(0)
-  const style = getStyle(status)
+  const classes = getClasses(status)
   return (
-    <span
-      style={style}
-      className="clickable"
+    <button
+      className={classes}
       onClick={() => {
         setStatus((status + 1) % 3)
       }}
     >
       {props.value.trim()}
-    </span>
+    </button>
   )
 }
 

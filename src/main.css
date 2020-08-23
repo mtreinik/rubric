@@ -18,18 +18,25 @@
   padding-right: 1em;
 }
 
-.noselect .clickable {
-  border: 1px solid;
-}
-
-.clickable {
-  border-color: #fafafa;
+button.clickable {
+  border: 1px solid #fafafa;
   padding: 4px 6px 4px 6px;
-  border-radius: 10px;
+  background-color: #fafafa;
+  border-radius: 4px;
 }
 
-.clickable:hover {
-  border: 1px solid black;
+.clickable.full {
+  background-color: #80ff80;
+  font-weight: bold;
+}
+
+.clickable.partial {
+  background-color: #ffff40;
+  font-weight: normal;
+}
+
+button:hover.clickable {
+  border: 1px solid #808080;
 }
 
 .noselect {
