@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
+import { AppBar, Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor, { SectionType } from './RubricEditor'
 import RubricView from './RubricView'
@@ -125,12 +125,17 @@ const App = (): ReactNode => {
                       onClick={selectElement('content')}
                       variant="contained"
                       color="primary"
+                      startIcon={<Icon>content_copy</Icon>}
                     >
                       Valitse ja kopioi
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button onClick={unselectAll} variant="contained">
+                    <Button
+                      onClick={unselectAll}
+                      variant="contained"
+                      startIcon={<Icon>clear</Icon>}
+                    >
                       Poista valinta
                     </Button>
                   </Grid>
@@ -139,6 +144,7 @@ const App = (): ReactNode => {
                       onClick={reload}
                       variant="outlined"
                       color="secondary"
+                      startIcon={<Icon>delete_forever</Icon>}
                     >
                       Tyhjennä
                     </Button>

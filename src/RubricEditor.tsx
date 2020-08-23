@@ -1,11 +1,11 @@
 import React from 'react'
 import { MultiSelectCriterionType } from './MultiSelectCriterion'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, Icon } from '@material-ui/core'
 import { EditSectionType } from './App'
 import SectionEditor from './SectionEditor'
 
 interface CriterionContainerType {
-  type: 'MultiSelectCriterion'
+  type: string
   criterion: MultiSelectCriterionType
 }
 
@@ -30,10 +30,10 @@ const RubricEditor = (props: Props): JSX.Element => (
             <Grid item xs={2}>
               <Button
                 onClick={() => props.removeSection(sectionIndex)}
-                variant="outlined"
                 color="secondary"
+                startIcon={<Icon>remove_circle</Icon>}
               >
-                Poista osio
+                Poista
               </Button>
             </Grid>
             <Grid item xs={10}>
@@ -47,7 +47,10 @@ const RubricEditor = (props: Props): JSX.Element => (
       )
     })}
     <Grid item xs={12}>
-      <Button onClick={props.addSection} variant="contained">
+      <Button
+        onClick={props.addSection}
+        startIcon={<Icon>add_circle</Icon>}
+      >
         Lisää osio
       </Button>
     </Grid>

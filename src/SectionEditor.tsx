@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Grid, TextField } from '@material-ui/core'
+import { Button, Icon, IconButton, Grid, TextField } from '@material-ui/core'
 import { SectionType } from './RubricEditor'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 interface Props {
@@ -56,17 +56,16 @@ const SectionEditor = (props: Props): JSX.Element => {
           (criterionContainer, criterionIndex) => {
             if (criterionContainer.type === 'MultiSelectCriterion') {
               return (
-                <Grid item key={'criterion-' + criterionIndex}>
+                <Grid item key={'criterion-' + criterionIndex} xs={12}>
                   <Grid container spacing={1}>
                     <Grid item>
-                      <Button
+                      <IconButton
                         onClick={removeCriterion(criterionIndex)}
-                        variant="contained"
+                        color="secondary"
                         size="small"
-                        startIcon={<Icon>remove_circle</Icon>}
                       >
-                        Poista
-                      </Button>
+                        <Icon fontSize="small">remove_circle</Icon>
+                      </IconButton>
                     </Grid>
                     <Grid item>
                       <MultiSelectCriterionEditor
@@ -87,7 +86,6 @@ const SectionEditor = (props: Props): JSX.Element => {
         <Grid item xs={12}>
           <Button
             onClick={addCriterion}
-            variant="contained"
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
