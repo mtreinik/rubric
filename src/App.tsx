@@ -2,30 +2,8 @@ import * as React from 'react'
 import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Clickable from './Clickable'
-import { ReactNode, ReactNodeArray } from 'react'
-
-type JoinedReactNode = ReactNode | ReactNodeArray
-type IndexToReactNode = (index: number) => ReactNode
-type TextToReactNode = (text: string) => ReactNode
-
-function joinReactNodes(
-  array: ReactNode[],
-  separatorGetter: IndexToReactNode
-): JoinedReactNode[] {
-  return array.reduce((previous: ReactNode, item: ReactNode, index: number) => [
-    previous,
-    separatorGetter(index),
-    item,
-  ]) as (React.ReactNode | React.ReactNodeArray)[]
-}
-
-function createSeparatedReactNodes(
-  array: string[],
-  textToReactNode: TextToReactNode,
-  separatorGetter: IndexToReactNode
-): JoinedReactNode[] {
-  return joinReactNodes(array.map(textToReactNode), separatorGetter)
-}
+import { ReactNode } from 'react'
+import { createSeparatedReactNodes } from './react-utils'
 
 const theme = createMuiTheme({
   palette: {

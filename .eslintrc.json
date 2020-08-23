@@ -6,14 +6,16 @@
   "env": {
     "node": true,
     "es6": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["prettier", "react", "@typescript-eslint"],
+  "plugins": ["prettier", "react", "@typescript-eslint", "jest"],
   "extends": [
     "eslint:recommended",
     "plugin:prettier/recommended",
     "prettier",
+    "plugin:jest/recommended",
     "plugin:react/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",

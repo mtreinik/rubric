@@ -39,7 +39,7 @@ function getStyle(status: number): StyleCSS {
   }
 }
 
-const Clickable = (props: Props): ReactNode => {
+const Clickable = (props: Props): JSX.Element => {
   const [status, setStatus] = useState(0)
   const style = getStyle(status)
   return (
