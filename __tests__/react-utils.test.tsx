@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { createSeparatedReactNodes } from '../src/react-utils'
 import { fail } from 'assert'
 

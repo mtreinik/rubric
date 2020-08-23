@@ -1,9 +1,8 @@
-import * as React from 'react'
+import React, { ReactNode } from 'react'
 import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import Clickable from './Clickable'
-import { ReactNode } from 'react'
-import { createSeparatedReactNodes } from './react-utils'
+import MultiSelectCriterion from './MultiSelectCriterion'
+import SectionTitle from './SectionTitle'
 
 const theme = createMuiTheme({
   palette: {
@@ -58,12 +57,6 @@ const App = (): ReactNode => {
     setSelectionEnabled(false)
   })
 
-  const clickables = createSeparatedReactNodes(
-    ['erinomainen', 'kiitettävä', 'hyvä', 'tyydyttävä', 'välttävä', 'heikko'],
-    (value) => <Clickable key={value} value={value} />,
-    (index) => <span key={'separator' + index}> / </span>
-  )
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -76,12 +69,18 @@ const App = (): ReactNode => {
           </Grid>
           <Grid item xs={12}>
             <div id="content">
-              <div className="sectionTitle">OSIO A: KANSILEHTI</div>
-              <div className="criterion">
-                <span className="criterionTitle">otsikointi</span>
-                <span> </span>
-                {clickables}
-              </div>
+              <SectionTitle title="OSIO A: KANSILEHTI" />
+              <MultiSelectCriterion
+                title="otsikointi"
+                options={[
+                  'erinomainen',
+                  'kiitettävä',
+                  'hyvä',
+                  'tyydyttävä',
+                  'välttävä',
+                  'heikko',
+                ]}
+              />
             </div>
           </Grid>
           <Grid item xs={12}>
