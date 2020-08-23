@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import MultiSelectCriterion from './MultiSelectCriterion'
-import SectionTitle from './SectionTitle'
+import SectionEditor, { SectionType } from './SectionEditor'
+
+const emptySections: SectionType[] = []
 
 const theme = createMuiTheme({
   palette: {
@@ -53,9 +54,36 @@ const selectElement = (elementId: string) => () => {
 }
 
 const App = (): ReactNode => {
+  const [sections, setSections] = useState(emptySections)
+
   React.useEffect(() => {
     setSelectionEnabled(false)
   })
+
+  const addSection = (): void => {
+    const newSections = [
+      ...sections,
+      {
+        title: `OSION ${sections.length + 1} OTSIKKO`,
+        criterionContainers: [
+          {
+            type: 'MultiSelectCriterion',
+            criterion: {
+              title: 'Kriteeri',
+              options: ['valinta', 'toinen valinta', 'kolmas valinta'],
+            },
+          },
+        ],
+      },
+    ]
+    setSections(newSections)
+  }
+
+  const removeSection = (sectionIndex: number): void => {
+    const newSections = sections.slice()
+    newSections.splice(sectionIndex, 1)
+    setSections(newSections)
+  }
 
   return (
     <React.Fragment>
@@ -68,20 +96,11 @@ const App = (): ReactNode => {
             <h1>Rubric</h1>
           </Grid>
           <Grid item xs={12}>
-            <div id="content">
-              <SectionTitle title="OSIO A: KANSILEHTI" />
-              <MultiSelectCriterion
-                title="otsikointi"
-                options={[
-                  'erinomainen',
-                  'kiitettävä',
-                  'hyvä',
-                  'tyydyttävä',
-                  'välttävä',
-                  'heikko',
-                ]}
-              />
-            </div>
+            <SectionEditor
+              sections={sections}
+              addSection={addSection}
+              removeSection={removeSection}
+            />
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={4}>

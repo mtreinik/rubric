@@ -2,12 +2,12 @@ import React from 'react'
 import { createSeparatedReactNodes } from './react-utils'
 import Clickable from './Clickable'
 
-interface Props {
+export interface MultiSelectCriterionType {
   title: string
   options: string[]
 }
 
-const MultiSelectCriterion = (props: Props): JSX.Element => {
+const MultiSelectCriterion = (props: MultiSelectCriterionType): JSX.Element => {
   const clickables = createSeparatedReactNodes(
     props.options,
     (value) => <Clickable key={value} value={value} />,
