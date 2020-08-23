@@ -15,10 +15,10 @@ an easy and efficient tool.
 
 ## TODO
 
-- representation for inputting rubrics
-- parsing input into interactive ui components
 - rubric editor with preview
-- downloading or storing user created rubrics
+- adding custom content to rubric
+- exporting and importing user created rubrics
+- localization
 - documentation
 - UI polishing
 
