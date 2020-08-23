@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import 'typeface-roboto'
 import './main.css'
 
 ReactDOM.render(

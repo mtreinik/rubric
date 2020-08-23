@@ -23,8 +23,7 @@
     "start": "webpack-dev-server --mode development --progress --color"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "typeface-roboto": "^0.0.75"
+    "react": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

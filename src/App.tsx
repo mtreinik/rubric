@@ -1,9 +1,14 @@
 import React, { ReactNode, useState } from 'react'
 import { AppBar, Button, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import SectionEditor, { SectionType } from './SectionEditor'
+import RubricEditor, { SectionType } from './RubricEditor'
+import RubricView from './RubricView'
 
-const emptySections: SectionType[] = []
+export type EditSectionType = (
+  sectionIndex: number
+) => (section: SectionType) => void
+
+const emptyRubric: SectionType[] = []
 
 const theme = createMuiTheme({
   palette: {
@@ -54,17 +59,17 @@ const selectElement = (elementId: string) => () => {
 }
 
 const App = (): ReactNode => {
-  const [sections, setSections] = useState(emptySections)
+  const [rubric, setRubric] = useState(emptyRubric)
 
   React.useEffect(() => {
     setSelectionEnabled(false)
   })
 
   const addSection = (): void => {
-    const newSections = [
-      ...sections,
+    const newRubric = [
+      ...rubric,
       {
-        title: `OSION ${sections.length + 1} OTSIKKO`,
+        title: `OSION ${rubric.length + 1} OTSIKKO`,
         criterionContainers: [
           {
             type: 'MultiSelectCriterion',
@@ -76,13 +81,20 @@ const App = (): ReactNode => {
         ],
       },
     ]
-    setSections(newSections)
+    setRubric(newRubric)
   }
 
   const removeSection = (sectionIndex: number): void => {
-    const newSections = sections.slice()
-    newSections.splice(sectionIndex, 1)
-    setSections(newSections)
+    const newRubric = rubric.slice()
+    newRubric.splice(sectionIndex, 1)
+    setRubric(newRubric)
+  }
+
+  const editSection = (sectionIndex: number) => (section: SectionType) => {
+    const newRubric = rubric.slice()
+    const newSection = { ...rubric[sectionIndex], ...section }
+    newRubric[sectionIndex] = newSection
+    setRubric(newRubric)
   }
 
   return (
@@ -90,38 +102,48 @@ const App = (): ReactNode => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <AppBar position="static">TODO toolbar</AppBar>
-
-        <Grid container spacing={4}>
-          <Grid item xs={12}>
-            <h1>Rubric</h1>
-          </Grid>
-          <Grid item xs={12}>
-            <SectionEditor
-              sections={sections}
+        <Grid container direction="row" spacing={2}>
+          <Grid item xs={6}>
+            <RubricEditor
+              rubric={rubric}
               addSection={addSection}
               removeSection={removeSection}
+              editSection={editSection}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Grid container spacing={4}>
-              <Grid item>
-                <Button
-                  onClick={selectElement('content')}
-                  variant="contained"
-                  color="primary"
-                >
-                  Valitse ja kopioi
-                </Button>
+              <Grid item xs={12}>
+                <div id="content">
+                  <RubricView rubric={rubric} />
+                </div>
               </Grid>
-              <Grid item>
-                <Button onClick={unselectAll} variant="contained">
-                  Poista valinta
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button onClick={reload} variant="outlined" color="secondary">
-                  Tyhjennä
-                </Button>
+              <Grid item xs={12}>
+                <Grid container spacing={4}>
+                  <Grid item>
+                    <Button
+                      onClick={selectElement('content')}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Valitse ja kopioi
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button onClick={unselectAll} variant="contained">
+                      Poista valinta
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      onClick={reload}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Tyhjennä
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
