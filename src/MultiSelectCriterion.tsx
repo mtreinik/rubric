@@ -10,7 +10,7 @@ export interface MultiSelectCriterionType {
 const MultiSelectCriterion = (props: MultiSelectCriterionType): JSX.Element => {
   const clickables = createSeparatedReactNodes(
     props.options,
-    (value) => <Clickable key={value} value={value} />,
+    (value, index) => <Clickable key={'clickable-' + index} value={value} />,
     (index) => <span key={'separator' + index}> / </span>
   )
   return (

@@ -2,7 +2,7 @@ import { ReactNode, ReactNodeArray } from 'react'
 
 type JoinedReactNodes = ReactNode | ReactNodeArray
 type IndexToReactNode = (index: number) => ReactNode
-type TextToReactNode = (text: string) => ReactNode
+type TextToReactNode = (text: string, index: number) => ReactNode
 
 /**
  * Join an array of React nodes with a separator that gets its key from an index

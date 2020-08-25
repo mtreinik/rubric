@@ -46,6 +46,44 @@ const SectionEditor = (props: Props): JSX.Element => {
     })
   }
 
+  const addOption = (criterionIndex: number) => (): void => {
+    const newCriterionContainers = props.section.criterionContainers.slice()
+    newCriterionContainers[criterionIndex].criterion.options.push(
+      'uusi vaihtoehto'
+    )
+    props.editSection({
+      ...props.section,
+      criterionContainers: newCriterionContainers,
+    })
+  }
+
+  const removeOption = (criterionIndex: number) => (
+    optionIndex: number
+  ): void => {
+    const newCriterionContainers = props.section.criterionContainers.slice()
+    newCriterionContainers[criterionIndex].criterion.options.splice(
+      optionIndex,
+      1
+    )
+    props.editSection({
+      ...props.section,
+      criterionContainers: newCriterionContainers,
+    })
+  }
+
+  const editOption = (criterionIndex: number) => (optionIndex: number) => (
+    optionTitle: string
+  ): void => {
+    const newCriterionContainers = props.section.criterionContainers.slice()
+    newCriterionContainers[criterionIndex].criterion.options[
+      optionIndex
+    ] = optionTitle
+    props.editSection({
+      ...props.section,
+      criterionContainers: newCriterionContainers,
+    })
+  }
+
   return (
     <div>
       <Grid container spacing={2}>
@@ -71,6 +109,9 @@ const SectionEditor = (props: Props): JSX.Element => {
                       <MultiSelectCriterionEditor
                         editCriterion={editCriterion(criterionIndex)}
                         criterion={criterionContainer.criterion}
+                        addOption={addOption(criterionIndex)}
+                        removeOption={removeOption(criterionIndex)}
+                        editOption={editOption(criterionIndex)}
                       />
                     </Grid>
                   </Grid>
