@@ -47,10 +47,7 @@ const RubricEditor = (props: Props): JSX.Element => (
       )
     })}
     <Grid item xs={12}>
-      <Button
-        onClick={props.addSection}
-        startIcon={<Icon>add_circle</Icon>}
-      >
+      <Button onClick={props.addSection} startIcon={<Icon>add_circle</Icon>}>
         Lisää osio
       </Button>
     </Grid>

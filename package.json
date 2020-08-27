@@ -23,6 +23,7 @@
     "start": "webpack-dev-server --mode development --progress --color"
   },
   "dependencies": {
+    "optics-ts": "^1.1.0",
     "react": "^16.13.1"
   },
   "devDependencies": {

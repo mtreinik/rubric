@@ -3,12 +3,20 @@ import { AppBar, Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor, { SectionType } from './RubricEditor'
 import RubricView from './RubricView'
+import * as O from 'optics-ts'
 
 export type EditSectionType = (
   sectionIndex: number
 ) => (section: SectionType) => void
 
-const emptyRubric: SectionType[] = []
+type RubricType = SectionType[]
+
+const sectionPrism = (sectionIndex: number) =>
+  O.optic<RubricType>().index(sectionIndex)
+
+const newSectionSetter = O.optic<RubricType>().appendTo()
+
+const emptyRubric: RubricType = []
 
 const theme = createMuiTheme({
   palette: {
@@ -66,9 +74,8 @@ const App = (): ReactNode => {
   })
 
   const addSection = (): void => {
-    const newRubric = [
-      ...rubric,
-      {
+    setRubric(
+      O.set(newSectionSetter)({
         title: `OSION ${rubric.length + 1} OTSIKKO`,
         criterionContainers: [
           {
@@ -79,22 +86,16 @@ const App = (): ReactNode => {
             },
           },
         ],
-      },
-    ]
-    setRubric(newRubric)
+      })(rubric)
+    )
   }
 
   const removeSection = (sectionIndex: number): void => {
-    const newRubric = rubric.slice()
-    newRubric.splice(sectionIndex, 1)
-    setRubric(newRubric)
+    setRubric(O.remove(sectionPrism(sectionIndex))(rubric))
   }
 
   const editSection = (sectionIndex: number) => (section: SectionType) => {
-    const newRubric = rubric.slice()
-    const newSection = { ...rubric[sectionIndex], ...section }
-    newRubric[sectionIndex] = newSection
-    setRubric(newRubric)
+    setRubric(O.set(sectionPrism(sectionIndex))(section)(rubric))
   }
 
   return (

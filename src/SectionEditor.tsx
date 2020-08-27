@@ -2,93 +2,96 @@ import React from 'react'
 import { Button, Icon, IconButton, Grid, TextField } from '@material-ui/core'
 import { SectionType } from './RubricEditor'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
+import * as O from 'optics-ts'
+
+const sectionTitlePrism = O.optic<SectionType>().prop('title')
+
+const criterionContainersLens = O.optic<SectionType>().prop(
+  'criterionContainers'
+)
+
+const newCriterionSetter = criterionContainersLens.appendTo()
+
+const criterionPrism = (criterionIndex: number) =>
+  criterionContainersLens.index(criterionIndex)
+
+const criterionTitlePrism = (criterionIndex: number) =>
+  criterionPrism(criterionIndex).path(['criterion', 'title'])
+
+const optionPrism = (criterionIndex: number, optionIndex: number) =>
+  criterionPrism(criterionIndex)
+    .path(['criterion', 'options'])
+    .index(optionIndex)
+
 interface Props {
   section: SectionType
   editSection: (section: SectionType) => void
 }
 
 const SectionEditor = (props: Props): JSX.Element => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    props.editSection({ ...props.section, title: event.target.value })
+  const handleSectionTitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    props.editSection(
+      O.set(sectionTitlePrism)(event.target.value)(props.section)
+    )
   }
 
   const editCriterion = (criterionIndex: number) => (
     criterionTitle: string
   ): void => {
-    const newSection = { ...props.section }
-    const newCriterionContainer = {
-      ...newSection.criterionContainers[criterionIndex],
-    }
-    newCriterionContainer.criterion.title = criterionTitle
-    newSection.criterionContainers[criterionIndex] = newCriterionContainer
-    props.editSection(newSection)
+    props.editSection(
+      O.set(criterionTitlePrism(criterionIndex))(criterionTitle)(props.section)
+    )
   }
 
   const addCriterion = (): void => {
-    props.editSection({
-      ...props.section,
-      criterionContainers: [
-        ...props.section.criterionContainers,
-        {
-          type: 'MultiSelectCriterion',
-          criterion: { title: 'Uusi kriteeri', options: ['eka', 'toka'] },
-        },
-      ],
-    })
+    props.editSection(
+      O.set(newCriterionSetter)({
+        type: 'MultiSelectCriterion',
+        criterion: { title: 'Uusi kriteeri', options: ['eka', 'toka'] },
+      })(props.section)
+    )
   }
 
   const removeCriterion = (criterionIndex: number) => (): void => {
-    const newCriterionContainers = props.section.criterionContainers.slice()
-    newCriterionContainers.splice(criterionIndex, 1)
-    props.editSection({
-      ...props.section,
-      criterionContainers: newCriterionContainers,
-    })
+    props.editSection(O.remove(criterionPrism(criterionIndex))(props.section))
   }
 
   const addOption = (criterionIndex: number) => (): void => {
-    const newCriterionContainers = props.section.criterionContainers.slice()
-    newCriterionContainers[criterionIndex].criterion.options.push(
-      'uusi vaihtoehto'
-    )
-    props.editSection({
-      ...props.section,
-      criterionContainers: newCriterionContainers,
-    })
+    const newOptionSetter = criterionPrism(criterionIndex)
+      .prop('criterion')
+      .prop('options')
+      .appendTo()
+    props.editSection(O.set(newOptionSetter)('Uusi vaihtoehto')(props.section))
   }
 
   const removeOption = (criterionIndex: number) => (
     optionIndex: number
   ): void => {
-    const newCriterionContainers = props.section.criterionContainers.slice()
-    newCriterionContainers[criterionIndex].criterion.options.splice(
-      optionIndex,
-      1
+    props.editSection(
+      O.remove(optionPrism(criterionIndex, optionIndex))(props.section)
     )
-    props.editSection({
-      ...props.section,
-      criterionContainers: newCriterionContainers,
-    })
   }
 
   const editOption = (criterionIndex: number) => (optionIndex: number) => (
     optionTitle: string
   ): void => {
-    const newCriterionContainers = props.section.criterionContainers.slice()
-    newCriterionContainers[criterionIndex].criterion.options[
-      optionIndex
-    ] = optionTitle
-    props.editSection({
-      ...props.section,
-      criterionContainers: newCriterionContainers,
-    })
+    props.editSection(
+      O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
+        props.section
+      )
+    )
   }
 
   return (
     <div>
       <Grid container spacing={2}>
         <Grid key="title" item xs={12}>
-          <TextField value={props.section.title} onChange={handleChange} />
+          <TextField
+            value={props.section.title}
+            onChange={handleSectionTitleChange}
+          />
         </Grid>
         {props.section.criterionContainers.map(
           (criterionContainer, criterionIndex) => {
