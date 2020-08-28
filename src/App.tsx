@@ -1,22 +1,43 @@
 import React, { ReactNode, useState } from 'react'
 import { AppBar, Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import RubricEditor, { SectionType } from './RubricEditor'
+import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
+import { MultiSelectCriterionType } from './MultiSelectCriterion'
+
+export type EditTitleType = (title: string) => void
 
 export type EditSectionType = (
   sectionIndex: number
 ) => (section: SectionType) => void
 
-type RubricType = SectionType[]
+interface CriterionContainerType {
+  type: string
+  criterion: MultiSelectCriterionType
+}
+
+export interface SectionType {
+  title: string
+  criterionContainers: CriterionContainerType[]
+}
+
+export type RubricType = {
+  title: string
+  sections: SectionType[]
+}
+
+const titleLens = O.optic<RubricType>().prop('title')
 
 const sectionPrism = (sectionIndex: number) =>
-  O.optic<RubricType>().index(sectionIndex)
+  O.optic<RubricType>().prop('sections').index(sectionIndex)
 
-const newSectionSetter = O.optic<RubricType>().appendTo()
+const newSectionSetter = O.optic<RubricType>().prop('sections').appendTo()
 
-const emptyRubric: RubricType = []
+const emptyRubric: RubricType = {
+  title: 'Rubriikki',
+  sections: [],
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -73,10 +94,14 @@ const App = (): ReactNode => {
     setSelectionEnabled(false)
   })
 
+  const editTitle = (title: string) => {
+    setRubric(O.set(titleLens)(title)(rubric))
+  }
+
   const addSection = (): void => {
     setRubric(
       O.set(newSectionSetter)({
-        title: `OSION ${rubric.length + 1} OTSIKKO`,
+        title: `OSION ${rubric.sections.length + 1} OTSIKKO`,
         criterionContainers: [
           {
             type: 'MultiSelectCriterion',
@@ -102,16 +127,7 @@ const App = (): ReactNode => {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <AppBar position="static">TODO toolbar</AppBar>
         <Grid container direction="row" spacing={2}>
-          <Grid item xs={6}>
-            <RubricEditor
-              rubric={rubric}
-              addSection={addSection}
-              removeSection={removeSection}
-              editSection={editSection}
-            />
-          </Grid>
           <Grid item xs={6}>
             <Grid container spacing={4}>
               <Grid item xs={12}>
@@ -153,6 +169,15 @@ const App = (): ReactNode => {
                 </Grid>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <RubricEditor
+              rubric={rubric}
+              editTitle={editTitle}
+              addSection={addSection}
+              removeSection={removeSection}
+              editSection={editSection}
+            />
           </Grid>
         </Grid>
       </ThemeProvider>

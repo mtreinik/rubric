@@ -1,6 +1,14 @@
+#root {
+  margin: 1em;
+}
+
 #content {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.rubricTitle {
+  font-size: x-large;
 }
 
 .sectionTitle {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Icon, IconButton, Grid, TextField } from '@material-ui/core'
-import { SectionType } from './RubricEditor'
+import { SectionType } from './App'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 import * as O from 'optics-ts'
 
