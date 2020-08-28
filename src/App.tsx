@@ -1,43 +1,23 @@
 import React, { ReactNode, useState } from 'react'
-import { AppBar, Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
+import { Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
-import { MultiSelectCriterionType } from './MultiSelectCriterion'
-
-export type EditTitleType = (title: string) => void
-
-export type EditSectionType = (
-  sectionIndex: number
-) => (section: SectionType) => void
-
-interface CriterionContainerType {
-  type: string
-  criterion: MultiSelectCriterionType
-}
-
-export interface SectionType {
-  title: string
-  criterionContainers: CriterionContainerType[]
-}
-
-export type RubricType = {
-  title: string
-  sections: SectionType[]
-}
-
-const titleLens = O.optic<RubricType>().prop('title')
-
-const sectionPrism = (sectionIndex: number) =>
-  O.optic<RubricType>().prop('sections').index(sectionIndex)
-
-const newSectionSetter = O.optic<RubricType>().prop('sections').appendTo()
+import { RubricType, SectionType } from './types'
 
 const emptyRubric: RubricType = {
   title: 'Rubriikki',
   sections: [],
 }
+
+const rubricTitleLens = O.optic<RubricType>().prop('title')
+
+const sectionsLens = O.optic<RubricType>().prop('sections')
+
+const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
+
+const newSectionSetter = O.optic<RubricType>().prop('sections').appendTo()
 
 const theme = createMuiTheme({
   palette: {
@@ -95,7 +75,7 @@ const App = (): ReactNode => {
   })
 
   const editTitle = (title: string) => {
-    setRubric(O.set(titleLens)(title)(rubric))
+    setRubric(O.set(rubricTitleLens)(title)(rubric))
   }
 
   const addSection = (): void => {

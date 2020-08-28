@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Grid, Icon, TextField } from '@material-ui/core'
-import { EditTitleType, EditSectionType, RubricType } from './App'
+import { EditTitleType, EditSectionType, RubricType } from './types'
 import SectionEditor from './SectionEditor'
 
 interface Props {

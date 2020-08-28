@@ -2,7 +2,7 @@ import React from 'react'
 import MultiSelectCriterion from './MultiSelectCriterion'
 import SectionTitle from './SectionTitle'
 import { Grid } from '@material-ui/core'
-import { RubricType } from './App'
+import { RubricType } from './types'
 import RubricTitle from './RubricTitle'
 
 interface Props {

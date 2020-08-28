@@ -1,5 +1,5 @@
 import React from 'react'
-import { MultiSelectCriterionType } from './MultiSelectCriterion'
+import { MultiSelectCriterionType } from './types'
 import { Button, Grid, Icon, IconButton, TextField } from '@material-ui/core'
 
 interface Props {
