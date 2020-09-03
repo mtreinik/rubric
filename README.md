@@ -6,7 +6,7 @@ A tool for creating interactive assessment rubrics.
 
 A rubric is a set of criteria used to evaluate students' responses.
 
-This tool allows creating rubrics and filling them out.
+This tool allows teachers to create rubrics and fill them out.
 
 Here the emphasis is not on grading but giving feedback to the student with
 an easy and efficient tool.
