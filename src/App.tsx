@@ -26,6 +26,7 @@ const theme = createMuiTheme({
   palette: {
     primary: { main: '#2e7d32' },
     secondary: { main: '#ff1744' },
+    background: { default: '#ffffff' },
   },
 })
 
@@ -122,6 +123,7 @@ const App = (): ReactNode => {
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Grid container direction="row" spacing={2}>
           <Grid item xs={6}>
             <Grid container spacing={4}>

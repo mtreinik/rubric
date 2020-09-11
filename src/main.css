@@ -34,9 +34,9 @@
   border: 1px solid black;
 }
 button.clickable {
-  border: 1px solid #fafafa;
+  border: 1px solid #ffffff;
   padding: 4px 6px 4px 6px;
-  background-color: #fafafa;
+  background-color: #ffffff;
   border-radius: 4px;
 }
 
