@@ -29,4 +29,5 @@ export interface SectionType {
 export type RubricType = {
   title: string
   sections: SectionType[]
+  selected: boolean
 }

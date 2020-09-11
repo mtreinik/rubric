@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
@@ -9,9 +9,12 @@ import { RubricType, SectionType } from './types'
 const emptyRubric: RubricType = {
   title: 'Rubriikki',
   sections: [],
+  selected: false,
 }
 
 const rubricTitleLens = O.optic<RubricType>().prop('title')
+
+const rubricSelectedLens = O.optic<RubricType>().prop('selected')
 
 const sectionsLens = O.optic<RubricType>().prop('sections')
 
@@ -103,6 +106,18 @@ const App = (): ReactNode => {
     setRubric(O.set(sectionPrism(sectionIndex))(section)(rubric))
   }
 
+  const setSelected = (selected: boolean) => {
+    setRubric(O.set(rubricSelectedLens)(selected)(rubric))
+  }
+
+  useEffect(() => {
+    if (rubric.selected) {
+      selectElement('content')()
+    } else {
+      unselectAll()
+    }
+  }, [rubric])
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -119,7 +134,7 @@ const App = (): ReactNode => {
                 <Grid container spacing={4}>
                   <Grid item>
                     <Button
-                      onClick={selectElement('content')}
+                      onClick={() => setSelected(true)}
                       variant="contained"
                       color="primary"
                       startIcon={<Icon>content_copy</Icon>}
@@ -129,7 +144,7 @@ const App = (): ReactNode => {
                   </Grid>
                   <Grid item>
                     <Button
-                      onClick={unselectAll}
+                      onClick={() => setSelected(false)}
                       variant="contained"
                       startIcon={<Icon>clear</Icon>}
                     >

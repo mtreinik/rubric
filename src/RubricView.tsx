@@ -41,6 +41,7 @@ const RubricView = (props: Props): JSX.Element => (
                   <TextAreaView
                     key={'criterion-' + criterionIndex}
                     title={textAreaCriterion.title}
+                    selected={props.rubric.selected}
                   />
                 )
               } else {
