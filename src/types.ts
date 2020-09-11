@@ -4,14 +4,21 @@ export type EditSectionType = (
   sectionIndex: number
 ) => (section: SectionType) => void
 
-export interface MultiSelectCriterionType {
+export type MultiSelectCriterionType = {
   title: string
   options: string[]
 }
 
+export type TextAreaCriterionType = {
+  title: string
+  value: string
+}
+
+export type CriterionType = MultiSelectCriterionType | TextAreaCriterionType
+
 export interface CriterionContainerType {
   type: string
-  criterion: MultiSelectCriterionType
+  criterion: CriterionType
 }
 
 export interface SectionType {

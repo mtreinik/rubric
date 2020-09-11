@@ -1,8 +1,14 @@
 import React from 'react'
-import MultiSelectCriterion from './MultiSelectCriterion'
+import MultiSelectCriterionView from './MultiSelectCriterionView'
+import TextAreaView from './TextAreaView'
+
 import SectionTitle from './SectionTitle'
 import { Grid } from '@material-ui/core'
-import { RubricType } from './types'
+import {
+  RubricType,
+  MultiSelectCriterionType,
+  TextAreaCriterionType,
+} from './types'
 import RubricTitle from './RubricTitle'
 
 interface Props {
@@ -21,11 +27,20 @@ const RubricView = (props: Props): JSX.Element => (
           {section.criterionContainers.map(
             (criterionContainer, criterionIndex) => {
               if (criterionContainer.type === 'MultiSelectCriterion') {
+                const multiSelectCriterion = criterionContainer.criterion as MultiSelectCriterionType
                 return (
-                  <MultiSelectCriterion
+                  <MultiSelectCriterionView
                     key={'criterion-' + criterionIndex}
-                    title={criterionContainer.criterion.title}
-                    options={criterionContainer.criterion.options}
+                    title={multiSelectCriterion.title}
+                    options={multiSelectCriterion.options}
+                  />
+                )
+              } else if (criterionContainer.type === 'TextAreaCriterion') {
+                const textAreaCriterion = criterionContainer.criterion as TextAreaCriterionType
+                return (
+                  <TextAreaView
+                    key={'criterion-' + criterionIndex}
+                    title={textAreaCriterion.title}
                   />
                 )
               } else {

@@ -26,6 +26,13 @@
   padding-right: 1em;
 }
 
+.textAreaCriterion {
+  margin-bottom: 1em;
+}
+
+.textAreaCriterionCell {
+  border: 1px solid black;
+}
 button.clickable {
   border: 1px solid #fafafa;
   padding: 4px 6px 4px 6px;

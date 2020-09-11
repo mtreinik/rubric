@@ -4,6 +4,8 @@ import { Button, Grid, Icon, IconButton, TextField } from '@material-ui/core'
 
 interface Props {
   criterion: MultiSelectCriterionType
+  criterionIndex: number
+  removeCriterion: (criterionIndex: number) => () => void
   editCriterion: (criterionTitle: string) => void
   addOption: () => void
   removeOption: (optionIndex: number) => void
@@ -38,24 +40,39 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
     </Grid>
   ))
   return (
-    <Grid container direction="row" spacing={2}>
-      <Grid item>
-        <TextField
-          value={props.criterion.title}
-          onChange={handleCriterionTitleChange}
-        />
-      </Grid>
-      <Grid item>
-        <Grid container direction="column" spacing={2}>
-          {clickables}
-          <Grid item>
-            <Button
-              onClick={props.addOption}
-              size="small"
-              startIcon={<Icon>add_circle</Icon>}
-            >
-              Lisää vaihtoehto
-            </Button>
+    <Grid item xs={12}>
+      <Grid container spacing={1}>
+        <Grid item>
+          <IconButton
+            onClick={props.removeCriterion(props.criterionIndex)}
+            color="secondary"
+            size="small"
+          >
+            <Icon fontSize="small">remove_circle</Icon>
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <Grid container direction="row" spacing={2}>
+            <Grid item>
+              <TextField
+                value={props.criterion.title}
+                onChange={handleCriterionTitleChange}
+              />
+            </Grid>
+            <Grid item>
+              <Grid container direction="column" spacing={2}>
+                {clickables}
+                <Grid item>
+                  <Button
+                    onClick={props.addOption}
+                    size="small"
+                    startIcon={<Icon>add_circle</Icon>}
+                  >
+                    Lisää vaihtoehto
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

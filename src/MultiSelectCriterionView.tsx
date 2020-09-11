@@ -3,7 +3,9 @@ import { createSeparatedReactNodes } from './react-utils'
 import Clickable from './Clickable'
 import { MultiSelectCriterionType } from './types'
 
-const MultiSelectCriterion = (props: MultiSelectCriterionType): JSX.Element => {
+const MultiSelectCriterionView = (
+  props: MultiSelectCriterionType
+): JSX.Element => {
   const clickables = createSeparatedReactNodes(
     props.options,
     (value, index) => <Clickable key={'clickable-' + index} value={value} />,
@@ -18,4 +20,4 @@ const MultiSelectCriterion = (props: MultiSelectCriterionType): JSX.Element => {
   )
 }
 
-export default MultiSelectCriterion
+export default MultiSelectCriterionView

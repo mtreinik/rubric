@@ -1,8 +1,13 @@
 import React from 'react'
-import { Button, Icon, IconButton, Grid, TextField } from '@material-ui/core'
-import { SectionType } from './types'
+import { Button, Icon, Grid, TextField } from '@material-ui/core'
+import {
+  MultiSelectCriterionType,
+  SectionType,
+  TextAreaCriterionType,
+} from './types'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 import * as O from 'optics-ts'
+import TextAreaEditor from './TextAreaEditor'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
@@ -45,10 +50,10 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
-  const addCriterion = (): void => {
+  const addCriterion = (criterionType: string) => (): void => {
     props.editSection(
       O.set(newCriterionSetter)({
-        type: 'MultiSelectCriterion',
+        type: criterionType,
         criterion: { title: 'Uusi kriteeri', options: ['eka', 'toka'] },
       })(props.section)
     )
@@ -97,28 +102,30 @@ const SectionEditor = (props: Props): JSX.Element => {
           (criterionContainer, criterionIndex) => {
             if (criterionContainer.type === 'MultiSelectCriterion') {
               return (
-                <Grid item key={'criterion-' + criterionIndex} xs={12}>
-                  <Grid container spacing={1}>
-                    <Grid item>
-                      <IconButton
-                        onClick={removeCriterion(criterionIndex)}
-                        color="secondary"
-                        size="small"
-                      >
-                        <Icon fontSize="small">remove_circle</Icon>
-                      </IconButton>
-                    </Grid>
-                    <Grid item>
-                      <MultiSelectCriterionEditor
-                        editCriterion={editCriterion(criterionIndex)}
-                        criterion={criterionContainer.criterion}
-                        addOption={addOption(criterionIndex)}
-                        removeOption={removeOption(criterionIndex)}
-                        editOption={editOption(criterionIndex)}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
+                <MultiSelectCriterionEditor
+                  key={'criterion-' + criterionIndex}
+                  criterionIndex={criterionIndex}
+                  removeCriterion={removeCriterion}
+                  editCriterion={editCriterion(criterionIndex)}
+                  criterion={
+                    criterionContainer.criterion as MultiSelectCriterionType
+                  }
+                  addOption={addOption(criterionIndex)}
+                  removeOption={removeOption(criterionIndex)}
+                  editOption={editOption(criterionIndex)}
+                />
+              )
+            } else if (criterionContainer.type === 'TextAreaCriterion') {
+              return (
+                <TextAreaEditor
+                  key={'criterion-' + criterionIndex}
+                  criterionIndex={criterionIndex}
+                  removeCriterion={removeCriterion}
+                  criterion={
+                    criterionContainer.criterion as TextAreaCriterionType
+                  }
+                  editCriterion={editCriterion(criterionIndex)}
+                />
               )
             } else {
               console.error(
@@ -129,11 +136,18 @@ const SectionEditor = (props: Props): JSX.Element => {
         )}
         <Grid item xs={12}>
           <Button
-            onClick={addCriterion}
+            onClick={addCriterion('MultiSelectCriterion')}
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
             Lisää kriteeri
+          </Button>
+          <Button
+            onClick={addCriterion('TextAreaCriterion')}
+            size="small"
+            startIcon={<Icon>add_circle</Icon>}
+          >
+            Lisää tekstilaatikko
           </Button>
         </Grid>
       </Grid>
