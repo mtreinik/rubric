@@ -17,6 +17,9 @@ interface Props {
 
 const RubricView = (props: Props): JSX.Element => (
   <Grid container spacing={2}>
+    <Grid item xs={12} key="rubricHeader">
+      <hr />
+    </Grid>
     <Grid item xs={12} key="rubricTitle">
       <RubricTitle title={props.rubric.title} />
     </Grid>
