@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Icon, Grid, TextField } from '@material-ui/core'
 import {
+  MultiSelectCriterionSectionType,
   MultiSelectCriterionType,
   SectionType,
   TextAreaCriterionType,
@@ -11,20 +12,25 @@ import TitleEditor from './TitleEditor'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
-const criterionContainersLens = O.optic<SectionType>().prop(
-  'criterionContainers'
-)
+const criterionsLens = O.optic<SectionType>().prop('criterions')
 
-const newCriterionSetter = criterionContainersLens.appendTo()
+const newCriterionSetter = criterionsLens.appendTo()
 
 const criterionPrism = (criterionIndex: number) =>
-  criterionContainersLens.index(criterionIndex)
+  criterionsLens.index(criterionIndex)
 
 const criterionTitlePrism = (criterionIndex: number) =>
   criterionPrism(criterionIndex).path(['criterion', 'title'])
 
+const multiSelectCriterionsLens = O.optic<
+  MultiSelectCriterionSectionType
+>().prop('criterions')
+
+const multiSelectCriterionPrism = (criterionIndex: number) =>
+  multiSelectCriterionsLens.index(criterionIndex)
+
 const optionPrism = (criterionIndex: number, optionIndex: number) =>
-  criterionPrism(criterionIndex)
+  multiSelectCriterionPrism(criterionIndex)
     .path(['criterion', 'options'])
     .index(optionIndex)
 
@@ -65,7 +71,7 @@ const SectionEditor = (props: Props): JSX.Element => {
       props.editSection(
         O.set(newCriterionSetter)({
           type: criterionType,
-          criterion: { title: 'Tekstilaatikon kuvaus', value: 'Tekstiä' },
+          criterion: { title: 'Tekstilaatikon kuvaus' },
         })(props.section)
       )
     } else if (criterionType === 'InfoCriterion') {
@@ -85,18 +91,24 @@ const SectionEditor = (props: Props): JSX.Element => {
   }
 
   const addOption = (criterionIndex: number) => (): void => {
-    const newOptionSetter = criterionPrism(criterionIndex)
+    const newOptionSetter = multiSelectCriterionPrism(criterionIndex)
       .prop('criterion')
       .prop('options')
       .appendTo()
-    props.editSection(O.set(newOptionSetter)('Uusi vaihtoehto')(props.section))
+    props.editSection(
+      O.set(newOptionSetter)('Uusi vaihtoehto')(
+        props.section as MultiSelectCriterionSectionType
+      )
+    )
   }
 
   const removeOption = (criterionIndex: number) => (
     optionIndex: number
   ): void => {
     props.editSection(
-      O.remove(optionPrism(criterionIndex, optionIndex))(props.section)
+      O.remove(optionPrism(criterionIndex, optionIndex))(
+        props.section as MultiSelectCriterionSectionType
+      )
     )
   }
 
@@ -105,7 +117,7 @@ const SectionEditor = (props: Props): JSX.Element => {
   ): void => {
     props.editSection(
       O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
-        props.section
+        props.section as MultiSelectCriterionSectionType
       )
     )
   }
@@ -119,42 +131,37 @@ const SectionEditor = (props: Props): JSX.Element => {
             onChange={handleSectionTitleChange}
           />
         </Grid>
-        {props.section.criterionContainers.map(
-          (criterionContainer, criterionIndex) => {
-            const type = criterionContainer.type
-            const criterion = criterionContainer.criterion
-            if (type === 'MultiSelectCriterion') {
-              return (
-                <MultiSelectCriterionEditor
-                  key={'criterion-' + criterionIndex}
-                  criterionIndex={criterionIndex}
-                  removeCriterion={removeCriterion}
-                  editCriterion={editCriterion(criterionIndex)}
-                  criterion={criterion as MultiSelectCriterionType}
-                  addOption={addOption(criterionIndex)}
-                  removeOption={removeOption(criterionIndex)}
-                  editOption={editOption(criterionIndex)}
-                />
-              )
-            } else if (
-              type === 'TextAreaCriterion' ||
-              type === 'InfoCriterion'
-            ) {
-              return (
-                <TitleEditor
-                  key={'criterion-' + criterionIndex}
-                  criterionIndex={criterionIndex}
-                  removeCriterion={removeCriterion}
-                  criterion={criterion as TextAreaCriterionType}
-                  editCriterion={editCriterion(criterionIndex)}
-                  type={type}
-                />
-              )
-            } else {
-              console.error(`unsupported criterion type '${type}'`)
-            }
+        {props.section.criterions.map((criterionAndType, criterionIndex) => {
+          const type = criterionAndType.type
+          const criterion = criterionAndType.criterion
+          if (type === 'MultiSelectCriterion') {
+            return (
+              <MultiSelectCriterionEditor
+                key={'criterion-' + criterionIndex}
+                criterionIndex={criterionIndex}
+                removeCriterion={removeCriterion}
+                editCriterion={editCriterion(criterionIndex)}
+                criterion={criterion as MultiSelectCriterionType}
+                addOption={addOption(criterionIndex)}
+                removeOption={removeOption(criterionIndex)}
+                editOption={editOption(criterionIndex)}
+              />
+            )
+          } else if (type === 'TextAreaCriterion' || type === 'InfoCriterion') {
+            return (
+              <TitleEditor
+                key={'criterion-' + criterionIndex}
+                criterionIndex={criterionIndex}
+                removeCriterion={removeCriterion}
+                criterion={criterion as TextAreaCriterionType}
+                editCriterion={editCriterion(criterionIndex)}
+                type={type}
+              />
+            )
+          } else {
+            console.error(`unsupported criterion type '${type}'`)
           }
-        )}
+        })}
         <Grid item xs={12}>
           <Button
             onClick={addCriterion('MultiSelectCriterion')}

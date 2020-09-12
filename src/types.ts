@@ -11,7 +11,6 @@ export type MultiSelectCriterionType = {
 
 export type TextAreaCriterionType = {
   title: string
-  value: string
 }
 
 export type InfoCriterionType = {
@@ -23,20 +22,29 @@ export type CriterionType =
   | TextAreaCriterionType
   | InfoCriterionType
 
-export interface CriterionContainerType {
+export interface CriterionAndType {
   type: string
   criterion: CriterionType
 }
 
+export interface MultiSelectCriterionAndType {
+  type: string
+  criterion: MultiSelectCriterionType
+}
+
 export interface SectionType {
   title: string
-  criterionContainers: CriterionContainerType[]
+  criterions: CriterionAndType[]
+}
+
+export interface MultiSelectCriterionSectionType {
+  title: string
+  criterions: MultiSelectCriterionAndType[]
 }
 
 export type SelectionType = 'deselect' | 'select' | null
 
-export type RubricType = {
-  title: string
+export type AppState = {
   sections: SectionType[]
   selection: SelectionType
 }

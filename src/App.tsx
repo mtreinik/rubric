@@ -1,26 +1,23 @@
 import React, { ReactNode, useEffect, useState } from 'react'
-import { Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
+import { Button, Icon, Link, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
-import { RubricType, SectionType, SelectionType } from './types'
+import { AppState, SectionType, SelectionType } from './types'
 
-const emptyRubric: RubricType = {
-  title: 'Rubriikin otsikko',
+const emptyAppState: AppState = {
   sections: [],
   selection: null,
 }
 
-const rubricTitleLens = O.optic<RubricType>().prop('title')
+const rubricSelectionLens = O.optic<AppState>().prop('selection')
 
-const rubricSelectionLens = O.optic<RubricType>().prop('selection')
-
-const sectionsLens = O.optic<RubricType>().prop('sections')
+const sectionsLens = O.optic<AppState>().prop('sections')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
-const newSectionSetter = O.optic<RubricType>().prop('sections').appendTo()
+const newSectionSetter = O.optic<AppState>().prop('sections').appendTo()
 
 const theme = createMuiTheme({
   palette: {
@@ -72,45 +69,41 @@ const selectElement = (elementId: string) => () => {
 }
 
 const App = (): ReactNode => {
-  const [rubric, setRubric] = useState(emptyRubric)
+  const [appState, setAppState] = useState(emptyAppState)
 
   React.useEffect(() => {
     setSelectionEnabled(false)
   })
 
-  const editTitle = (title: string) => {
-    setRubric(O.set(rubricTitleLens)(title)(rubric))
-  }
-
   const addSection = (): void => {
-    setRubric(
+    setAppState(
       O.set(newSectionSetter)({
-        title: `OSION ${rubric.sections.length + 1} OTSIKKO`,
-        criterionContainers: [],
-      })(rubric)
+        title: `OSION ${appState.sections.length + 1} OTSIKKO`,
+        criterions: [],
+      })(appState)
     )
   }
 
   const removeSection = (sectionIndex: number): void => {
-    setRubric(O.remove(sectionPrism(sectionIndex))(rubric))
+    setAppState(O.remove(sectionPrism(sectionIndex))(appState))
   }
 
   const editSection = (sectionIndex: number) => (section: SectionType) => {
-    setRubric(O.set(sectionPrism(sectionIndex))(section)(rubric))
+    setAppState(O.set(sectionPrism(sectionIndex))(section)(appState))
   }
 
   const setSelection = (selection: SelectionType) => {
-    setRubric(O.set(rubricSelectionLens)(selection)(rubric))
+    setAppState(O.set(rubricSelectionLens)(selection)(appState))
   }
 
   useEffect(() => {
-    if (rubric.selection === 'deselect') {
+    if (appState.selection === 'deselect') {
       unselectAll()
       setSelection(null)
-    } else if (rubric.selection === 'select') {
+    } else if (appState.selection === 'select') {
       selectElement('content')()
     }
-  }, [rubric])
+  }, [appState.selection])
 
   return (
     <React.Fragment>
@@ -122,7 +115,10 @@ const App = (): ReactNode => {
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <div id="content">
-                  <RubricView rubric={rubric} />
+                  <RubricView
+                    sections={appState.sections}
+                    selection={appState.selection}
+                  />
                 </div>
               </Grid>
               <Grid item xs={12}>
@@ -147,6 +143,19 @@ const App = (): ReactNode => {
                     </Button>
                   </Grid>
                   <Grid item>
+                    <Link
+                      href={
+                        'data:text/json;charset=utf-8,' +
+                        encodeURIComponent(
+                          JSON.stringify(appState.sections, null, 2)
+                        )
+                      }
+                      download="rubric.json"
+                    >
+                      Lataa
+                    </Link>
+                  </Grid>
+                  <Grid item>
                     <Button
                       onClick={reload}
                       variant="outlined"
@@ -162,8 +171,7 @@ const App = (): ReactNode => {
           </Grid>
           <Grid item xs={6}>
             <RubricEditor
-              rubric={rubric}
-              editTitle={editTitle}
+              sections={appState.sections}
               addSection={addSection}
               removeSection={removeSection}
               editSection={editSection}
