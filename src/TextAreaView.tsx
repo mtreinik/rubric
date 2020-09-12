@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { SelectionType } from './types'
 
 interface Props {
   title: string
-  selected: boolean
+  selection: SelectionType
 }
 
 const TextAreaView = (props: Props): JSX.Element => {
@@ -14,16 +15,17 @@ const TextAreaView = (props: Props): JSX.Element => {
     setValue(event.target.value)
   }
 
-  const valueComponent = props.selected ? (
-    <span>{value}</span>
-  ) : (
-    <textarea
-      rows={4}
-      cols={80}
-      value={value}
-      onChange={handleValueChange}
-    ></textarea>
-  )
+  const valueComponent =
+    props.selection === 'select' ? (
+      <span>{value}</span>
+    ) : (
+      <textarea
+        rows={4}
+        cols={80}
+        value={value}
+        onChange={handleValueChange}
+      ></textarea>
+    )
 
   return (
     <table className="textAreaCriterion">

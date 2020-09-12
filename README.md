@@ -15,7 +15,6 @@ an easy and efficient tool.
 
 ## TODO
 
-- fix editing
 - exporting and importing user created rubrics
 - code refactoring
 - localization

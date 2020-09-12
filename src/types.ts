@@ -33,8 +33,10 @@ export interface SectionType {
   criterionContainers: CriterionContainerType[]
 }
 
+export type SelectionType = 'deselect' | 'select' | null
+
 export type RubricType = {
   title: string
   sections: SectionType[]
-  selected: boolean
+  selection: SelectionType
 }

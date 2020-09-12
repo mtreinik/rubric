@@ -4,17 +4,17 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
-import { RubricType, SectionType } from './types'
+import { RubricType, SectionType, SelectionType } from './types'
 
 const emptyRubric: RubricType = {
   title: 'Rubriikin otsikko',
   sections: [],
-  selected: false,
+  selection: null,
 }
 
 const rubricTitleLens = O.optic<RubricType>().prop('title')
 
-const rubricSelectedLens = O.optic<RubricType>().prop('selected')
+const rubricSelectionLens = O.optic<RubricType>().prop('selection')
 
 const sectionsLens = O.optic<RubricType>().prop('sections')
 
@@ -99,15 +99,16 @@ const App = (): ReactNode => {
     setRubric(O.set(sectionPrism(sectionIndex))(section)(rubric))
   }
 
-  const setSelected = (selected: boolean) => {
-    setRubric(O.set(rubricSelectedLens)(selected)(rubric))
+  const setSelection = (selection: SelectionType) => {
+    setRubric(O.set(rubricSelectionLens)(selection)(rubric))
   }
 
   useEffect(() => {
-    if (rubric.selected) {
-      selectElement('content')()
-    } else {
+    if (rubric.selection === 'deselect') {
       unselectAll()
+      setSelection(null)
+    } else if (rubric.selection === 'select') {
+      selectElement('content')()
     }
   }, [rubric])
 
@@ -128,7 +129,7 @@ const App = (): ReactNode => {
                 <Grid container spacing={4}>
                   <Grid item>
                     <Button
-                      onClick={() => setSelected(true)}
+                      onClick={() => setSelection('select')}
                       variant="contained"
                       color="primary"
                       startIcon={<Icon>content_copy</Icon>}
@@ -138,7 +139,7 @@ const App = (): ReactNode => {
                   </Grid>
                   <Grid item>
                     <Button
-                      onClick={() => setSelected(false)}
+                      onClick={() => setSelection('deselect')}
                       variant="contained"
                       startIcon={<Icon>clear</Icon>}
                     >

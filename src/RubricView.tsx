@@ -18,7 +18,7 @@ interface Props {
 }
 
 const RubricView = (props: Props): JSX.Element => (
-  <Grid container spacing={2}>
+  <Grid container>
     <Grid item xs={12} key="rubricHeader">
       <hr />
     </Grid>
@@ -48,7 +48,7 @@ const RubricView = (props: Props): JSX.Element => (
                   <TextAreaView
                     key={'criterion-' + criterionIndex}
                     title={textAreaCriterion.title}
-                    selected={props.rubric.selected}
+                    selection={props.rubric.selection}
                   />
                 )
               } else if (type === `InfoCriterion`) {
