@@ -16,18 +16,14 @@
   padding-bottom: 0.5em;
 }
 
-.criterion {
-  padding-left: 2em;
-  padding-bottom: 0.4em;
-}
-
 .criterionTitle {
   font-weight: bold;
   padding-right: 1em;
 }
 
-.textAreaCriterion {
-  margin-bottom: 1em;
+.criterion, .infoCriterion, .textAreaCriterion {
+  padding-left: 2em;
+  padding-bottom: 0.4em;
 }
 
 .textAreaCriterionCell {
