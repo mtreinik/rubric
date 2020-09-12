@@ -15,9 +15,9 @@ an easy and efficient tool.
 
 ## TODO
 
-- rubric editor with preview
-- adding custom content to rubric
+- fix editing
 - exporting and importing user created rubrics
+- code refactoring
 - localization
 - documentation
 - UI polishing
