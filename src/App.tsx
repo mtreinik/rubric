@@ -7,7 +7,7 @@ import * as O from 'optics-ts'
 import { RubricType, SectionType } from './types'
 
 const emptyRubric: RubricType = {
-  title: 'Rubriikki',
+  title: 'Rubriikin otsikko',
   sections: [],
   selected: false,
 }
@@ -86,15 +86,7 @@ const App = (): ReactNode => {
     setRubric(
       O.set(newSectionSetter)({
         title: `OSION ${rubric.sections.length + 1} OTSIKKO`,
-        criterionContainers: [
-          {
-            type: 'MultiSelectCriterion',
-            criterion: {
-              title: 'Kriteeri',
-              options: ['valinta', 'toinen valinta', 'kolmas valinta'],
-            },
-          },
-        ],
+        criterionContainers: [],
       })(rubric)
     )
   }

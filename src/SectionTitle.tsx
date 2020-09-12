@@ -5,7 +5,10 @@ interface Props {
 }
 
 const SectionTitle = (props: Props): JSX.Element => (
-  <div className="sectionTitle">{props.title}</div>
+  <div className="sectionTitle">
+    <br />
+    {props.title}
+  </div>
 )
 
 export default SectionTitle

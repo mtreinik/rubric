@@ -8,8 +8,10 @@ import {
   RubricType,
   MultiSelectCriterionType,
   TextAreaCriterionType,
+  InfoCriterionType,
 } from './types'
 import RubricTitle from './RubricTitle'
+import InfoView from './InfoView'
 
 interface Props {
   rubric: RubricType
@@ -29,8 +31,10 @@ const RubricView = (props: Props): JSX.Element => (
           <SectionTitle title={section.title} />
           {section.criterionContainers.map(
             (criterionContainer, criterionIndex) => {
-              if (criterionContainer.type === 'MultiSelectCriterion') {
-                const multiSelectCriterion = criterionContainer.criterion as MultiSelectCriterionType
+              const type = criterionContainer.type
+              const criterion = criterionContainer.criterion
+              if (type === 'MultiSelectCriterion') {
+                const multiSelectCriterion = criterion as MultiSelectCriterionType
                 return (
                   <MultiSelectCriterionView
                     key={'criterion-' + criterionIndex}
@@ -38,8 +42,8 @@ const RubricView = (props: Props): JSX.Element => (
                     options={multiSelectCriterion.options}
                   />
                 )
-              } else if (criterionContainer.type === 'TextAreaCriterion') {
-                const textAreaCriterion = criterionContainer.criterion as TextAreaCriterionType
+              } else if (type === 'TextAreaCriterion') {
+                const textAreaCriterion = criterion as TextAreaCriterionType
                 return (
                   <TextAreaView
                     key={'criterion-' + criterionIndex}
@@ -47,10 +51,16 @@ const RubricView = (props: Props): JSX.Element => (
                     selected={props.rubric.selected}
                   />
                 )
-              } else {
-                console.error(
-                  `unsupported criterion type '${criterionContainer.type}'`
+              } else if (type === `InfoCriterion`) {
+                const infoCriterion = criterion as InfoCriterionType
+                return (
+                  <InfoView
+                    key={'criterion-' + criterionIndex}
+                    title={infoCriterion.title}
+                  />
                 )
+              } else {
+                console.error(`unsupported criterion type '${type}'`)
               }
             }
           )}

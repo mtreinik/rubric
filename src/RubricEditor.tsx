@@ -34,7 +34,7 @@ const RubricEditor = (props: Props): JSX.Element => {
                   color="secondary"
                   startIcon={<Icon>remove_circle</Icon>}
                 >
-                  Poista
+                  osio
                 </Button>
               </Grid>
               <Grid item xs={10}>

@@ -14,7 +14,14 @@ export type TextAreaCriterionType = {
   value: string
 }
 
-export type CriterionType = MultiSelectCriterionType | TextAreaCriterionType
+export type InfoCriterionType = {
+  title: string
+}
+
+export type CriterionType =
+  | MultiSelectCriterionType
+  | TextAreaCriterionType
+  | InfoCriterionType
 
 export interface CriterionContainerType {
   type: string

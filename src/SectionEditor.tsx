@@ -7,7 +7,7 @@ import {
 } from './types'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 import * as O from 'optics-ts'
-import TextAreaEditor from './TextAreaEditor'
+import TitleEditor from './TitleEditor'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
@@ -51,12 +51,33 @@ const SectionEditor = (props: Props): JSX.Element => {
   }
 
   const addCriterion = (criterionType: string) => (): void => {
-    props.editSection(
-      O.set(newCriterionSetter)({
-        type: criterionType,
-        criterion: { title: 'Uusi kriteeri', options: ['eka', 'toka'] },
-      })(props.section)
-    )
+    if (criterionType === 'MultiSelectCriterion') {
+      props.editSection(
+        O.set(newCriterionSetter)({
+          type: criterionType,
+          criterion: {
+            title: 'Monivalintakriteerin otsikko',
+            options: ['eka', 'toka'],
+          },
+        })(props.section)
+      )
+    } else if (criterionType === 'TextAreaCriterion') {
+      props.editSection(
+        O.set(newCriterionSetter)({
+          type: criterionType,
+          criterion: { title: 'Tekstilaatikon kuvaus', value: 'Tekstiä' },
+        })(props.section)
+      )
+    } else if (criterionType === 'InfoCriterion') {
+      props.editSection(
+        O.set(newCriterionSetter)({
+          type: criterionType,
+          criterion: { title: 'Selite' },
+        })(props.section)
+      )
+    } else {
+      console.error(`unsupported criterion type '${criterionType}'`)
+    }
   }
 
   const removeCriterion = (criterionIndex: number) => (): void => {
@@ -100,37 +121,37 @@ const SectionEditor = (props: Props): JSX.Element => {
         </Grid>
         {props.section.criterionContainers.map(
           (criterionContainer, criterionIndex) => {
-            if (criterionContainer.type === 'MultiSelectCriterion') {
+            const type = criterionContainer.type
+            const criterion = criterionContainer.criterion
+            if (type === 'MultiSelectCriterion') {
               return (
                 <MultiSelectCriterionEditor
                   key={'criterion-' + criterionIndex}
                   criterionIndex={criterionIndex}
                   removeCriterion={removeCriterion}
                   editCriterion={editCriterion(criterionIndex)}
-                  criterion={
-                    criterionContainer.criterion as MultiSelectCriterionType
-                  }
+                  criterion={criterion as MultiSelectCriterionType}
                   addOption={addOption(criterionIndex)}
                   removeOption={removeOption(criterionIndex)}
                   editOption={editOption(criterionIndex)}
                 />
               )
-            } else if (criterionContainer.type === 'TextAreaCriterion') {
+            } else if (
+              type === 'TextAreaCriterion' ||
+              type === 'InfoCriterion'
+            ) {
               return (
-                <TextAreaEditor
+                <TitleEditor
                   key={'criterion-' + criterionIndex}
                   criterionIndex={criterionIndex}
                   removeCriterion={removeCriterion}
-                  criterion={
-                    criterionContainer.criterion as TextAreaCriterionType
-                  }
+                  criterion={criterion as TextAreaCriterionType}
                   editCriterion={editCriterion(criterionIndex)}
+                  type={type}
                 />
               )
             } else {
-              console.error(
-                `unsupported criterion type '${criterionContainer.type}'`
-              )
+              console.error(`unsupported criterion type '${type}'`)
             }
           }
         )}
@@ -140,7 +161,7 @@ const SectionEditor = (props: Props): JSX.Element => {
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
-            Lisää kriteeri
+            Lisää monivalinta
           </Button>
           <Button
             onClick={addCriterion('TextAreaCriterion')}
@@ -148,6 +169,13 @@ const SectionEditor = (props: Props): JSX.Element => {
             startIcon={<Icon>add_circle</Icon>}
           >
             Lisää tekstilaatikko
+          </Button>
+          <Button
+            onClick={addCriterion('InfoCriterion')}
+            size="small"
+            startIcon={<Icon>add_circle</Icon>}
+          >
+            Lisää selite
           </Button>
         </Grid>
       </Grid>

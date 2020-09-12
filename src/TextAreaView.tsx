@@ -27,12 +27,14 @@ const TextAreaView = (props: Props): JSX.Element => {
 
   return (
     <table className="textAreaCriterion">
-      <tr>
-        <td className="textAreaCriterionCell">
-          <div className="criterionTitle">{props.title}</div>
-          <div>{valueComponent}</div>
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td className="textAreaCriterionCell">
+            <div className="criterionTitle">{props.title}</div>
+            <div>{valueComponent}</div>
+          </td>
+        </tr>
+      </tbody>
     </table>
   )
 }

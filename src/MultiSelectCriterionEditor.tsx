@@ -42,16 +42,16 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
   return (
     <Grid item xs={12}>
       <Grid container spacing={1}>
-        <Grid item>
-          <IconButton
+        <Grid item xs={3}>
+          <Button
             onClick={props.removeCriterion(props.criterionIndex)}
             color="secondary"
-            size="small"
+            startIcon={<Icon>remove_circle</Icon>}
           >
-            <Icon fontSize="small">remove_circle</Icon>
-          </IconButton>
+            monivalinta
+          </Button>
         </Grid>
-        <Grid item>
+        <Grid item xs={9}>
           <Grid container direction="row" spacing={2}>
             <Grid item>
               <TextField
