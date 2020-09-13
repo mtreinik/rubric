@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  MutableRefObject,
   ReactNode,
   useEffect,
   useRef,
@@ -142,7 +143,7 @@ const App = (): ReactNode => {
     }
   }, [appState.selection])
 
-  const uploader = useRef(null)
+  const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
 
   return (
     <React.Fragment>
@@ -177,13 +178,13 @@ const App = (): ReactNode => {
                     <Button
                       variant="contained"
                       startIcon={<Icon>open_in_browser</Icon>}
-                      onClick={() => uploader.current.click()}
+                      onClick={() => uploaderRefObject.current.click()}
                     >
                       <input
                         type="file"
                         accept="text/json"
                         multiple={false}
-                        ref={uploader}
+                        ref={uploaderRefObject}
                         style={{ display: 'none' }}
                         onChange={uploadRubric}
                       ></input>

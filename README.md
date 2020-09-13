@@ -15,9 +15,9 @@ an easy and efficient tool.
 
 ## TODO
 
-- fix compiler errors
 - code refactoring
 - localization
+- example rubrics
 - documentation
 - UI polishing
 
