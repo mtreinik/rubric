@@ -15,7 +15,7 @@ an easy and efficient tool.
 
 ## TODO
 
-- exporting and importing user created rubrics
+- fix compiler errors
 - code refactoring
 - localization
 - documentation

@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Button, Icon, Link, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
@@ -75,6 +81,37 @@ const App = (): ReactNode => {
     setSelectionEnabled(false)
   })
 
+  const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (!event.target.files) {
+      return
+    }
+    const file = event.target.files.item(0)
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        if (!e || !e.target || !e.target.result) {
+          console.warn('Could not read file')
+          return
+        }
+        const data = e.target.result
+        if (typeof data !== 'string') {
+          console.warn('Could not parse file')
+          return
+        }
+        const sections = JSON.parse(data)
+        console.log(
+          `TODO remove this logging: sections: ${JSON.stringify(
+            sections,
+            null,
+            2
+          )}`
+        )
+        setAppState(O.set(sectionsLens)(sections)(appState))
+      }
+      reader.readAsText(file)
+    }
+  }
+
   const addSection = (): void => {
     setAppState(
       O.set(newSectionSetter)({
@@ -105,6 +142,8 @@ const App = (): ReactNode => {
     }
   }, [appState.selection])
 
+  const uploader = useRef(null)
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -113,6 +152,46 @@ const App = (): ReactNode => {
         <Grid container direction="row" spacing={2}>
           <Grid item xs={6}>
             <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <Grid container spacing={4}>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon>save_alt</Icon>}
+                    >
+                      <Link
+                        variant={'button'}
+                        href={
+                          'data:text/json;charset=utf-8,' +
+                          encodeURIComponent(
+                            JSON.stringify(appState.sections, null, 2)
+                          )
+                        }
+                        download="rubric.json"
+                      >
+                        Tallenna rubriikki
+                      </Link>
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      startIcon={<Icon>open_in_browser</Icon>}
+                      onClick={() => uploader.current.click()}
+                    >
+                      <input
+                        type="file"
+                        accept="text/json"
+                        multiple={false}
+                        ref={uploader}
+                        style={{ display: 'none' }}
+                        onChange={uploadRubric}
+                      ></input>
+                      Avaa rubriikki
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid item xs={12}>
                 <div id="content">
                   <RubricView
@@ -141,19 +220,6 @@ const App = (): ReactNode => {
                     >
                       Poista valinta
                     </Button>
-                  </Grid>
-                  <Grid item>
-                    <Link
-                      href={
-                        'data:text/json;charset=utf-8,' +
-                        encodeURIComponent(
-                          JSON.stringify(appState.sections, null, 2)
-                        )
-                      }
-                      download="rubric.json"
-                    >
-                      Lataa
-                    </Link>
                   </Grid>
                   <Grid item>
                     <Button
