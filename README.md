@@ -15,11 +15,12 @@ an easy and efficient tool.
 
 ## TODO
 
-- code refactoring
-- localization
-- example rubrics
-- documentation
-- UI polishing
+- add error handling to upload
+- refactor code
+- add localization: Finnish, English
+- create example rubrics
+- add documentation
+- polish UI
 
 ## Developing and building Rubric
 
