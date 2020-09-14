@@ -8,6 +8,8 @@
   "openRubric": "Avaa rubriikki",
   "changeLanguage": "Valitse kieli",
   "editRubric": "Muokkaa rubriikkia",
+  "closeRubricEditor": "Sulje muokkausnäkymä",
+  "close": "Sulje",
   "addMultiSelect": "Lisää monivalinta",
   "addTextArea": "Lisää tekstilaatikko",
   "criterion": "Kriteeri",

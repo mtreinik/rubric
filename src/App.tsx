@@ -28,13 +28,13 @@ const emptyAppState: AppState = {
   sections: [],
   selection: null,
   language: '',
+  showRubricEditor: false,
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')
-
 const sectionsLens = O.optic<AppState>().prop('sections')
-
 const languageLens = O.optic<AppState>().prop('language')
+const showRubricEditorLens = O.optic<AppState>().prop('showRubricEditor')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
@@ -164,6 +164,12 @@ const App = (): ReactNode => {
     setAppState(O.set(languageLens)(language)(appState))
   }
 
+  const toggleRubricEditor = (): void => {
+    setAppState(
+      O.set(showRubricEditorLens)(!appState.showRubricEditor)(appState)
+    )
+  }
+
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
 
   return (
@@ -197,19 +203,15 @@ const App = (): ReactNode => {
                     <Button
                       variant="contained"
                       startIcon={<Icon>save_alt</Icon>}
+                      href={
+                        'data:text/json;charset=utf-8,' +
+                        encodeURIComponent(
+                          JSON.stringify(appState.sections, null, 2)
+                        )
+                      }
+                      download="rubric.json"
                     >
-                      <Link
-                        variant={'button'}
-                        href={
-                          'data:text/json;charset=utf-8,' +
-                          encodeURIComponent(
-                            JSON.stringify(appState.sections, null, 2)
-                          )
-                        }
-                        download="rubric.json"
-                      >
-                        {t('saveRubric')}
-                      </Link>
+                      {t('saveRubric')}
                     </Button>
                   </Grid>
                   <Grid item>
@@ -227,6 +229,23 @@ const App = (): ReactNode => {
                         onChange={uploadRubric}
                       ></input>
                       {t('openRubric')}
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      startIcon={
+                        appState.showRubricEditor ? (
+                          <Icon>close</Icon>
+                        ) : (
+                          <Icon>edit</Icon>
+                        )
+                      }
+                      onClick={toggleRubricEditor}
+                    >
+                      {appState.showRubricEditor
+                        ? t('closeRubricEditor')
+                        : t('editRubric')}
                     </Button>
                   </Grid>
                 </Grid>
@@ -275,13 +294,18 @@ const App = (): ReactNode => {
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            <RubricEditor
-              sections={appState.sections}
-              addSection={addSection}
-              removeSection={removeSection}
-              editSection={editSection}
-              t={t}
-            />
+            {appState.showRubricEditor ? (
+              <RubricEditor
+                sections={appState.sections}
+                addSection={addSection}
+                removeSection={removeSection}
+                editSection={editSection}
+                t={t}
+                toggleRubricEditor={toggleRubricEditor}
+              />
+            ) : (
+              <span></span>
+            )}
           </Grid>
         </Grid>
       </ThemeProvider>

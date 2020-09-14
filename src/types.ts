@@ -48,4 +48,5 @@ export type AppState = {
   sections: SectionType[]
   selection: SelectionType
   language: string
+  showRubricEditor: boolean
 }

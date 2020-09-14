@@ -8,6 +8,8 @@
   "openRubric": "Open rubric",
   "changeLanguage": "Choose language",
   "editRubric": "Edit rubric",
+  "closeRubricEditor": "Close editor",
+  "close": "Close",
   "addMultiSelect": "Add multiselect",
   "addTextArea": "Add text area",
   "criterion": "Criterion",

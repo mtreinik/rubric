@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Icon } from '@material-ui/core'
+import { Button, Grid, Icon, IconButton } from '@material-ui/core'
 import { EditSectionType, SectionType } from './types'
 import SectionEditor from './SectionEditor'
 import { TFunction } from 'i18next'
@@ -10,12 +10,29 @@ interface Props {
   removeSection: (sectionIndex: number) => void
   editSection: EditSectionType
   t: TFunction
+  toggleRubricEditor: () => void
 }
 
 const RubricEditor = (props: Props): JSX.Element => {
   const t = props.t
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={4} style={{ backgroundColor: '#f0f0f0' }}>
+      <Grid item xs={12} key="title">
+        <Grid container alignContent="flex-end">
+          <Grid item xs={10}>
+            <h2>{t('editRubric')}</h2>
+          </Grid>
+          <Grid item xs={2}>
+            <Button
+              startIcon={<Icon>close</Icon>}
+              variant="contained"
+              onClick={props.toggleRubricEditor}
+            >
+              {t('close')}
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
       {props.sections.map((section, sectionIndex: number) => {
         return (
           <Grid item xs={12} key={sectionIndex}>
