@@ -191,10 +191,10 @@ const App = (): ReactNode => {
                         id="change-language"
                       >
                         <MenuItem value="fi">
-                          <Icon fontSize="small">language</Icon> suomi
+                          <Icon fontSize="small">language</Icon>&nbsp;suomi
                         </MenuItem>
                         <MenuItem value="en">
-                          <Icon fontSize="small">language</Icon> English
+                          <Icon fontSize="small">language</Icon>&nbsp;English
                         </MenuItem>
                       </Select>
                     </FormControl>
