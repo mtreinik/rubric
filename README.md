@@ -15,9 +15,9 @@ an easy and efficient tool.
 
 ## TODO
 
+- editing order of criteria
 - add error handling to upload
 - refactor code
-- add localization: Finnish, English
 - create example rubrics
 - add documentation
 - polish UI
