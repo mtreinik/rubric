@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Icon, IconButton } from '@material-ui/core'
+import { Button, Grid, Icon } from '@material-ui/core'
 import { EditSectionType, SectionType } from './types'
 import SectionEditor from './SectionEditor'
 import { TFunction } from 'i18next'
