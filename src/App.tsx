@@ -6,21 +6,35 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Button, Icon, Link, CssBaseline, Grid } from '@material-ui/core/'
+import {
+  Button,
+  Icon,
+  Link,
+  CssBaseline,
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+} from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
 import { AppState, SectionType, SelectionType } from './types'
+import { useTranslation } from 'react-i18next'
+import i18n from './i18n'
 
 const emptyAppState: AppState = {
   sections: [],
   selection: null,
+  language: '',
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')
 
 const sectionsLens = O.optic<AppState>().prop('sections')
+
+const languageLens = O.optic<AppState>().prop('language')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
@@ -77,6 +91,7 @@ const selectElement = (elementId: string) => () => {
 
 const App = (): ReactNode => {
   const [appState, setAppState] = useState(emptyAppState)
+  const { t } = useTranslation()
 
   React.useEffect(() => {
     setSelectionEnabled(false)
@@ -116,7 +131,7 @@ const App = (): ReactNode => {
   const addSection = (): void => {
     setAppState(
       O.set(newSectionSetter)({
-        title: `OSION ${appState.sections.length + 1} OTSIKKO`,
+        title: '',
         criterions: [],
       })(appState)
     )
@@ -143,6 +158,12 @@ const App = (): ReactNode => {
     }
   }, [appState.selection])
 
+  const changeLanguage = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const language = event.target.value as string
+    i18n.changeLanguage(language)
+    setAppState(O.set(languageLens)(language)(appState))
+  }
+
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
 
   return (
@@ -155,6 +176,23 @@ const App = (): ReactNode => {
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Grid container spacing={4}>
+                  <Grid item>
+                    <FormControl>
+                      <Select
+                        onChange={changeLanguage}
+                        value={i18n.language}
+                        labelId="change-language-label"
+                        id="change-language"
+                      >
+                        <MenuItem value="fi">
+                          <Icon fontSize="small">language</Icon> suomi
+                        </MenuItem>
+                        <MenuItem value="en">
+                          <Icon fontSize="small">language</Icon> English
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
                   <Grid item>
                     <Button
                       variant="contained"
@@ -170,7 +208,7 @@ const App = (): ReactNode => {
                         }
                         download="rubric.json"
                       >
-                        Tallenna rubriikki
+                        {t('saveRubric')}
                       </Link>
                     </Button>
                   </Grid>
@@ -188,7 +226,7 @@ const App = (): ReactNode => {
                         style={{ display: 'none' }}
                         onChange={uploadRubric}
                       ></input>
-                      Avaa rubriikki
+                      {t('openRubric')}
                     </Button>
                   </Grid>
                 </Grid>
@@ -210,7 +248,7 @@ const App = (): ReactNode => {
                       color="primary"
                       startIcon={<Icon>content_copy</Icon>}
                     >
-                      Valitse ja kopioi
+                      {t('selectAndCopy')}
                     </Button>
                   </Grid>
                   <Grid item>
@@ -219,7 +257,7 @@ const App = (): ReactNode => {
                       variant="contained"
                       startIcon={<Icon>clear</Icon>}
                     >
-                      Poista valinta
+                      {t('unselect')}
                     </Button>
                   </Grid>
                   <Grid item>
@@ -229,7 +267,7 @@ const App = (): ReactNode => {
                       color="secondary"
                       startIcon={<Icon>delete_forever</Icon>}
                     >
-                      Tyhjennä
+                      {t('reset')}
                     </Button>
                   </Grid>
                 </Grid>
@@ -242,6 +280,7 @@ const App = (): ReactNode => {
               addSection={addSection}
               removeSection={removeSection}
               editSection={editSection}
+              t={t}
             />
           </Grid>
         </Grid>

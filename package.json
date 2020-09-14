@@ -23,8 +23,11 @@
     "start": "webpack-dev-server --mode development --progress --color"
   },
   "dependencies": {
+    "i18next": "^19.7.0",
+    "i18next-browser-languagedetector": "^6.0.1",
     "optics-ts": "^1.1.0",
-    "react": "^16.13.1"
+    "react": "^16.13.1",
+    "react-i18next": "^11.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

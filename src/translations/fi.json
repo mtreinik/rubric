@@ -1,0 +1,23 @@
+{
+  "section": "Osio",
+  "addSection": "Lisää osio",
+  "selectAndCopy": "Valitse ja kopioi",
+  "unselect": "Poista valinta",
+  "reset": "Tyhjennä",
+  "saveRubric": "Tallenna rubriikki",
+  "openRubric": "Avaa rubriikki",
+  "changeLanguage": "Valitse kieli",
+  "editRubric": "Muokkaa rubriikkia",
+  "addMultiSelect": "Lisää monivalinta",
+  "addTextArea": "Lisää tekstilaatikko",
+  "criterion": "Kriteeri",
+  "multiSelect": "Monivalinta",
+  "textArea": "Tekstilaatikko",
+  "info": "Selite",
+  "addInfo": "Lisää selite",
+  "multiSelectTitleHelperText": "Monivalintakriteerin otsikko",
+  "textAreaTitleHelperText": "Tekstilaatikon otsikko",
+  "infoHelperText": "Selitteen sisältö",
+  "addOption": "Lisää vaihtoehto",
+  "sectionTitleHelperText": "Osion otsikko"
+}

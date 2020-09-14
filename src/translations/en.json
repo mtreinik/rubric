@@ -1,0 +1,23 @@
+{
+  "section": "Section",
+  "addSection": "Add section",
+  "selectAndCopy": "Select and Copy",
+  "unselect": "Unselect",
+  "reset": "Reset",
+  "saveRubric": "Save rubric",
+  "openRubric": "Open rubric",
+  "changeLanguage": "Choose language",
+  "editRubric": "Edit rubric",
+  "addMultiSelect": "Add multiselect",
+  "addTextArea": "Add text area",
+  "criterion": "Criterion",
+  "multiSelect": "Multiselect",
+  "textArea": "Text area",
+  "info": "Info",
+  "addInfo": "Add info",
+  "multiSelectTitleHelperText": "Multiselect title",
+  "textAreaTitleHelperText": "Text area title",
+  "infoHelperText": "Info content",
+  "addOption": "Add option",
+  "sectionTitleHelperText": "Section title"
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { MultiSelectCriterionType } from './types'
 import { Button, Grid, Icon, IconButton, TextField } from '@material-ui/core'
+import { TFunction } from 'i18next'
 
 interface Props {
   criterion: MultiSelectCriterionType
@@ -10,9 +11,11 @@ interface Props {
   addOption: () => void
   removeOption: (optionIndex: number) => void
   editOption: (optionIndex: number) => (optionTitle: string) => void
+  t: TFunction
 }
 
 const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
+  const t = props.t
   const handleCriterionTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -48,7 +51,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
             color="secondary"
             startIcon={<Icon>remove_circle</Icon>}
           >
-            monivalinta
+            {t('multiSelect')}
           </Button>
         </Grid>
         <Grid item xs={9}>
@@ -56,6 +59,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
             <Grid item>
               <TextField
                 value={props.criterion.title}
+                helperText={t('multiSelectTitleHelperText')}
                 onChange={handleCriterionTitleChange}
               />
             </Grid>
@@ -68,7 +72,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
                     size="small"
                     startIcon={<Icon>add_circle</Icon>}
                   >
-                    Lisää vaihtoehto
+                    {t('addOption')}
                   </Button>
                 </Grid>
               </Grid>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { InfoCriterionType, TextAreaCriterionType } from './types'
 import { Button, Grid, Icon, TextField } from '@material-ui/core'
+import { TFunction } from 'i18next'
 
 interface Props {
   criterion: TextAreaCriterionType | InfoCriterionType
@@ -8,6 +9,7 @@ interface Props {
   removeCriterion: (criterionIndex: number) => () => void
   editCriterion: (criterionTitle: string) => void
   type: string
+  t: TFunction
 }
 
 const TitleEditor = (props: Props): JSX.Element => {
@@ -16,6 +18,8 @@ const TitleEditor = (props: Props): JSX.Element => {
   ): void => {
     props.editCriterion(event.target.value)
   }
+  const t = props.t
+  const multiLine = props.type === 'InfoCriterion'
   return (
     <Grid item xs={12}>
       <Grid container spacing={1}>
@@ -26,15 +30,26 @@ const TitleEditor = (props: Props): JSX.Element => {
             startIcon={<Icon>remove_circle</Icon>}
           >
             {props.type === 'TextAreaCriterion'
-              ? 'tekstilaatikko'
+              ? t('textArea')
               : props.type === 'InfoCriterion'
-              ? 'selite'
-              : 'kriteeri'}
+              ? t('info')
+              : t('criterion')}
           </Button>
         </Grid>
         <Grid item xs={9}>
           <TextField
             value={props.criterion.title}
+            multiline={multiLine}
+            fullWidth
+            rows={multiLine ? 3 : 1}
+            variant={multiLine ? 'outlined' : 'standard'}
+            helperText={
+              props.type === 'TextAreaCriterion'
+                ? t('textAreaTitleHelperText')
+                : props.type === 'InfoCriterion'
+                ? t('infoHelperText')
+                : ''
+            }
             onChange={handleCriterionTitleChange}
           />
         </Grid>

@@ -9,6 +9,7 @@ import {
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 import * as O from 'optics-ts'
 import TitleEditor from './TitleEditor'
+import { TFunction } from 'i18next'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
@@ -37,6 +38,7 @@ const optionPrism = (criterionIndex: number, optionIndex: number) =>
 interface Props {
   section: SectionType
   editSection: (section: SectionType) => void
+  t: TFunction
 }
 
 const SectionEditor = (props: Props): JSX.Element => {
@@ -62,8 +64,8 @@ const SectionEditor = (props: Props): JSX.Element => {
         O.set(newCriterionSetter)({
           type: criterionType,
           criterion: {
-            title: 'Monivalintakriteerin otsikko',
-            options: ['eka', 'toka'],
+            title: '',
+            options: [],
           },
         })(props.section)
       )
@@ -71,14 +73,14 @@ const SectionEditor = (props: Props): JSX.Element => {
       props.editSection(
         O.set(newCriterionSetter)({
           type: criterionType,
-          criterion: { title: 'Tekstilaatikon kuvaus' },
+          criterion: { title: '' },
         })(props.section)
       )
     } else if (criterionType === 'InfoCriterion') {
       props.editSection(
         O.set(newCriterionSetter)({
           type: criterionType,
-          criterion: { title: 'Selite' },
+          criterion: { title: '' },
         })(props.section)
       )
     } else {
@@ -96,7 +98,7 @@ const SectionEditor = (props: Props): JSX.Element => {
       .prop('options')
       .appendTo()
     props.editSection(
-      O.set(newOptionSetter)('Uusi vaihtoehto')(
+      O.set(newOptionSetter)('')(
         props.section as MultiSelectCriterionSectionType
       )
     )
@@ -122,12 +124,14 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
+  const t = props.t
   return (
     <div>
       <Grid container spacing={2}>
         <Grid key="title" item xs={12}>
           <TextField
             value={props.section.title}
+            helperText={t('sectionTitleHelperText')}
             onChange={handleSectionTitleChange}
           />
         </Grid>
@@ -145,6 +149,7 @@ const SectionEditor = (props: Props): JSX.Element => {
                 addOption={addOption(criterionIndex)}
                 removeOption={removeOption(criterionIndex)}
                 editOption={editOption(criterionIndex)}
+                t={t}
               />
             )
           } else if (type === 'TextAreaCriterion' || type === 'InfoCriterion') {
@@ -156,6 +161,7 @@ const SectionEditor = (props: Props): JSX.Element => {
                 criterion={criterion as TextAreaCriterionType}
                 editCriterion={editCriterion(criterionIndex)}
                 type={type}
+                t={t}
               />
             )
           } else {
@@ -168,21 +174,21 @@ const SectionEditor = (props: Props): JSX.Element => {
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
-            Lisää monivalinta
+            {t('addMultiSelect')}
           </Button>
           <Button
             onClick={addCriterion('TextAreaCriterion')}
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
-            Lisää tekstilaatikko
+            {t('addTextArea')}
           </Button>
           <Button
             onClick={addCriterion('InfoCriterion')}
             size="small"
             startIcon={<Icon>add_circle</Icon>}
           >
-            Lisää selite
+            {t('addInfo')}
           </Button>
         </Grid>
       </Grid>

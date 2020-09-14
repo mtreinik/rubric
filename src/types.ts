@@ -47,4 +47,5 @@ export type SelectionType = 'deselect' | 'select' | null
 export type AppState = {
   sections: SectionType[]
   selection: SelectionType
+  language: string
 }
