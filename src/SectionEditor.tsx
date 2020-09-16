@@ -1,5 +1,12 @@
 import React from 'react'
-import { Button, Icon, Grid, TextField } from '@material-ui/core'
+import {
+  Button,
+  Grid,
+  Icon,
+  IconButton,
+  TextField,
+  Typography,
+} from '@material-ui/core'
 import {
   MultiSelectCriterionSectionType,
   MultiSelectCriterionType,
@@ -38,6 +45,8 @@ const optionPrism = (criterionIndex: number, optionIndex: number) =>
 interface Props {
   section: SectionType
   editSection: (section: SectionType) => void
+  moveCriterionUp: (criterionIndex: number) => void
+  moveCriterionDown: (criterionIndex: number) => void
   t: TFunction
 }
 
@@ -133,63 +142,117 @@ const SectionEditor = (props: Props): JSX.Element => {
             value={props.section.title}
             helperText={t('sectionTitleHelperText')}
             onChange={handleSectionTitleChange}
+            fullWidth
           />
         </Grid>
         {props.section.criterions.map((criterionAndType, criterionIndex) => {
           const type = criterionAndType.type
           const criterion = criterionAndType.criterion
-          if (type === 'MultiSelectCriterion') {
-            return (
-              <MultiSelectCriterionEditor
-                key={'criterion-' + criterionIndex}
-                criterionIndex={criterionIndex}
-                removeCriterion={removeCriterion}
-                editCriterion={editCriterion(criterionIndex)}
-                criterion={criterion as MultiSelectCriterionType}
-                addOption={addOption(criterionIndex)}
-                removeOption={removeOption(criterionIndex)}
-                editOption={editOption(criterionIndex)}
-                t={t}
-              />
-            )
-          } else if (type === 'TextAreaCriterion' || type === 'InfoCriterion') {
-            return (
-              <TitleEditor
-                key={'criterion-' + criterionIndex}
-                criterionIndex={criterionIndex}
-                removeCriterion={removeCriterion}
-                criterion={criterion as TextAreaCriterionType}
-                editCriterion={editCriterion(criterionIndex)}
-                type={type}
-                t={t}
-              />
-            )
-          } else {
-            console.error(`unsupported criterion type '${type}'`)
-          }
+          return (
+            <Grid item xs={12} key={'criterion-' + criterionIndex}>
+              <Grid container spacing={1}>
+                <Grid item xs={3}>
+                  <Typography variant="button">
+                    {' '}
+                    {type === 'MultiSelectCriterion'
+                      ? t('multiSelect')
+                      : type === 'TextAreaCriterion'
+                      ? t('textArea')
+                      : type === 'InfoCriterion'
+                      ? t('info')
+                      : t('criterion')}
+                  </Typography>
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <IconButton
+                        onClick={() => props.moveCriterionUp(criterionIndex)}
+                        disabled={criterionIndex <= 0}
+                        size="small"
+                      >
+                        <Icon>arrow_upward</Icon>
+                      </IconButton>
+                    </Grid>
+                    <Grid item>
+                      <IconButton
+                        onClick={() => props.moveCriterionDown(criterionIndex)}
+                        disabled={
+                          criterionIndex >= props.section.criterions.length - 1
+                        }
+                        size="small"
+                      >
+                        <Icon>arrow_downward</Icon>
+                      </IconButton>
+                    </Grid>
+                    <Grid item>
+                      <IconButton
+                        onClick={removeCriterion(criterionIndex)}
+                        color="secondary"
+                        size="small"
+                      >
+                        <Icon>remove_circle</Icon>
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={9}>
+                  {type === 'MultiSelectCriterion' && (
+                    <MultiSelectCriterionEditor
+                      criterionIndex={criterionIndex}
+                      removeCriterion={removeCriterion}
+                      editCriterion={editCriterion(criterionIndex)}
+                      criterion={criterion as MultiSelectCriterionType}
+                      addOption={addOption(criterionIndex)}
+                      removeOption={removeOption(criterionIndex)}
+                      editOption={editOption(criterionIndex)}
+                      t={t}
+                    />
+                  )}
+                  {(type === 'TextAreaCriterion' ||
+                    type === 'InfoCriterion') && (
+                    <TitleEditor
+                      criterionIndex={criterionIndex}
+                      removeCriterion={removeCriterion}
+                      criterion={criterion as TextAreaCriterionType}
+                      editCriterion={editCriterion(criterionIndex)}
+                      type={type}
+                      t={t}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+          )
         })}
         <Grid item xs={12}>
-          <Button
-            onClick={addCriterion('MultiSelectCriterion')}
-            size="small"
-            startIcon={<Icon>add_circle</Icon>}
-          >
-            {t('addMultiSelect')}
-          </Button>
-          <Button
-            onClick={addCriterion('TextAreaCriterion')}
-            size="small"
-            startIcon={<Icon>add_circle</Icon>}
-          >
-            {t('addTextArea')}
-          </Button>
-          <Button
-            onClick={addCriterion('InfoCriterion')}
-            size="small"
-            startIcon={<Icon>add_circle</Icon>}
-          >
-            {t('addInfo')}
-          </Button>
+          <Grid container spacing={4}>
+            <Grid item>
+              <Button
+                onClick={addCriterion('MultiSelectCriterion')}
+                size="small"
+                startIcon={<Icon>add_circle</Icon>}
+              >
+                {t('addMultiSelect')}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={addCriterion('TextAreaCriterion')}
+                size="small"
+                startIcon={<Icon>add_circle</Icon>}
+              >
+                {t('addTextArea')}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                onClick={addCriterion('InfoCriterion')}
+                size="small"
+                startIcon={<Icon>add_circle</Icon>}
+              >
+                {t('addInfo')}
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </div>

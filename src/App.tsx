@@ -28,7 +28,7 @@ const emptyAppState: AppState = {
   sections: [],
   selection: null,
   language: '',
-  showRubricEditor: false,
+  showRubricEditor: true,
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')

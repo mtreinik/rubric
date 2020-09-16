@@ -1,8 +1,12 @@
 import React from 'react'
-import { Button, Grid, Icon, IconButton } from '@material-ui/core'
+import { Button, Grid, Icon, IconButton, Typography } from '@material-ui/core'
 import { EditSectionType, SectionType } from './types'
 import SectionEditor from './SectionEditor'
 import { TFunction } from 'i18next'
+import { swapElements } from './array-utils'
+import * as O from 'optics-ts'
+
+const criterionsLens = O.optic<SectionType>().prop('criterions')
 
 interface Props {
   sections: SectionType[]
@@ -17,6 +21,22 @@ interface Props {
 
 const RubricEditor = (props: Props): JSX.Element => {
   const t = props.t
+
+  const moveCriterionUp = (sectionIndex: number) => (
+    criterionIndex: number
+  ): void => moveCriterionDown(sectionIndex)(criterionIndex - 1)
+
+  const moveCriterionDown = (sectionIndex: number) => (
+    criterionIndex: number
+  ): void => {
+    console.log('sectionIndex', sectionIndex, 'criterionIndex', criterionIndex)
+    const section = props.sections[sectionIndex]
+    const newCriterions = swapElements(criterionIndex, section.criterions)
+    props.editSection(sectionIndex)(
+      O.set(criterionsLens)(newCriterions)(section)
+    )
+  }
+
   return (
     <Grid container spacing={4} style={{ backgroundColor: '#f0f0f0' }}>
       <Grid item xs={12} key="title">
@@ -39,31 +59,44 @@ const RubricEditor = (props: Props): JSX.Element => {
         return (
           <Grid item xs={12} key={sectionIndex}>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
-                <Button
-                  onClick={() => props.removeSection(sectionIndex)}
-                  color="secondary"
-                  startIcon={<Icon>remove_circle</Icon>}
-                >
-                  {t('section')}
-                </Button>
-                <IconButton
-                  onClick={() => props.moveSectionUp(sectionIndex)}
-                  disabled={sectionIndex <= 0}
-                >
-                  <Icon>arrow_upward</Icon>
-                </IconButton>
-                <IconButton
-                  onClick={() => props.moveSectionDown(sectionIndex)}
-                  disabled={sectionIndex >= props.sections.length - 1}
-                >
-                  <Icon>arrow_downward</Icon>
-                </IconButton>
+              <Grid item xs={2}>
+                <Typography variant="button">{t('section')}</Typography>
+                <Grid container spacing={1}>
+                  <Grid item>
+                    <IconButton
+                      onClick={() => props.moveSectionUp(sectionIndex)}
+                      disabled={sectionIndex <= 0}
+                      size="small"
+                    >
+                      <Icon>arrow_upward</Icon>
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      onClick={() => props.moveSectionDown(sectionIndex)}
+                      disabled={sectionIndex >= props.sections.length - 1}
+                      size="small"
+                    >
+                      <Icon>arrow_downward</Icon>
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <IconButton
+                      onClick={() => props.removeSection(sectionIndex)}
+                      color="secondary"
+                      size="small"
+                    >
+                      <Icon>remove_circle</Icon>
+                    </IconButton>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={10}>
                 <SectionEditor
                   section={section}
                   editSection={props.editSection(sectionIndex)}
+                  moveCriterionUp={moveCriterionUp(sectionIndex)}
+                  moveCriterionDown={moveCriterionDown(sectionIndex)}
                   t={t}
                 />
               </Grid>

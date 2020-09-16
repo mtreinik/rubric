@@ -29,10 +29,6 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
 
   const clickables = props.criterion.options.map((option, optionIndex) => (
     <Grid item key={'option-' + optionIndex}>
-      <TextField
-        value={option}
-        onChange={handleOptionTitleChange(optionIndex)}
-      />
       <IconButton
         onClick={() => props.removeOption(optionIndex)}
         color="secondary"
@@ -40,43 +36,34 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
       >
         <Icon fontSize="small">remove_circle</Icon>
       </IconButton>{' '}
+      <TextField
+        value={option}
+        onChange={handleOptionTitleChange(optionIndex)}
+      />
     </Grid>
   ))
   return (
-    <Grid item xs={12}>
-      <Grid container spacing={1}>
-        <Grid item xs={3}>
-          <Button
-            onClick={props.removeCriterion(props.criterionIndex)}
-            color="secondary"
-            startIcon={<Icon>remove_circle</Icon>}
-          >
-            {t('multiSelect')}
-          </Button>
-        </Grid>
-        <Grid item xs={9}>
-          <Grid container direction="row" spacing={2}>
-            <Grid item>
-              <TextField
-                value={props.criterion.title}
-                helperText={t('multiSelectTitleHelperText')}
-                onChange={handleCriterionTitleChange}
-              />
-            </Grid>
-            <Grid item>
-              <Grid container direction="column" spacing={2}>
-                {clickables}
-                <Grid item>
-                  <Button
-                    onClick={props.addOption}
-                    size="small"
-                    startIcon={<Icon>add_circle</Icon>}
-                  >
-                    {t('addOption')}
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+    <Grid container direction="row" spacing={2}>
+      <Grid item xs={6}>
+        <TextField
+          value={props.criterion.title}
+          helperText={t('multiSelectTitleHelperText')}
+          onChange={handleCriterionTitleChange}
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <Grid container direction="column" spacing={2}>
+          {clickables}
+          <Grid item>
+            <Button
+              style={{ marginLeft: '0.1em' }}
+              onClick={props.addOption}
+              size="small"
+              startIcon={<Icon>add_circle</Icon>}
+            >
+              {t('addOption')}
+            </Button>
           </Grid>
         </Grid>
       </Grid>
