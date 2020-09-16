@@ -48,3 +48,9 @@ export type AppState = {
   language: string
   showRubricEditor: boolean
 }
+
+export type LanguageCode = 'fi' | 'en'
+export type Language = {
+  code: LanguageCode
+  name: string
+}

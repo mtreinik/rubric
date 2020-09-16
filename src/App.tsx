@@ -1,28 +1,14 @@
-import React, {
-  ChangeEvent,
-  MutableRefObject,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import {
-  Button,
-  Icon,
-  CssBaseline,
-  Grid,
-  Select,
-  MenuItem,
-  FormControl,
-} from '@material-ui/core/'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
-import { AppState, SectionType, SelectionType } from './types'
+import { AppState, LanguageCode, SectionType, SelectionType } from './types'
 import { useTranslation } from 'react-i18next'
 import i18n from './i18n'
 import { swapElements } from './array-utils'
+import MainMenu from './MainMenu'
 
 const emptyAppState: AppState = {
   sections: [],
@@ -97,30 +83,8 @@ const App = (): ReactNode => {
     setSelectionEnabled(false)
   })
 
-  const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (!event.target.files) {
-      console.warn(`File to upload was not specified`)
-      return
-    }
-    const file = event.target.files.item(0)
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        if (!e || !e.target || !e.target.result) {
-          console.warn('Could not read uploaded file')
-          return
-        }
-        const data = e.target.result
-        if (typeof data !== 'string') {
-          console.warn('Could not parse uploaded file')
-          return
-        }
-        // TODO add validation here
-        const sections = JSON.parse(data)
-        setAppState(O.set(sectionsLens)(sections)(appState))
-      }
-      reader.readAsText(file)
-    }
+  const setSections = (sections: SectionType[]): void => {
+    setAppState(O.set(sectionsLens)(sections)(appState))
   }
 
   const addSection = (): void => {
@@ -173,8 +137,7 @@ const App = (): ReactNode => {
     }
   }, [appState.selection])
 
-  const changeLanguage = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const language = event.target.value as string
+  const changeLanguage = (language: LanguageCode): void => {
     i18n.changeLanguage(language)
     setAppState(O.set(languageLens)(language)(appState))
   }
@@ -185,83 +148,55 @@ const App = (): ReactNode => {
     )
   }
 
-  const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
-
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={6}>
+        <Grid container direction="row" spacing={3}>
+          {appState.showRubricEditor && (
+            <Grid item xs={6}>
+              <RubricEditor
+                sections={appState.sections}
+                addSection={addSection}
+                removeSection={removeSection}
+                editSection={editSection}
+                moveSectionUp={moveSectionUp}
+                moveSectionDown={moveSectionDown}
+                t={t}
+                toggleRubricEditor={toggleRubricEditor}
+              />
+            </Grid>
+          )}
+          <Grid item xs={appState.showRubricEditor ? 6 : 12}>
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <Grid container spacing={4}>
-                  <Grid item>
-                    <FormControl>
-                      <Select
-                        onChange={changeLanguage}
-                        value={i18n.language}
-                        labelId="change-language-label"
-                        id="change-language"
+                <Grid container>
+                  <Grid item xs={10}>
+                    {!appState.showRubricEditor && (
+                      <Button
+                        startIcon={
+                          appState.showRubricEditor ? (
+                            <Icon>close</Icon>
+                          ) : (
+                            <Icon>edit</Icon>
+                          )
+                        }
+                        onClick={toggleRubricEditor}
                       >
-                        <MenuItem value="fi">
-                          <Icon fontSize="small">language</Icon>&nbsp;suomi
-                        </MenuItem>
-                        <MenuItem value="en">
-                          <Icon fontSize="small">language</Icon>&nbsp;English
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
+                        {t('editRubric')}
+                      </Button>
+                    )}
                   </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      startIcon={<Icon>save_alt</Icon>}
-                      href={
-                        'data:text/json;charset=utf-8,' +
-                        encodeURIComponent(
-                          JSON.stringify(appState.sections, null, 2)
-                        )
-                      }
-                      download="rubric.json"
-                    >
-                      {t('saveRubric')}
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      startIcon={<Icon>open_in_browser</Icon>}
-                      onClick={() => uploaderRefObject.current.click()}
-                    >
-                      <input
-                        type="file"
-                        accept="text/json"
-                        multiple={false}
-                        ref={uploaderRefObject}
-                        style={{ display: 'none' }}
-                        onChange={uploadRubric}
-                      ></input>
-                      {t('openRubric')}
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      startIcon={
-                        appState.showRubricEditor ? (
-                          <Icon>close</Icon>
-                        ) : (
-                          <Icon>edit</Icon>
-                        )
-                      }
-                      onClick={toggleRubricEditor}
-                    >
-                      {appState.showRubricEditor
-                        ? t('closeRubricEditor')
-                        : t('editRubric')}
-                    </Button>
+                  <Grid item xs={2}>
+                    <MainMenu
+                      appState={appState}
+                      language={i18n.language}
+                      toggleRubricEditor={toggleRubricEditor}
+                      setSections={setSections}
+                      changeLanguage={changeLanguage}
+                      t={t}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -307,20 +242,6 @@ const App = (): ReactNode => {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={6}>
-            {appState.showRubricEditor && (
-              <RubricEditor
-                sections={appState.sections}
-                addSection={addSection}
-                removeSection={removeSection}
-                editSection={editSection}
-                moveSectionUp={moveSectionUp}
-                moveSectionDown={moveSectionDown}
-                t={t}
-                toggleRubricEditor={toggleRubricEditor}
-              />
-            )}
           </Grid>
         </Grid>
       </ThemeProvider>
