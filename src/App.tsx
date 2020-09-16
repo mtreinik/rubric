@@ -99,6 +99,7 @@ const App = (): ReactNode => {
 
   const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
     if (!event.target.files) {
+      console.warn(`File to upload was not specified`)
       return
     }
     const file = event.target.files.item(0)
@@ -106,22 +107,16 @@ const App = (): ReactNode => {
       const reader = new FileReader()
       reader.onload = (e) => {
         if (!e || !e.target || !e.target.result) {
-          console.warn('Could not read file')
+          console.warn('Could not read uploaded file')
           return
         }
         const data = e.target.result
         if (typeof data !== 'string') {
-          console.warn('Could not parse file')
+          console.warn('Could not parse uploaded file')
           return
         }
+        // TODO add validation here
         const sections = JSON.parse(data)
-        console.log(
-          `TODO remove this logging: sections: ${JSON.stringify(
-            sections,
-            null,
-            2
-          )}`
-        )
         setAppState(O.set(sectionsLens)(sections)(appState))
       }
       reader.readAsText(file)
@@ -138,6 +133,9 @@ const App = (): ReactNode => {
   }
 
   const removeSection = (sectionIndex: number): void => {
+    if (sectionIndex >= appState.sections.length - 1) {
+      console.error(`Cannot remove section at ${sectionIndex}`)
+    }
     setAppState(O.remove(sectionPrism(sectionIndex))(appState))
   }
 
