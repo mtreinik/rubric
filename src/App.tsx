@@ -22,6 +22,7 @@ import * as O from 'optics-ts'
 import { AppState, SectionType, SelectionType } from './types'
 import { useTranslation } from 'react-i18next'
 import i18n from './i18n'
+import { swapElements } from './array-utils'
 
 const emptyAppState: AppState = {
   sections: [],
@@ -142,6 +143,23 @@ const App = (): ReactNode => {
 
   const editSection = (sectionIndex: number) => (section: SectionType) => {
     setAppState(O.set(sectionPrism(sectionIndex))(section)(appState))
+  }
+
+  const moveSectionUp = (sectionIndex: number): void => {
+    if (sectionIndex < 1) {
+      console.error(`Cannot move up section at ${sectionIndex}`)
+      return
+    }
+    moveSectionDown(sectionIndex - 1)
+  }
+
+  const moveSectionDown = (sectionIndex: number): void => {
+    if (sectionIndex >= appState.sections.length) {
+      console.error(`Cannot move down section at ${sectionIndex}`)
+      return
+    }
+    const newSections = swapElements(sectionIndex, appState.sections)
+    setAppState(O.set(sectionsLens)(newSections)(appState))
   }
 
   const setSelection = (selection: SelectionType) => {
@@ -299,6 +317,8 @@ const App = (): ReactNode => {
                 addSection={addSection}
                 removeSection={removeSection}
                 editSection={editSection}
+                moveSectionUp={moveSectionUp}
+                moveSectionDown={moveSectionDown}
                 t={t}
                 toggleRubricEditor={toggleRubricEditor}
               />

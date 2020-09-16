@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Icon } from '@material-ui/core'
+import { Button, Grid, Icon, IconButton } from '@material-ui/core'
 import { EditSectionType, SectionType } from './types'
 import SectionEditor from './SectionEditor'
 import { TFunction } from 'i18next'
@@ -8,6 +8,8 @@ interface Props {
   sections: SectionType[]
   addSection: () => void
   removeSection: (sectionIndex: number) => void
+  moveSectionUp: (sectionIndex: number) => void
+  moveSectionDown: (sectionIndex: number) => void
   editSection: EditSectionType
   t: TFunction
   toggleRubricEditor: () => void
@@ -37,7 +39,7 @@ const RubricEditor = (props: Props): JSX.Element => {
         return (
           <Grid item xs={12} key={sectionIndex}>
             <Grid container spacing={2}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Button
                   onClick={() => props.removeSection(sectionIndex)}
                   color="secondary"
@@ -45,8 +47,20 @@ const RubricEditor = (props: Props): JSX.Element => {
                 >
                   {t('section')}
                 </Button>
+                <IconButton
+                  onClick={() => props.moveSectionUp(sectionIndex)}
+                  disabled={sectionIndex <= 0}
+                >
+                  <Icon>arrow_upward</Icon>
+                </IconButton>
+                <IconButton
+                  onClick={() => props.moveSectionDown(sectionIndex)}
+                  disabled={sectionIndex >= props.sections.length - 1}
+                >
+                  <Icon>arrow_downward</Icon>
+                </IconButton>
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={9}>
                 <SectionEditor
                   section={section}
                   editSection={props.editSection(sectionIndex)}

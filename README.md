@@ -15,6 +15,9 @@ an easy and efficient tool.
 
 ## TODO
 
+- refactor remove criterion buttons from children to a parent component
+- put save, load, edit and language selection in a hamburger menu
+- validate uploaded json file
 - editing order of criteria
 - add error handling to upload
 - refactor code
