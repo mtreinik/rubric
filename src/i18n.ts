@@ -5,7 +5,6 @@ import { initReactI18next } from 'react-i18next'
 import translationFI from './translations/fi.json'
 import translationEN from './translations/en.json'
 
-// the translations
 const resources = {
   fi: {
     translation: translationFI,
@@ -17,17 +16,18 @@ const resources = {
 
 i18n
   .use(detector)
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
     resources,
     lng: 'fi',
-    fallbackLng: 'en', // use en if detected lng is not available
+    fallbackLng: 'en',
 
-    keySeparator: false, // we do not use keys in form messages.welcome
+    keySeparator: false,
 
     interpolation: {
-      escapeValue: false, // react already safe from xss
+      escapeValue: false,
     },
   })
+  .then()
 
 export default i18n

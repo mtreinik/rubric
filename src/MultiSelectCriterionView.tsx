@@ -13,9 +13,7 @@ const MultiSelectCriterionView = (
   )
   return (
     <div className="criterion">
-      <span className="criterionTitle">{props.title}</span>
-      <span> </span>
-      {clickables}
+      <span className="criterionTitle">{props.title}</span> {clickables}
     </div>
   )
 }

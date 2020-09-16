@@ -32,7 +32,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
       <TextField
         value={option}
         onChange={handleOptionTitleChange(optionIndex)}
-      ></TextField>
+      />
       <IconButton
         onClick={() => props.removeOption(optionIndex)}
         color="secondary"

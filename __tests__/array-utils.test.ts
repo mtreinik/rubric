@@ -9,7 +9,7 @@ describe('swapElements', () => {
   })
 
   it('swaps two elements', () => {
-    expect(swapElements(0, ['qwerty', 'xyzzy'])).toEqual(['xyzzy', 'qwerty'])
+    expect(swapElements(0, ['qwerty', 'foo'])).toEqual(['foo', 'qwerty'])
   })
   it('swaps two first elements', () => {
     expect(swapElements(0, ['a', 'b', 'c', 'd'])).toEqual(['b', 'a', 'c', 'd'])

@@ -1,5 +1,3 @@
-export type EditTitleType = (title: string) => void
-
 export type EditSectionType = (
   sectionIndex: number
 ) => (section: SectionType) => void

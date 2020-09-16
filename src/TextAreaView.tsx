@@ -19,12 +19,7 @@ const TextAreaView = (props: Props): JSX.Element => {
     props.selection === 'select' ? (
       <span>{value}</span>
     ) : (
-      <textarea
-        rows={4}
-        cols={80}
-        value={value}
-        onChange={handleValueChange}
-      ></textarea>
+      <textarea rows={4} cols={80} value={value} onChange={handleValueChange} />
     )
 
   return (

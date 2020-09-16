@@ -309,7 +309,7 @@ const App = (): ReactNode => {
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            {appState.showRubricEditor ? (
+            {appState.showRubricEditor && (
               <RubricEditor
                 sections={appState.sections}
                 addSection={addSection}
@@ -320,8 +320,6 @@ const App = (): ReactNode => {
                 t={t}
                 toggleRubricEditor={toggleRubricEditor}
               />
-            ) : (
-              <span></span>
             )}
           </Grid>
         </Grid>

@@ -16,10 +16,9 @@ function getClasses(status: number): string {
 
 const Clickable = (props: Props): JSX.Element => {
   const [status, setStatus] = useState(0)
-  const classes = getClasses(status)
   return (
     <button
-      className={classes}
+      className={getClasses(status)}
       onClick={() => {
         setStatus((status + 1) % 3)
       }}
