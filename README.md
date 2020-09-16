@@ -15,6 +15,7 @@ an easy and efficient tool.
 
 ## TODO
 
+- fix reset button
 - align buttons and menu better
 - validate uploaded json file
 - add error handling to upload
