@@ -14,7 +14,7 @@ const emptyAppState: AppState = {
   sections: [],
   selection: null,
   language: '',
-  showRubricEditor: true,
+  showRubricEditor: false,
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')
@@ -48,7 +48,7 @@ const setSelectionEnabled = (enabled: boolean) => {
   element.className = enabled ? '' : 'noselect'
 }
 
-const unselectAll = () => {
+const deselectAll = () => {
   const selection = window.getSelection()
   if (!selection) {
     return
@@ -130,7 +130,7 @@ const App = (): ReactNode => {
 
   useEffect(() => {
     if (appState.selection === 'deselect') {
-      unselectAll()
+      deselectAll()
       setSelection(null)
     } else if (appState.selection === 'select') {
       selectElement('content')()
@@ -154,51 +154,43 @@ const App = (): ReactNode => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Grid container direction="row" spacing={3}>
-          {appState.showRubricEditor && (
-            <Grid item xs={6}>
-              <RubricEditor
-                sections={appState.sections}
-                addSection={addSection}
-                removeSection={removeSection}
-                editSection={editSection}
-                moveSectionUp={moveSectionUp}
-                moveSectionDown={moveSectionDown}
-                t={t}
-                toggleRubricEditor={toggleRubricEditor}
-              />
-            </Grid>
-          )}
-          <Grid item xs={appState.showRubricEditor ? 6 : 12}>
+          <Grid
+            item
+            xs={appState.showRubricEditor ? 6 : 1}
+            style={{
+              transitionDuration: '0.5s',
+              transitionProperty: 'flex-basis width',
+            }}
+          >
+            <RubricEditor
+              appState={appState}
+              addSection={addSection}
+              removeSection={removeSection}
+              editSection={editSection}
+              moveSectionUp={moveSectionUp}
+              moveSectionDown={moveSectionDown}
+              t={t}
+              toggleRubricEditor={toggleRubricEditor}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={appState.showRubricEditor ? 6 : 11}
+            style={{
+              transitionDuration: '0.5s',
+              transitionProperty: 'flex-basis width',
+            }}
+          >
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <Grid container>
-                  <Grid item xs={10}>
-                    {!appState.showRubricEditor && (
-                      <Button
-                        startIcon={
-                          appState.showRubricEditor ? (
-                            <Icon>close</Icon>
-                          ) : (
-                            <Icon>edit</Icon>
-                          )
-                        }
-                        onClick={toggleRubricEditor}
-                      >
-                        {t('editRubric')}
-                      </Button>
-                    )}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <MainMenu
-                      appState={appState}
-                      language={i18n.language}
-                      toggleRubricEditor={toggleRubricEditor}
-                      setSections={setSections}
-                      changeLanguage={changeLanguage}
-                      t={t}
-                    />
-                  </Grid>
-                </Grid>
+                <MainMenu
+                  appState={appState}
+                  language={i18n.language}
+                  toggleRubricEditor={toggleRubricEditor}
+                  setSections={setSections}
+                  changeLanguage={changeLanguage}
+                  t={t}
+                />
               </Grid>
               <Grid item xs={12}>
                 <div id="content">
@@ -226,7 +218,7 @@ const App = (): ReactNode => {
                       variant="contained"
                       startIcon={<Icon>clear</Icon>}
                     >
-                      {t('unselect')}
+                      {t('deselect')}
                     </Button>
                   </Grid>
                   <Grid item>
