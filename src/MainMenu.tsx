@@ -11,6 +11,10 @@ import {
 } from '@material-ui/core'
 import { AppState, SectionType, Language, LanguageCode } from './types'
 import { TFunction } from 'i18next'
+import Ajv from 'ajv'
+import rubricSchema from './rubricSchema.json'
+
+const ajv = new Ajv()
 
 interface Props {
   appState: AppState
@@ -44,15 +48,31 @@ const MainMenu = (props: Props): JSX.Element => {
           console.warn('Could not read uploaded file')
           return
         }
+
         const data = e.target.result
         if (typeof data !== 'string') {
           console.warn('Could not parse uploaded file')
           return
         }
-        // TODO add validation here
-        const sections = JSON.parse(data)
-        props.setSections(sections)
-        setAnchorEl(null)
+
+        try {
+          const json = JSON.parse(data)
+          const isValid = ajv.validate(rubricSchema, json)
+          if (!isValid) {
+            console.warn(
+              `Uploaded file is not in valid format: ${ajv.errorsText()}`
+            )
+            setAnchorEl(null)
+            return
+          }
+
+          const sections = JSON.parse(data)
+          props.setSections(sections)
+          setAnchorEl(null)
+        } catch (error) {
+          console.warn(`Uploaded file is not valid JSON file: ${error}`)
+          setAnchorEl(null)
+        }
       }
       reader.readAsText(file)
     }

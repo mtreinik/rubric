@@ -15,13 +15,10 @@ an easy and efficient tool.
 
 ## TODO
 
-- align buttons and menu better
-- validate uploaded json file
+- show popup for errors
 - add error handling to upload
-- refactor code
 - create example rubrics
 - add documentation
-- polish UI
 
 ## Developing and building Rubric
 

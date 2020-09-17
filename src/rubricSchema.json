@@ -1,0 +1,55 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "criterions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "MultiSelectCriterion",
+                "TextAreaCriterion",
+                "InfoCriterion"
+              ]
+            },
+            "criterion": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "title"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type",
+            "criterion"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "title",
+      "criterions"
+    ],
+    "additionalProperties": false
+  }
+}
