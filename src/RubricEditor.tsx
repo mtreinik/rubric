@@ -51,20 +51,13 @@ const RubricEditor = (props: Props): JSX.Element => {
       <Grid item xs={12} key="title">
         <Grid container justify="flex-end">
           <Grid item>
-            <Button
-              startIcon={
-                props.appState.showRubricEditor ? (
-                  <Icon>close</Icon>
-                ) : (
-                  <Icon>edit</Icon>
-                )
-              }
-              onClick={props.toggleRubricEditor}
-            >
-              {props.appState.showRubricEditor
-                ? t('closeRubricEditor')
-                : t('edit')}
-            </Button>
+            <IconButton onClick={props.toggleRubricEditor}>
+              {props.appState.showRubricEditor ? (
+                <Icon>close</Icon>
+              ) : (
+                <Icon>edit</Icon>
+              )}
+            </IconButton>
           </Grid>
         </Grid>
       </Grid>
