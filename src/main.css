@@ -2,9 +2,12 @@
   margin: 1em;
 }
 
+.rubricViewPanel {
+  padding-left: 1em;
+}
+
 #content {
-  margin-left: 1em;
-  margin-right: 1em;
+  padding-bottom: 1em;
 }
 
 .rubricTitle {

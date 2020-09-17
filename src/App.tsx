@@ -155,7 +155,7 @@ const App = (): ReactNode => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid container direction="row" spacing={3}>
+        <Grid container direction="row" spacing={2}>
           <Grid
             item
             xs={appState.showRubricEditor ? 6 : 1}
@@ -183,7 +183,7 @@ const App = (): ReactNode => {
               transitionProperty: 'flex-basis width',
             }}
           >
-            <Grid container spacing={4}>
+            <Grid container spacing={2} className="rubricViewPanel">
               <Grid item xs={12}>
                 <MainMenu
                   appState={appState}
@@ -204,7 +204,7 @@ const App = (): ReactNode => {
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={4}>
+                <Grid container spacing={6}>
                   <Grid item>
                     <Button
                       onClick={() => setSelection('select')}
@@ -218,7 +218,7 @@ const App = (): ReactNode => {
                   <Grid item>
                     <Button
                       onClick={() => setSelection('deselect')}
-                      variant="contained"
+                      variant="outlined"
                       startIcon={<Icon>clear</Icon>}
                     >
                       {t('deselect')}
