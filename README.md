@@ -15,8 +15,6 @@ an easy and efficient tool.
 
 ## TODO
 
-- show popup for errors
-- add error handling to upload
 - create example rubrics
 - add documentation
 
@@ -43,13 +41,21 @@ yarn build
 
 ## Technology
 
-Rubric is created by using
+Rubric is developed by using
 
 - `Nodejs`,
 - `TypeScript`,
 - `React`,
 - `Yarn`,
 - `Webpack`,
+- `css-loader`
 - `Babel`,
 - `ts-loader`
 - `ESLint`
+- `prettier`
+- `material-ui`
+- `i18next`
+- `jest`
+- `optics-ts`
+- `ajv`
+- `webpack-dev-server`
