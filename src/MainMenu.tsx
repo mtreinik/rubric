@@ -32,7 +32,6 @@ const MainMenu = (props: Props): JSX.Element => {
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
 
   const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('calling uploadRubric in MainMenu')
     if (!event.target.files) {
       console.warn(`File to upload was not specified`)
       return
@@ -52,7 +51,6 @@ const MainMenu = (props: Props): JSX.Element => {
         }
         // TODO add validation here
         const sections = JSON.parse(data)
-        console.log(`got sections ${sections}`)
         props.setSections(sections)
         setAnchorEl(null)
       }

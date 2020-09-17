@@ -29,7 +29,6 @@ const RubricEditor = (props: Props): JSX.Element => {
   const moveCriterionDown = (sectionIndex: number) => (
     criterionIndex: number
   ): void => {
-    console.log('sectionIndex', sectionIndex, 'criterionIndex', criterionIndex)
     const section = props.appState.sections[sectionIndex]
     const newCriterions = swapElements(criterionIndex, section.criterions)
     props.editSection(sectionIndex)(

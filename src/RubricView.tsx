@@ -16,6 +16,7 @@ import InfoView from './InfoView'
 interface Props {
   sections: SectionType[]
   selection: SelectionType
+  version: number
 }
 
 const RubricView = (props: Props): JSX.Element => (
@@ -34,7 +35,7 @@ const RubricView = (props: Props): JSX.Element => (
               const multiSelectCriterion = criterion as MultiSelectCriterionType
               return (
                 <MultiSelectCriterionView
-                  key={'criterion-' + criterionIndex}
+                  key={'criterion-' + props.version + '-' + criterionIndex}
                   title={multiSelectCriterion.title}
                   options={multiSelectCriterion.options}
                 />
@@ -43,7 +44,7 @@ const RubricView = (props: Props): JSX.Element => (
               const textAreaCriterion = criterion as TextAreaCriterionType
               return (
                 <TextAreaView
-                  key={'criterion-' + criterionIndex}
+                  key={'criterion-' + props.version + '-' + criterionIndex}
                   title={textAreaCriterion.title}
                   selection={props.selection}
                 />

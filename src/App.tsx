@@ -15,12 +15,14 @@ const emptyAppState: AppState = {
   selection: null,
   language: '',
   showRubricEditor: false,
+  version: 1,
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')
 const sectionsLens = O.optic<AppState>().prop('sections')
 const languageLens = O.optic<AppState>().prop('language')
 const showRubricEditorLens = O.optic<AppState>().prop('showRubricEditor')
+const versionLens = O.optic<AppState>().prop('version')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
@@ -33,10 +35,6 @@ const theme = createMuiTheme({
     background: { default: '#ffffff' },
   },
 })
-
-const reload = () => {
-  document.location.reload()
-}
 
 const setSelectionEnabled = (enabled: boolean) => {
   const elementId = 'content'
@@ -82,6 +80,10 @@ const App = (): ReactNode => {
   React.useEffect(() => {
     setSelectionEnabled(false)
   })
+
+  const reset = (): void => {
+    setAppState(O.set(versionLens)(appState.version + 1)(appState))
+  }
 
   const setSections = (sections: SectionType[]): void => {
     setAppState(O.set(sectionsLens)(sections)(appState))
@@ -197,6 +199,7 @@ const App = (): ReactNode => {
                   <RubricView
                     sections={appState.sections}
                     selection={appState.selection}
+                    version={appState.version}
                   />
                 </div>
               </Grid>
@@ -223,7 +226,7 @@ const App = (): ReactNode => {
                   </Grid>
                   <Grid item>
                     <Button
-                      onClick={reload}
+                      onClick={reset}
                       variant="outlined"
                       color="secondary"
                       startIcon={<Icon>delete_forever</Icon>}

@@ -47,6 +47,7 @@ export type AppState = {
   selection: SelectionType
   language: string
   showRubricEditor: boolean
+  version: number
 }
 
 export type LanguageCode = 'fi' | 'en'
