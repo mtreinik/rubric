@@ -23,5 +23,13 @@
   "textAreaTitleHelperText": "Text area title",
   "infoHelperText": "Info content",
   "addOption": "Add option",
-  "sectionTitleHelperText": "Section title"
+  "sectionTitleHelperText": "Section title",
+  "openedRubric": "Opened rubric",
+  "errorOpeningRubric": "Error opening rubric",
+  "noFileWasSelected": "No file was selected",
+  "couldNotReadFile": "Could not read file",
+  "fileHasInvalidType": "File has invalid type",
+  "invalidFileFormat": "Invalid file format",
+  "invalidJSONFile": "Invalid JSON file",
+  "openingWasAborted": "Opening was aborted"
 }

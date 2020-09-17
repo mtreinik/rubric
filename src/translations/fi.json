@@ -23,5 +23,13 @@
   "textAreaTitleHelperText": "Tekstilaatikon otsikko",
   "infoHelperText": "Selitteen sisältö",
   "addOption": "Lisää vaihtoehto",
-  "sectionTitleHelperText": "Osion otsikko"
+  "sectionTitleHelperText": "Osion otsikko",
+  "openedRubric": "Rubriikki avattu",
+  "errorOpeningRubric": "Virhe rubriikin avaamisessa",
+  "noFileWasSelected": "Avattavaa tiedostoa ei valittu",
+  "couldNotReadFile": "Tiedoston lukeminen epäonnistui",
+  "fileHasInvalidType": "Virheellinen tiedostotyyppi",
+  "invalidFileFormat": "Virheellinen tiedostomuoto",
+  "invalidJSONFile": "Virheellinen JSON-tiedosto",
+  "openingWasAborted": "Avaaminen keskeytettiin"
 }

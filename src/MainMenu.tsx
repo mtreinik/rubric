@@ -8,11 +8,14 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Snackbar,
 } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 import { AppState, SectionType, Language, LanguageCode } from './types'
 import { TFunction } from 'i18next'
 import Ajv from 'ajv'
 import rubricSchema from './rubricSchema.json'
+import AlertDialog, { AlertDialogStateType } from './AlertDialog'
 
 const ajv = new Ajv()
 
@@ -30,14 +33,39 @@ const languages: Language[] = [
   { code: 'en', name: 'English' },
 ]
 
+const closedAlertDialog: AlertDialogStateType = {
+  open: false,
+  title: '',
+  message: '',
+  details: '',
+}
+
 const MainMenu = (props: Props): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const [alertDialogState, setAlertDialogState] = useState(closedAlertDialog)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+
   const t = props.t
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
 
+  const openAlertDialog = (title: string, message: string, details: string) => {
+    setAlertDialogState({ open: true, title, message, details })
+  }
+
+  const closeAlertDialog = () => {
+    setAlertDialogState(closedAlertDialog)
+  }
+
+  const warnAndCloseMenu = (message: string, details = ''): void => {
+    console.warn('Error opening rubric', message, details)
+    openAlertDialog(t('errorOpeningRubric'), message, details.toString())
+    setAnchorEl(null)
+  }
+
   const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
+    console.log('at uploadRubric')
     if (!event.target.files) {
-      console.warn(`File to upload was not specified`)
+      warnAndCloseMenu(t('noFileWasSelected'))
       return
     }
     const file = event.target.files.item(0)
@@ -45,13 +73,13 @@ const MainMenu = (props: Props): JSX.Element => {
       const reader = new FileReader()
       reader.onload = (e) => {
         if (!e || !e.target || !e.target.result) {
-          console.warn('Could not read uploaded file')
+          warnAndCloseMenu(t('couldNotReadFile'))
           return
         }
 
         const data = e.target.result
         if (typeof data !== 'string') {
-          console.warn('Could not parse uploaded file')
+          warnAndCloseMenu(t('fileHasInvalidType'))
           return
         }
 
@@ -59,20 +87,20 @@ const MainMenu = (props: Props): JSX.Element => {
           const json = JSON.parse(data)
           const isValid = ajv.validate(rubricSchema, json)
           if (!isValid) {
-            console.warn(
-              `Uploaded file is not in valid format: ${ajv.errorsText()}`
-            )
-            setAnchorEl(null)
+            warnAndCloseMenu(t('invalidFileFormat'), ajv.errorsText())
             return
           }
 
           const sections = JSON.parse(data)
           props.setSections(sections)
           setAnchorEl(null)
+          setSnackbarOpen(true)
         } catch (error) {
-          console.warn(`Uploaded file is not valid JSON file: ${error}`)
-          setAnchorEl(null)
+          warnAndCloseMenu(t('invalidJSONFile'), error)
         }
+      }
+      reader.onerror = () => {
+        warnAndCloseMenu(t('openingWasAborted'))
       }
       reader.readAsText(file)
     }
@@ -175,6 +203,22 @@ const MainMenu = (props: Props): JSX.Element => {
           </MenuItem>
         ))}
       </Menu>
+      <AlertDialog
+        dialogState={alertDialogState}
+        closeDialog={closeAlertDialog}
+        t={t}
+      />
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert severity="success">{t('openedRubric')}</Alert>
+      </Snackbar>
     </div>
   )
 }
