@@ -20,7 +20,7 @@
     "lint": "eslint .",
     "build": "tsc",
     "start": "node dist/server.js",
-    "build-client": "cd client/ && yarn install && yarn build",
+    "build-client": "cd client/ && yarn install --production=false && yarn build",
     "heroku-postbuild": "yarn build-client"
   },
   "cacheDirectories": [
