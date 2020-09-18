@@ -22,6 +22,9 @@
     "test": "jest --coverage",
     "run": "webpack-dev-server --mode development --progress --color"
   },
+  "cacheDirectories": [
+    "node_modules"
+  ],
   "dependencies": {
   },
   "devDependencies": {
