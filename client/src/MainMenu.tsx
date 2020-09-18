@@ -46,7 +46,7 @@ const MainMenu = (props: Props): JSX.Element => {
   const [alertDialogState, setAlertDialogState] = useState(closedAlertDialog)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
-  const menuColor = props.appState.dirty ? 'primary' : 'default'
+  const menuColor = props.appState.dirty ? 'primary' : 'inherit'
 
   const t = props.t
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
