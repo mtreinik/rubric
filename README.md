@@ -15,7 +15,10 @@ an easy and efficient tool.
 
 ## TODO
 
+- menu item for new rubric
+- remind user that opening throws away changes
 - create example rubrics
+- after adding move focus to added field
 - add documentation
 
 ## Developing and building Rubric
