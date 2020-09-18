@@ -15,7 +15,6 @@ an easy and efficient tool.
 
 ## TODO
 
-- reduce build size
 - deploy to production
 - create example rubrics
 - add documentation
@@ -61,3 +60,4 @@ Rubric is developed by using
 - `optics-ts`
 - `ajv`
 - `webpack-dev-server`
+- `webpack-bundle-analyzer`
