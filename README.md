@@ -15,7 +15,6 @@ an easy and efficient tool.
 
 ## TODO
 
-- deploy to production
 - create example rubrics
 - add documentation
 
