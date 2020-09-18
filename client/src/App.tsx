@@ -16,6 +16,7 @@ const emptyAppState: AppState = {
   language: '',
   showRubricEditor: false,
   version: 1,
+  dirty: false,
 }
 
 const rubricSelectionLens = O.optic<AppState>().prop('selection')
@@ -23,6 +24,7 @@ const sectionsLens = O.optic<AppState>().prop('sections')
 const languageLens = O.optic<AppState>().prop('language')
 const showRubricEditorLens = O.optic<AppState>().prop('showRubricEditor')
 const versionLens = O.optic<AppState>().prop('version')
+const dirtyLens = O.optic<AppState>().prop('dirty')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
@@ -85,12 +87,26 @@ const App = (): ReactNode => {
     setAppState(O.set(versionLens)(appState.version + 1)(appState))
   }
 
-  const setSections = (sections: SectionType[]): void => {
-    setAppState(O.set(sectionsLens)(sections)(appState))
+  const cleanAppState = (): void => {
+    setAppState(O.set(dirtyLens)(false)(appState))
+  }
+
+  const changeAppState = (newAppState: AppState): void => {
+    if (appState.dirty) {
+      setAppState(newAppState)
+    } else {
+      setAppState(O.set(dirtyLens)(true)(newAppState))
+    }
+  }
+
+  const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
+    changeAppState(
+      O.set(dirtyLens)(false)(O.set(sectionsLens)(sections)(appState))
+    )
   }
 
   const addSection = (): void => {
-    setAppState(
+    changeAppState(
       O.set(newSectionSetter)({
         title: '',
         criterions: [],
@@ -102,11 +118,11 @@ const App = (): ReactNode => {
     if (sectionIndex >= appState.sections.length - 1) {
       console.error(`Cannot remove section at ${sectionIndex}`)
     }
-    setAppState(O.remove(sectionPrism(sectionIndex))(appState))
+    changeAppState(O.remove(sectionPrism(sectionIndex))(appState))
   }
 
   const editSection = (sectionIndex: number) => (section: SectionType) => {
-    setAppState(O.set(sectionPrism(sectionIndex))(section)(appState))
+    changeAppState(O.set(sectionPrism(sectionIndex))(section)(appState))
   }
 
   const moveSectionUp = (sectionIndex: number): void => {
@@ -123,7 +139,7 @@ const App = (): ReactNode => {
       return
     }
     const newSections = swapElements(sectionIndex, appState.sections)
-    setAppState(O.set(sectionsLens)(newSections)(appState))
+    changeAppState(O.set(sectionsLens)(newSections)(appState))
   }
 
   const setSelection = (selection: SelectionType) => {
@@ -189,8 +205,9 @@ const App = (): ReactNode => {
                   appState={appState}
                   language={i18n.language}
                   toggleRubricEditor={toggleRubricEditor}
-                  setSections={setSections}
+                  setSectionsAndCleanAppState={setSectionsAndCleanAppState}
                   changeLanguage={changeLanguage}
+                  cleanAppState={cleanAppState}
                   t={t}
                 />
               </Grid>

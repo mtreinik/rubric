@@ -22,9 +22,10 @@ const ajv = new Ajv()
 interface Props {
   appState: AppState
   language: string
-  setSections: (sections: SectionType[]) => void
+  setSectionsAndCleanAppState: (sections: SectionType[]) => void
   toggleRubricEditor: () => void
   changeLanguage: (language: LanguageCode) => void
+  cleanAppState: () => void
   t: TFunction
 }
 
@@ -45,6 +46,7 @@ const MainMenu = (props: Props): JSX.Element => {
   const [alertDialogState, setAlertDialogState] = useState(closedAlertDialog)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
+  const menuColor = props.appState.dirty ? 'primary' : 'default'
 
   const t = props.t
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
@@ -93,7 +95,7 @@ const MainMenu = (props: Props): JSX.Element => {
           }
 
           const sections = JSON.parse(data)
-          props.setSections(sections)
+          props.setSectionsAndCleanAppState(sections)
           setAnchorEl(null)
           setSnackbarOpen(true)
         } catch (error) {
@@ -114,7 +116,7 @@ const MainMenu = (props: Props): JSX.Element => {
         onClick={(event: React.MouseEvent<HTMLElement>) =>
           setAnchorEl(event.currentTarget)
         }
-        startIcon={<Icon>menu</Icon>}
+        startIcon={<Icon color={menuColor}>menu</Icon>}
       >
         {t('menu')}
       </Button>
@@ -151,7 +153,8 @@ const MainMenu = (props: Props): JSX.Element => {
         <MenuItem
           onClick={() => {
             setAnchorEl(null)
-            props.setSections([])
+            props.setSectionsAndCleanAppState([])
+            props.cleanAppState()
           }}
         >
           <ListItemIcon>
@@ -214,6 +217,7 @@ const MainMenu = (props: Props): JSX.Element => {
         closeDialog={() => {
           setDownloadDialogOpen(false)
           setAnchorEl(null)
+          props.cleanAppState()
         }}
         t={t}
       />
