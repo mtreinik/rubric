@@ -3,7 +3,6 @@ import {
   Button,
   Divider,
   Icon,
-  Link,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -16,6 +15,7 @@ import { TFunction } from 'i18next'
 import Ajv from 'ajv'
 import rubricSchema from './rubricSchema.json'
 import AlertDialog, { AlertDialogStateType } from './AlertDialog'
+import DownloadDialog from './DownloadDialog'
 
 const ajv = new Ajv()
 
@@ -44,6 +44,7 @@ const MainMenu = (props: Props): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [alertDialogState, setAlertDialogState] = useState(closedAlertDialog)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
 
   const t = props.t
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
@@ -164,19 +165,11 @@ const MainMenu = (props: Props): JSX.Element => {
           </ListItemText>
         </MenuItem>
 
-        <MenuItem
-          component={Link}
-          href={
-            'data:text/json;charset=utf-8,' +
-            encodeURIComponent(JSON.stringify(props.appState.sections, null, 2))
-          }
-          download="rubric.json"
-          color="textPrimary"
-        >
+        <MenuItem onClick={() => setDownloadDialogOpen(true)}>
           <ListItemIcon>
             <Icon>save_alt</Icon>
           </ListItemIcon>
-          <ListItemText>{t('saveRubric')}</ListItemText>
+          <ListItemText>{t('saveRubricEllipsis')}</ListItemText>
         </MenuItem>
 
         <Divider />
@@ -203,6 +196,15 @@ const MainMenu = (props: Props): JSX.Element => {
           </MenuItem>
         ))}
       </Menu>
+      <DownloadDialog
+        open={downloadDialogOpen}
+        sections={props.appState.sections}
+        closeDialog={() => {
+          setDownloadDialogOpen(false)
+          setAnchorEl(null)
+        }}
+        t={t}
+      />
       <AlertDialog
         dialogState={alertDialogState}
         closeDialog={closeAlertDialog}
