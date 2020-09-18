@@ -15,6 +15,8 @@ an easy and efficient tool.
 
 ## TODO
 
+- reduce build size
+- deploy to production
 - create example rubrics
 - add documentation
 

@@ -5,7 +5,10 @@ interface Props {
 }
 
 const InfoView = (props: Props): JSX.Element => (
-  <div className="infoCriterion">{props.title}</div>
+  <div
+    className="infoCriterion"
+    dangerouslySetInnerHTML={{ __html: props.title }}
+  />
 )
 
 export default InfoView

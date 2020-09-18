@@ -21,7 +21,7 @@
   "addInfo": "Add info",
   "multiSelectTitleHelperText": "Multiselect title",
   "textAreaTitleHelperText": "Text area title",
-  "infoHelperText": "Info content",
+  "infoHelperText": "Info content in HTML format",
   "addOption": "Add option",
   "sectionTitleHelperText": "Section title",
   "openedRubric": "Opened rubric",

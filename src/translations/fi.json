@@ -21,7 +21,7 @@
   "addInfo": "Lisää selite",
   "multiSelectTitleHelperText": "Monivalintakriteerin otsikko",
   "textAreaTitleHelperText": "Tekstilaatikon otsikko",
-  "infoHelperText": "Selitteen sisältö",
+  "infoHelperText": "Selitteen sisältö HTML-muodossa",
   "addOption": "Lisää vaihtoehto",
   "sectionTitleHelperText": "Osion otsikko",
   "openedRubric": "Rubriikki avattu",
