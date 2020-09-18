@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoView renders correctly with HTML title 1`] = `
+<div
+  className="infoCriterion"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "this is <strong>heavy</strong>",
+    }
+  }
+/>
+`;
+
+exports[`InfoView renders correctly with XSS attack sanitized from title 1`] = `
+<div
+  className="infoCriterion"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "<span>this is an XSS attack</span>",
+    }
+  }
+/>
+`;
+
+exports[`InfoView renders correctly with empty title 1`] = `
+<div
+  className="infoCriterion"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "",
+    }
+  }
+/>
+`;
+
+exports[`InfoView renders correctly with text title 1`] = `
+<div
+  className="infoCriterion"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "xyzzy",
+    }
+  }
+/>
+`;

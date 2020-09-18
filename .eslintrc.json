@@ -25,7 +25,19 @@
   "ignorePatterns": ["webpack.config.js", "node_modules", "dist"],
   "rules": {
     "prettier/prettier": "error",
-    "import/no-commonjs": "error"
+    "import/no-commonjs": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@material-ui/*/*/*", "!@material-ui/core/test-utils/*"]
+      }
+    ],
+    "jest/expect-expect": [
+      "error",
+      {
+        "assertFunctionNames": ["expect", "expectValidComponentWithTitle"]
+      }
+    ]
   },
   "settings": {
     "react": {
