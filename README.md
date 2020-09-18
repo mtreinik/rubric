@@ -15,8 +15,7 @@ an easy and efficient tool.
 
 ## TODO
 
-- menu item for new rubric
-- remind user that opening throws away changes
+- alert user that new rubric or open rubric discards any changes
 - create example rubrics
 - after adding move focus to added field
 - add documentation

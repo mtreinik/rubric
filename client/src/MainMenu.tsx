@@ -148,6 +148,18 @@ const MainMenu = (props: Props): JSX.Element => {
 
         <Divider />
 
+        <MenuItem
+          onClick={() => {
+            setAnchorEl(null)
+            props.setSections([])
+          }}
+        >
+          <ListItemIcon>
+            <Icon>add</Icon>
+          </ListItemIcon>
+          <ListItemText>{t('newRubric')}</ListItemText>
+        </MenuItem>
+
         <MenuItem onClick={() => uploaderRefObject.current.click()}>
           <ListItemIcon>
             <Icon>open_in_browser</Icon>
