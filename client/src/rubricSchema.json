@@ -16,7 +16,8 @@
               "enum": [
                 "MultiSelectCriterion",
                 "TextAreaCriterion",
-                "InfoCriterion"
+                "InfoCriterion",
+                "SliderCriterion"
               ]
             },
             "criterion": {
@@ -29,6 +30,21 @@
                   "type": "array",
                   "items": {
                     "type": "string"
+                  }
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 }
               },

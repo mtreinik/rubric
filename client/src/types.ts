@@ -15,10 +15,22 @@ export type InfoCriterionType = {
   title: string
 }
 
+export type SliderRowType = {
+  title: string
+  value: number
+}
+
+export type SliderCriterionType = {
+  title: string
+  options: string[]
+  rows: SliderRowType[]
+}
+
 export type CriterionType =
   | MultiSelectCriterionType
   | TextAreaCriterionType
   | InfoCriterionType
+  | SliderCriterionType
 
 export interface CriterionAndType {
   type: string
@@ -38,6 +50,16 @@ export interface SectionType {
 export interface MultiSelectCriterionSectionType {
   title: string
   criterions: MultiSelectCriterionAndType[]
+}
+
+export interface SliderCriterionAndType {
+  type: string
+  criterion: SliderCriterionType
+}
+
+export interface SliderCriterionSectionType {
+  title: string
+  criterions: SliderCriterionAndType[]
 }
 
 export type SelectionType = 'deselect' | 'select' | null

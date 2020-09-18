@@ -54,6 +54,25 @@ describe('rubric json validator', () => {
         ])
       ).toEqual(true)
     })
+    it('one section and one slider criterion', () => {
+      expect(
+        ajv.validate(rubricSchema, [
+          {
+            title: 'section title',
+            criterions: [
+              {
+                type: 'SliderCriterion',
+                criterion: {
+                  title: 'slider criterion',
+                  options: ['5', '4', '3', '2', '1'],
+                  rows: [{ title: 'slider title', value: 1 }],
+                },
+              },
+            ],
+          },
+        ])
+      ).toEqual(true)
+    })
   })
 
   describe('is invalid with', () => {
@@ -109,6 +128,42 @@ describe('rubric json validator', () => {
                   title: 'criterion title',
                   options: ['a', 'b'],
                   invalid: 'bar',
+                },
+              },
+            ],
+          },
+        ])
+      ).toEqual(false)
+    })
+    it('additional slider property', () => {
+      expect(
+        ajv.validate(rubricSchema, [
+          {
+            title: 'section title',
+            criterions: [
+              {
+                type: 'SliderCriterion',
+                criterion: {
+                  options: ['5', '4', '3', '2', '1'],
+                  rows: [{ title: 'slider title', value: 1, foo: 2 }],
+                },
+              },
+            ],
+          },
+        ])
+      ).toEqual(false)
+    })
+    it('invalid slider value', () => {
+      expect(
+        ajv.validate(rubricSchema, [
+          {
+            title: 'section title',
+            criterions: [
+              {
+                type: 'SliderCriterion',
+                criterion: {
+                  options: ['5', '4', '3', '2', '1'],
+                  rows: [{ title: 'slider title', value: 'foo' }],
                 },
               },
             ],

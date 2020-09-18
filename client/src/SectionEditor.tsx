@@ -11,12 +11,15 @@ import {
   MultiSelectCriterionSectionType,
   MultiSelectCriterionType,
   SectionType,
+  SliderCriterionSectionType,
+  SliderCriterionType,
   TextAreaCriterionType,
 } from './types'
 import MultiSelectCriterionEditor from './MultiSelectCriterionEditor'
 import * as O from 'optics-ts'
 import TitleEditor from './TitleEditor'
 import { TFunction } from 'i18next'
+import SliderEditor from './SliderEditor'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
@@ -34,13 +37,33 @@ const multiSelectCriterionsLens = O.optic<
   MultiSelectCriterionSectionType
 >().prop('criterions')
 
+const sliderCriterionsLens = O.optic<SliderCriterionSectionType>().prop(
+  'criterions'
+)
+
 const multiSelectCriterionPrism = (criterionIndex: number) =>
   multiSelectCriterionsLens.index(criterionIndex)
+
+const emptySlider = {
+  title: '',
+  value: 0,
+}
+
+const sliderCriterionPrism = (criterionIndex: number) =>
+  sliderCriterionsLens.index(criterionIndex)
 
 const optionPrism = (criterionIndex: number, optionIndex: number) =>
   multiSelectCriterionPrism(criterionIndex)
     .path(['criterion', 'options'])
     .index(optionIndex)
+
+const sliderRowPrism = (criterionIndex: number, rowIndex: number) =>
+  sliderCriterionPrism(criterionIndex)
+    .path(['criterion', 'rows'])
+    .index(rowIndex)
+
+const sliderRowTitlePrism = (criterionIndex: number, rowIndex: number) =>
+  sliderRowPrism(criterionIndex, rowIndex).prop('title')
 
 interface Props {
   section: SectionType
@@ -92,6 +115,17 @@ const SectionEditor = (props: Props): JSX.Element => {
           criterion: { title: '' },
         })(props.section)
       )
+    } else if (criterionType === 'SliderCriterion') {
+      props.editSection(
+        O.set(newCriterionSetter)({
+          type: criterionType,
+          criterion: {
+            title: '',
+            options: [''],
+            rows: [{ title: '', value: 0 }],
+          },
+        })(props.section)
+      )
     } else {
       console.error(`unsupported criterion type '${criterionType}'`)
     }
@@ -134,6 +168,37 @@ const SectionEditor = (props: Props): JSX.Element => {
   }
 
   const t = props.t
+
+  const addSlider = (criterionIndex: number) => (): void => {
+    const newSliderSetter = sliderCriterionPrism(criterionIndex)
+      .prop('criterion')
+      .prop('rows')
+      .appendTo()
+    props.editSection(
+      O.set(newSliderSetter)(emptySlider)(
+        props.section as SliderCriterionSectionType
+      )
+    )
+  }
+
+  const removeSlider = (criterionIndex: number) => (rowIndex: number): void => {
+    props.editSection(
+      O.remove(sliderRowPrism(criterionIndex, rowIndex))(
+        props.section as SliderCriterionSectionType
+      )
+    )
+  }
+
+  const editSliderTitle = (criterionIndex: number) => (rowIndex: number) => (
+    sliderTitle: string
+  ): void => {
+    props.editSection(
+      O.set(sliderRowTitlePrism(criterionIndex, rowIndex))(sliderTitle)(
+        props.section as SliderCriterionSectionType
+      )
+    )
+  }
+
   return (
     <div>
       <Grid container spacing={2}>
@@ -160,6 +225,8 @@ const SectionEditor = (props: Props): JSX.Element => {
                       ? t('textArea')
                       : type === 'InfoCriterion'
                       ? t('info')
+                      : type === 'SliderCriterion'
+                      ? t('slider')
                       : t('criterion')}
                   </Typography>
                   <Grid container spacing={1}>
@@ -207,6 +274,21 @@ const SectionEditor = (props: Props): JSX.Element => {
                       t={t}
                     />
                   )}
+                  {type === 'SliderCriterion' && (
+                    <SliderEditor
+                      criterionIndex={criterionIndex}
+                      removeCriterion={removeCriterion}
+                      //editCriterion={editCriterion(criterionIndex)}
+                      criterion={criterion as SliderCriterionType}
+                      addOption={addOption(criterionIndex)}
+                      removeOption={removeOption(criterionIndex)}
+                      editOption={editOption(criterionIndex)}
+                      addRow={addSlider(criterionIndex)}
+                      removeRow={removeSlider(criterionIndex)}
+                      editRowTitle={editSliderTitle(criterionIndex)}
+                      t={t}
+                    />
+                  )}
                   {(type === 'TextAreaCriterion' ||
                     type === 'InfoCriterion') && (
                     <TitleEditor
@@ -224,7 +306,16 @@ const SectionEditor = (props: Props): JSX.Element => {
           )
         })}
         <Grid item xs={12}>
-          <Grid container spacing={4}>
+          <Grid container spacing={3}>
+            <Grid item>
+              <Button
+                onClick={addCriterion('SliderCriterion')}
+                size="small"
+                startIcon={<Icon>add_circle</Icon>}
+              >
+                {t('addSlider')}
+              </Button>
+            </Grid>
             <Grid item>
               <Button
                 onClick={addCriterion('MultiSelectCriterion')}

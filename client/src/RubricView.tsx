@@ -10,8 +10,10 @@ import {
   InfoCriterionType,
   SelectionType,
   SectionType,
+  SliderCriterionType,
 } from './types'
 import InfoView from './InfoView'
+import SliderView from './SliderView'
 
 interface Props {
   sections: SectionType[]
@@ -49,12 +51,22 @@ const RubricView = (props: Props): JSX.Element => (
                   selection={props.selection}
                 />
               )
-            } else if (type === `InfoCriterion`) {
+            } else if (type === 'InfoCriterion') {
               const infoCriterion = criterion as InfoCriterionType
               return (
                 <InfoView
                   key={'criterion-' + criterionIndex}
                   title={infoCriterion.title}
+                />
+              )
+            } else if (type === 'SliderCriterion') {
+              const sliderCriterion = criterion as SliderCriterionType
+              return (
+                <SliderView
+                  key={'slider-' + criterionIndex}
+                  title={sliderCriterion.title}
+                  options={sliderCriterion.options}
+                  rows={sliderCriterion.rows}
                 />
               )
             } else {
