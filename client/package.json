@@ -20,7 +20,7 @@
     "prettier": "prettier --check .",
     "build": "webpack --mode production",
     "test": "jest --coverage",
-    "run": "webpack-dev-server --mode development --progress --color"
+    "start": "webpack-dev-server --mode development --progress --color"
   },
   "cacheDirectories": [
     "node_modules"
