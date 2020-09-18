@@ -4,7 +4,7 @@ import InfoView from '../src/InfoView'
 
 describe('InfoView renders correctly with', () => {
   const expectValidComponentWithTitle = (title: string): void => {
-    const component = renderer.create(<InfoView title={title}></InfoView>)
+    const component = renderer.create(<InfoView title={title} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   }
