@@ -21,7 +21,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "build-client": "cd client/ && yarn install --production=false && yarn build",
-    "heroku-postbuild": "yarn build-client"
+    "heroku-postbuild": "yarn build && yarn build-client"
   },
   "cacheDirectories": [
     "node_modules",
