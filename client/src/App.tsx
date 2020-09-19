@@ -19,19 +19,19 @@ import MainMenu from './MainMenu'
 
 const emptyAppState: AppState = {
   sections: [],
-  selection: null,
+  selection: '',
   language: '',
   showRubricEditor: false,
   version: 1,
   dirty: false,
 }
 
-const rubricSelectionLens = O.optic<AppState>().prop('selection')
 const sectionsLens = O.optic<AppState>().prop('sections')
 const languageLens = O.optic<AppState>().prop('language')
 const showRubricEditorLens = O.optic<AppState>().prop('showRubricEditor')
 const versionLens = O.optic<AppState>().prop('version')
 const dirtyLens = O.optic<AppState>().prop('dirty')
+const selectionLens = O.optic<AppState>().prop('selection')
 
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
@@ -102,12 +102,6 @@ const App = (): ReactNode => {
     }
   }
 
-  const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
-    setAppState(
-      O.set(dirtyLens)(false)(O.set(sectionsLens)(sections)(appState))
-    )
-  }
-
   const addSection = (): void => {
     changeAppState(
       O.set(newSectionSetter)({
@@ -146,13 +140,13 @@ const App = (): ReactNode => {
   }
 
   const setSelection = (selection: SelectionType) => {
-    setAppState(O.set(rubricSelectionLens)(selection)(appState))
+    setAppState(O.set(selectionLens)(selection)(appState))
   }
 
   useEffect(() => {
     if (appState.selection === 'deselect') {
       deselectAll()
-      setSelection(null)
+      setSelection('')
     } else if (appState.selection === 'select') {
       selectElement('content')()
     }
@@ -186,12 +180,21 @@ const App = (): ReactNode => {
     setAppState(O.set(valuePrism)(value)(appState as SliderCriterionAppState))
   }
 
+  const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
+    setAppState(
+      O.set(sectionsLens)(sections)(
+        O.set(dirtyLens)(false)(O.set(selectionLens)('deselect')(appState))
+      )
+    )
+  }
+
   // TODO please implement this function with lenses
   const reset = (): void => {
     const appStateWithUpdatedVersion = O.set(versionLens)(appState.version + 1)(
       appState
     )
-    appStateWithUpdatedVersion.sections.forEach((section) =>
+    appStateWithUpdatedVersion.selection = 'deselect'
+    appStateWithUpdatedVersion.sections.forEach((section: SectionType) =>
       section.criterions.forEach((criterion) => {
         if (criterion.type === 'SliderCriterion') {
           const sliderCriterion = criterion.criterion as SliderCriterionType
@@ -275,7 +278,8 @@ const App = (): ReactNode => {
                     <Grid item xs={6}>
                       <Button
                         onClick={() => setSelection('deselect')}
-                        variant="outlined"
+                        variant="contained"
+                        color="primary"
                         startIcon={<Icon>clear</Icon>}
                       >
                         {t('deselect')}

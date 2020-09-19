@@ -71,7 +71,7 @@ export type SliderCriterionAppState = {
   dirty: boolean
 }
 
-export type SelectionType = 'deselect' | 'select' | null
+export type SelectionType = string
 
 export type AppState = {
   sections: SectionType[]
