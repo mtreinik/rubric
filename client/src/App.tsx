@@ -257,6 +257,7 @@ const App = (): ReactNode => {
                     selection={appState.selection}
                     version={appState.version}
                     setSliderRowValue={setSliderRowValue}
+                    t={t}
                   />
                 </div>
               </Grid>

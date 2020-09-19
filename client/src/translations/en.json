@@ -34,6 +34,8 @@
   "infoHelperText": "Info content in HTML format",
   "sliderOptionHelperText": "Scale value",
   "sliderRowHelperText": "Scale row",
+  "deselectBeforeUsingSlider": "Deselect before using scale",
+  "deselectBeforeUsingMultiSelect": "Deselect before using multiselect",
   "addOption": "Add option",
   "sectionTitleHelperText": "Section title",
   "openedRubric": "Opened rubric",

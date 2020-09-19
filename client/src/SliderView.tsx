@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SelectionType, SliderRowType } from './types'
 import SliderCell from './SliderCell'
+import { Snackbar } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
+import { TFunction } from 'i18next'
 
 interface Props {
   title: string
@@ -8,9 +11,12 @@ interface Props {
   rows: SliderRowType[]
   setSliderRowValue: (rowIndex: number, value: number) => void
   selection: SelectionType
+  t: TFunction
 }
 
 const SliderView = (props: Props): JSX.Element => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const t = props.t
   const optionHeaders = props.options.map((option, optionIndex) => (
     <td className="sliderHeaderCell" key={'option-' + optionIndex}>
       {option}
@@ -35,6 +41,7 @@ const SliderView = (props: Props): JSX.Element => {
               value={optionIndex * cellsPerColumn + value}
               setSliderRowValue={props.setSliderRowValue}
               selection={props.selection}
+              warnAboutSelection={() => setSnackbarOpen(true)}
             />
           ))}
         </td>
@@ -46,7 +53,19 @@ const SliderView = (props: Props): JSX.Element => {
     <table className="sliderTable">
       <thead>
         <tr className="sliderHeaderRow">
-          <td className="sliderHeaderHeader">&nbsp;</td>
+          <td className="sliderHeaderHeader">
+            <Snackbar
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={snackbarOpen}
+              autoHideDuration={4000}
+              onClose={() => setSnackbarOpen(false)}
+            >
+              <Alert severity="info">{t('deselectBeforeUsingSlider')}</Alert>
+            </Snackbar>
+          </td>
           {optionHeaders}
         </tr>
       </thead>

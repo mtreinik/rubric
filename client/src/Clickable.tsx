@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { SelectionType } from './types'
 
 interface Props {
   value: string
+  selection: SelectionType
+  warnAboutSelection: () => void
 }
 
 function getClasses(status: number): string {
@@ -20,7 +23,11 @@ const Clickable = (props: Props): JSX.Element => {
     <button
       className={getClasses(status)}
       onClick={() => {
-        setStatus((status + 1) % 3)
+        if (props.selection) {
+          props.warnAboutSelection()
+        } else {
+          setStatus((status + 1) % 3)
+        }
       }}
     >
       {props.value.trim()}

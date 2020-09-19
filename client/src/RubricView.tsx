@@ -14,6 +14,7 @@ import {
 } from './types'
 import InfoView from './InfoView'
 import SliderView from './SliderView'
+import { TFunction } from 'i18next'
 
 interface Props {
   sections: SectionType[]
@@ -23,6 +24,7 @@ interface Props {
     sectionIndex: number,
     criterionIndex: number
   ) => (rowIndex: number, value: number) => void
+  t: TFunction
 }
 
 const RubricView = (props: Props): JSX.Element => (
@@ -44,6 +46,8 @@ const RubricView = (props: Props): JSX.Element => (
                   key={'criterion-' + props.version + '-' + criterionIndex}
                   title={multiSelectCriterion.title}
                   options={multiSelectCriterion.options}
+                  selection={props.selection}
+                  t={props.t}
                 />
               )
             } else if (type === 'TextAreaCriterion') {
@@ -76,6 +80,7 @@ const RubricView = (props: Props): JSX.Element => (
                     criterionIndex
                   )}
                   selection={props.selection}
+                  t={props.t}
                 />
               )
             } else {

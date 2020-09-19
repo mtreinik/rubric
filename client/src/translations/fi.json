@@ -34,6 +34,8 @@
   "infoHelperText": "Selitteen sisältö HTML-muodossa",
   "sliderOptionHelperText": "Asteikon arvo",
   "sliderRowHelperText": "Asteikon rivi",
+  "deselectBeforeUsingSlider": "Poista valinta ennen kuin käytät asteikkoa",
+  "deselectBeforeUsingMultiSelect": "Poista valinta ennen kuin käytät monivalintaa",
   "addOption": "Lisää vaihtoehto",
   "sectionTitleHelperText": "Osion otsikko",
   "openedRubric": "Rubriikki avattu",

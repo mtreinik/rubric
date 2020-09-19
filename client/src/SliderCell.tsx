@@ -7,6 +7,7 @@ interface Props {
   value: number
   setSliderRowValue: (rowIndex: number, value: number) => void
   selection: SelectionType
+  warnAboutSelection: () => void
 }
 
 const selectedSymbol = '✖'
@@ -16,12 +17,15 @@ const deselectedSymbol = <span>&nbsp;</span>
 const SliderCell = (props: Props): JSX.Element => (
   <span
     className="sliderCell"
-    onClick={() =>
-      !props.selection &&
-      (props.selectedValue === props.value
-        ? props.setSliderRowValue(props.rowIndex, -1)
-        : props.setSliderRowValue(props.rowIndex, props.value))
-    }
+    onClick={() => {
+      if (props.selection) {
+        props.warnAboutSelection()
+      } else {
+        props.selectedValue === props.value
+          ? props.setSliderRowValue(props.rowIndex, -1)
+          : props.setSliderRowValue(props.rowIndex, props.value)
+      }
+    }}
   >
     {props.selectedValue === props.value ? selectedSymbol : deselectedSymbol}
   </span>

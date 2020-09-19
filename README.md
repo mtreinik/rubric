@@ -16,7 +16,7 @@ an easy and efficient tool.
 ## TODO
 
 - alert user that new rubric or open rubric discards any changes
-- warn user when trying to edit while selection is on
+- hover scales
 - support enter key in save dialog 
 - create example rubrics
 - after adding move focus to added field
