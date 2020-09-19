@@ -103,7 +103,7 @@ const App = (): ReactNode => {
   }
 
   const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
-    changeAppState(
+    setAppState(
       O.set(dirtyLens)(false)(O.set(sectionsLens)(sections)(appState))
     )
   }
@@ -195,12 +195,7 @@ const App = (): ReactNode => {
       section.criterions.forEach((criterion) => {
         if (criterion.type === 'SliderCriterion') {
           const sliderCriterion = criterion.criterion as SliderCriterionType
-          console.log(
-            `resetting rows of criterion ${JSON.stringify(criterion)}`
-          )
           sliderCriterion.rows.forEach((row) => (row.value = -1))
-        } else {
-          console.log(`not caring about criterion ${JSON.stringify(criterion)}`)
         }
       })
     )
