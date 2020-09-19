@@ -41,10 +41,24 @@
   width: 3em;
   text-align: center;
   font-size: 0.5em;
+  padding: 0em;
+  width: 6em;
+}
+
+.sliderRowHeader {
+  font-size: 0.9em;
+  padding: 0em;
+}
+
+.sliderColumn {
+  padding: 0em;
+  padding-left: 0.15em;
 }
 
 .sliderCell {
-  text-align: center;
+  font-size: 1em;
+  padding: 0em;
+  cursor: pointer;
 }
 
 button.clickable {
