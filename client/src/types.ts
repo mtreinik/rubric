@@ -62,6 +62,15 @@ export interface SliderCriterionSectionType {
   criterions: SliderCriterionAndType[]
 }
 
+export type SliderCriterionAppState = {
+  sections: SliderCriterionSectionType[]
+  selection: SelectionType
+  language: string
+  showRubricEditor: boolean
+  version: number
+  dirty: boolean
+}
+
 export type SelectionType = 'deselect' | 'select' | null
 
 export type AppState = {

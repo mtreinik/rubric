@@ -37,30 +37,29 @@ const multiSelectCriterionsLens = O.optic<
   MultiSelectCriterionSectionType
 >().prop('criterions')
 
+const multiSelectCriterionPrism = (criterionIndex: number) =>
+  multiSelectCriterionsLens.index(criterionIndex)
+
 const sliderCriterionsLens = O.optic<SliderCriterionSectionType>().prop(
   'criterions'
 )
+const sliderCriterionPrism = (criterionIndex: number) =>
+  sliderCriterionsLens.index(criterionIndex)
 
-const multiSelectCriterionPrism = (criterionIndex: number) =>
-  multiSelectCriterionsLens.index(criterionIndex)
+const sliderRowPrism = (criterionIndex: number, rowIndex: number) =>
+  sliderCriterionPrism(criterionIndex)
+    .path(['criterion', 'rows'])
+    .index(rowIndex)
 
 const emptySlider = {
   title: '',
   value: 0,
 }
 
-const sliderCriterionPrism = (criterionIndex: number) =>
-  sliderCriterionsLens.index(criterionIndex)
-
 const optionPrism = (criterionIndex: number, optionIndex: number) =>
   multiSelectCriterionPrism(criterionIndex)
     .path(['criterion', 'options'])
     .index(optionIndex)
-
-const sliderRowPrism = (criterionIndex: number, rowIndex: number) =>
-  sliderCriterionPrism(criterionIndex)
-    .path(['criterion', 'rows'])
-    .index(rowIndex)
 
 const sliderRowTitlePrism = (criterionIndex: number, rowIndex: number) =>
   sliderRowPrism(criterionIndex, rowIndex).prop('title')

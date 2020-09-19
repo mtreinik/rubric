@@ -4,7 +4,14 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
 import RubricView from './RubricView'
 import * as O from 'optics-ts'
-import { AppState, LanguageCode, SectionType, SelectionType } from './types'
+import {
+  AppState,
+  LanguageCode,
+  SectionType,
+  SelectionType,
+  SliderCriterionAppState,
+  SliderCriterionType,
+} from './types'
 import { useTranslation } from 'react-i18next'
 import i18n from './i18n'
 import { swapElements } from './array-utils'
@@ -82,10 +89,6 @@ const App = (): ReactNode => {
   React.useEffect(() => {
     setSelectionEnabled(false)
   })
-
-  const reset = (): void => {
-    setAppState(O.set(versionLens)(appState.version + 1)(appState))
-  }
 
   const cleanAppState = (): void => {
     setAppState(O.set(dirtyLens)(false)(appState))
@@ -166,6 +169,44 @@ const App = (): ReactNode => {
     )
   }
 
+  // TODO this function contains ugly hack
+  const setSliderRowValue = (sectionIndex: number, criterionIndex: number) => (
+    rowIndex: number,
+    value: number
+  ): void => {
+    const valuePrism = O.optic<SliderCriterionAppState>()
+      .prop('sections')
+      .index(sectionIndex)
+      .prop('criterions')
+      .index(criterionIndex)
+      .prop('criterion')
+      .prop('rows')
+      .index(rowIndex)
+      .prop('value')
+    setAppState(O.set(valuePrism)(value)(appState as SliderCriterionAppState))
+  }
+
+  // TODO please implement this function with lenses
+  const reset = (): void => {
+    const appStateWithUpdatedVersion = O.set(versionLens)(appState.version + 1)(
+      appState
+    )
+    appStateWithUpdatedVersion.sections.forEach((section) =>
+      section.criterions.forEach((criterion) => {
+        if (criterion.type === 'SliderCriterion') {
+          const sliderCriterion = criterion.criterion as SliderCriterionType
+          console.log(
+            `resetting rows of criterion ${JSON.stringify(criterion)}`
+          )
+          sliderCriterion.rows.forEach((row) => (row.value = -1))
+        } else {
+          console.log(`not caring about criterion ${JSON.stringify(criterion)}`)
+        }
+      })
+    )
+    setAppState(appStateWithUpdatedVersion)
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -217,31 +258,36 @@ const App = (): ReactNode => {
                     sections={appState.sections}
                     selection={appState.selection}
                     version={appState.version}
+                    setSliderRowValue={setSliderRowValue}
                   />
                 </div>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={6}>
-                  <Grid item>
-                    <Button
-                      onClick={() => setSelection('select')}
-                      variant="contained"
-                      color="primary"
-                      startIcon={<Icon>content_copy</Icon>}
-                    >
-                      {t('selectAndCopy')}
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={() => setSelection('deselect')}
-                      variant="outlined"
-                      startIcon={<Icon>clear</Icon>}
-                    >
-                      {t('deselect')}
-                    </Button>
-                  </Grid>
-                  <Grid item>
+                <Grid container>
+                  {!appState.selection && (
+                    <Grid item xs={6}>
+                      <Button
+                        onClick={() => setSelection('select')}
+                        variant="contained"
+                        color="primary"
+                        startIcon={<Icon>content_copy</Icon>}
+                      >
+                        {t('selectAndCopy')}
+                      </Button>
+                    </Grid>
+                  )}
+                  {appState.selection && (
+                    <Grid item xs={6}>
+                      <Button
+                        onClick={() => setSelection('deselect')}
+                        variant="outlined"
+                        startIcon={<Icon>clear</Icon>}
+                      >
+                        {t('deselect')}
+                      </Button>
+                    </Grid>
+                  )}
+                  <Grid item xs={6}>
                     <Button
                       onClick={reset}
                       variant="outlined"

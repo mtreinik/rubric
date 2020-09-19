@@ -24,13 +24,27 @@
   padding-right: 1em;
 }
 
-.criterion, .infoCriterion, .textAreaCriterion {
+.criterion, .infoCriterion, .textAreaCriterion, .sliderTable {
   padding-left: 2em;
   padding-bottom: 0.4em;
 }
 
 .textAreaCriterionCell {
   border: 1px solid black;
+}
+
+.sliderTable td, .sliderTable th {
+  border: 1px solid black;
+}
+
+.sliderHeader {
+  width: 3em;
+  text-align: center;
+  font-size: 0.5em;
+}
+
+.sliderCell {
+  text-align: center;
 }
 
 button.clickable {

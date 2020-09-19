@@ -19,6 +19,10 @@ interface Props {
   sections: SectionType[]
   selection: SelectionType
   version: number
+  setSliderRowValue: (
+    sectionIndex: number,
+    criterionIndex: number
+  ) => (rowIndex: number, value: number) => void
 }
 
 const RubricView = (props: Props): JSX.Element => (
@@ -67,6 +71,11 @@ const RubricView = (props: Props): JSX.Element => (
                   title={sliderCriterion.title}
                   options={sliderCriterion.options}
                   rows={sliderCriterion.rows}
+                  setSliderRowValue={props.setSliderRowValue(
+                    sectionIndex,
+                    criterionIndex
+                  )}
+                  selection={props.selection}
                 />
               )
             } else {

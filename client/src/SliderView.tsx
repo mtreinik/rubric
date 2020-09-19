@@ -1,34 +1,46 @@
-import React, { Fragment } from 'react'
-import { SliderCriterionType } from './types'
+import React from 'react'
+import { SelectionType, SliderRowType } from './types'
+import SliderCell from './SliderCell'
 
-const SliderView = (props: SliderCriterionType): JSX.Element => {
+interface Props {
+  title: string
+  options: string[]
+  rows: SliderRowType[]
+  setSliderRowValue: (rowIndex: number, value: number) => void
+  selection: SelectionType
+}
+
+const SliderView = (props: Props): JSX.Element => {
   const optionHeaders = props.options.map((option, optionIndex) => (
-    <Fragment key={'option-' + optionIndex}>
-      <th></th>
-      <th>{option}</th>
-    </Fragment>
+    <td className="sliderHeader" key={'option-' + optionIndex}>
+      {option}
+    </td>
   ))
 
   const rows = props.rows.map((row, rowIndex) => (
     <tr key={'row-' + rowIndex}>
-      <th>{row.title}</th>
-      {props.options.map((option, optionIndex) => (
-        <Fragment key={'option-' + rowIndex + '-' + optionIndex}>
-          <td>(o)</td>
-          <td>tähän</td>
-        </Fragment>
-      ))}
-      <td>(o)</td>
+      <td>{row.title}</td>
+      <td colSpan={props.options.length} style={{ fontFamily: 'Monospace' }}>
+        {Array.from({ length: 40 }).map((_, value) => (
+          <SliderCell
+            key={'option-' + rowIndex + '-' + value}
+            rowIndex={rowIndex}
+            selectedValue={row.value}
+            value={value}
+            setSliderRowValue={props.setSliderRowValue}
+            selection={props.selection}
+          />
+        ))}
+      </td>
     </tr>
   ))
 
   return (
-    <table className="criterion">
+    <table className="sliderTable">
       <thead>
         <tr>
-          <th>&nbsp;</th>
+          <td>&nbsp;</td>
           {optionHeaders}
-          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>
