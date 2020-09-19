@@ -37,22 +37,32 @@
   border: 1px solid black;
 }
 
-.sliderHeader {
-  width: 3em;
-  text-align: center;
+.sliderHeaderRow {
+  font-size: 0.5em;
+}
+
+.sliderHeaderHeader {
   font-size: 0.5em;
   padding: 0em;
-  width: 6em;
+}
+
+.sliderHeaderCell {
+  text-align: center;
+  font-size: 0.6em;
+  padding: 0em;
+  width: 11em;
 }
 
 .sliderRowHeader {
-  font-size: 0.9em;
+  font-size: 0.8em;
+  line-height: 0.8;
   padding: 0em;
 }
 
 .sliderColumn {
   padding: 0em;
-  padding-left: 0.15em;
+  padding-left: 0.2em;
+  word-break: keep-all;
 }
 
 .sliderCell {

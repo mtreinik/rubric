@@ -12,7 +12,7 @@ interface Props {
 
 const SliderView = (props: Props): JSX.Element => {
   const optionHeaders = props.options.map((option, optionIndex) => (
-    <td className="sliderHeader" key={'option-' + optionIndex}>
+    <td className="sliderHeaderCell" key={'option-' + optionIndex}>
       {option}
     </td>
   ))
@@ -45,8 +45,8 @@ const SliderView = (props: Props): JSX.Element => {
   return (
     <table className="sliderTable">
       <thead>
-        <tr>
-          <td>&nbsp;</td>
+        <tr className="sliderHeaderRow">
+          <td className="sliderHeaderHeader">&nbsp;</td>
           {optionHeaders}
         </tr>
       </thead>
