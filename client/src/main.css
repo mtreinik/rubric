@@ -91,6 +91,14 @@ button:hover.clickable {
   border: 1px solid #808080;
 }
 
+span.sliderCell {
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+}
+span:hover.sliderCell {
+  border: 1px solid #808080;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
