@@ -15,8 +15,8 @@ import { SectionType } from './types'
 interface Props {
   open: boolean
   sections: SectionType[]
-  closeDialogAfterCancel: () => void
-  closeDialogAfterSave: () => void
+  closeDialogOnCancel: () => void
+  closeDialogOnSave: () => void
   t: TFunction
 }
 
@@ -46,7 +46,7 @@ const DownloadDialog = (props: Props): JSX.Element => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.closeDialogAfterCancel}>{t('cancel')}</Button>
+        <Button onClick={props.closeDialogOnCancel}>{t('cancel')}</Button>
         <Button
           color="primary"
           component={Link}
@@ -55,7 +55,7 @@ const DownloadDialog = (props: Props): JSX.Element => {
             encodeURIComponent(JSON.stringify(props.sections, null, 2))
           }
           download={filename + extension}
-          onClick={props.closeDialogAfterSave}
+          onClick={props.closeDialogOnSave}
         >
           {t('save')}
         </Button>

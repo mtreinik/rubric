@@ -1,6 +1,11 @@
 {
   "menu": "Menu",
   "saveChanges": "Save changes...",
+  "discardChanges": "Discard changes?",
+  "discardUnsavedChangesAndCreateNew": "Discard unsaved changes and create new rubric?",
+  "discardUnsavedChangesAndOpen": "Discard unsaved changes and open rubric?",
+  "discardAndCreateNew": "Discard and create new",
+  "discardAndOpen": "Discard and open",
   "section": "Section",
   "addSection": "Add section",
   "selectAndCopy": "Select and Copy",

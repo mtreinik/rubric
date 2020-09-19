@@ -1,6 +1,11 @@
 {
   "menu": "Valikko",
   "saveChanges": "Tallenna muutokset...",
+  "discardChanges": "Hylkää muutokset?",
+  "discardUnsavedChangesAndCreateNew": "Hylkää tallentamattomat muutokset ja luo uusi rubriikki?",
+  "discardUnsavedChangesAndOpen": "Hylkää tallentamattomat muutokset ja avaa rubriikki?",
+  "discardAndCreateNew": "Hylkää ja luo uusi",
+  "discardAndOpen": "Hylkää ja avaa",
   "section": "Osio",
   "addSection": "Lisää osio",
   "selectAndCopy": "Valitse ja kopioi",
