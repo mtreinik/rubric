@@ -66,7 +66,6 @@ const MainMenu = (props: Props): JSX.Element => {
   }
 
   const uploadRubric = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log('at uploadRubric')
     if (!event.target.files) {
       warnAndCloseMenu(t('noFileWasSelected'))
       return
