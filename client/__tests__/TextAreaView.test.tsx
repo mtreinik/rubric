@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount, render, shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import TextAreaView from '../src/TextAreaView'
 
 describe('TextAreaView', () => {
@@ -12,7 +12,6 @@ describe('TextAreaView', () => {
       const component = shallow(
         <TextAreaView title={title} value={value} selection={selection} />
       )
-      //const tree = component.toJSON()
       expect(component).toMatchSnapshot()
     }
 
