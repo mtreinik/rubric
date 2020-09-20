@@ -11,6 +11,14 @@ This tool allows teachers to create rubrics and fill them out.
 Here the emphasis is not on grading but giving feedback to the student with
 an easy and efficient tool.
 
+# Design principles
+
+- User can create, load and save their own rubrics
+- User can export filled rubric to Google Docs
+- Works in a browser
+- No server needed
+- 
+
 # Development
 
 ## TODO
@@ -44,10 +52,11 @@ yarn build
 
 Rubric is developed by using
 
-- `Nodejs`,
+- `Yarn`,
 - `TypeScript`,
 - `React`,
-- `Yarn`,
+- `Nodejs`,
+- `Express`
 - `Webpack`,
 - `webpack-dev-server`
 - `webpack-bundle-analyzer`
