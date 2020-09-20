@@ -13,16 +13,17 @@ an easy and efficient tool.
 
 # Design principles
 
-- User can create, load and save their own rubrics
-- User can export filled rubric to Google Docs
-- Works in a browser
-- No server needed
+- User can create, load and save their own rubrics.
+- User can export filled rubric to Google Docs.
+- Works in a browser.
+- No server needed.
 
 # Development
 
 ## TODO
 
 - create example rubrics
+- create 10 minute presentation on Rubric 
 - add documentation
 - aria tags for accessibility
 
@@ -62,10 +63,10 @@ Rubric is developed by using many tools:
   [Material Design icons](https://google.github.io/material-design-icons/) and the
   [Roboto Font](https://github.com/googlefonts/roboto).
 
-- The UI is provided in English and Finnish with (react-i18next)[https://react.i18next.com/] 
+- The UI is provided in English and Finnish with [react-i18next](https://react.i18next.com/)
   internationaliation framework.
 
-- The app is tested automatically with [Jest]](https://jestjs.io/) and [Enzyme](https://github.com/enzymejs/enzyme), 
+- The app is tested automatically with [Jest](https://jestjs.io/) and [Enzyme](https://github.com/enzymejs/enzyme), 
   which use [ts-jest](https://github.com/kulshekhar/ts-jest), 
   [enzyme-adapter-react-16](https://enzymejs.github.io/enzyme/) and
   [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json) to test React components with tests coded in 
