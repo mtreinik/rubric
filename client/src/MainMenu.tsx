@@ -17,6 +17,7 @@ import Ajv from 'ajv'
 import rubricSchema from './rubricSchema.json'
 import AlertDialog, { AlertDialogStateType } from './AlertDialog'
 import DownloadDialog from './DownloadDialog'
+import AcceptDialog from './AcceptDialog'
 
 const ajv = new Ajv()
 
@@ -47,6 +48,8 @@ const MainMenu = (props: Props): JSX.Element => {
   const [alertDialogState, setAlertDialogState] = useState(closedAlertDialog)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
+  const [acceptNewDialogOpen, setAcceptNewDialogOpen] = useState(false)
+  const [acceptOpenDialogOpen, setAcceptOpenDialogOpen] = useState(false)
 
   const t = props.t
   const uploaderRefObject = useRef() as MutableRefObject<HTMLInputElement>
@@ -107,6 +110,7 @@ const MainMenu = (props: Props): JSX.Element => {
       reader.readAsText(file)
     }
   }
+  const createNewRubric = () => props.setSectionsAndCleanAppState([])
 
   return (
     <Grid container spacing={4} alignItems="center">
@@ -152,8 +156,12 @@ const MainMenu = (props: Props): JSX.Element => {
 
           <MenuItem
             onClick={() => {
+              if (props.appState.dirty) {
+                setAcceptNewDialogOpen(true)
+              } else {
+                createNewRubric()
+              }
               setAnchorEl(null)
-              props.setSectionsAndCleanAppState([])
             }}
           >
             <ListItemIcon>
@@ -162,21 +170,19 @@ const MainMenu = (props: Props): JSX.Element => {
             <ListItemText>{t('newRubric')}</ListItemText>
           </MenuItem>
 
-          <MenuItem onClick={() => uploaderRefObject.current.click()}>
+          <MenuItem
+            onClick={() => {
+              if (props.appState.dirty) {
+                setAcceptOpenDialogOpen(true)
+              } else {
+                uploaderRefObject.current.click()
+              }
+            }}
+          >
             <ListItemIcon>
               <Icon>open_in_browser</Icon>
             </ListItemIcon>
-            <ListItemText>
-              <input
-                type="file"
-                accept="text/json"
-                multiple={false}
-                ref={uploaderRefObject}
-                style={{ display: 'none' }}
-                onChange={uploadRubric}
-              />
-              {t('openRubric')}
-            </ListItemText>
+            <ListItemText>{t('openRubric')}</ListItemText>
           </MenuItem>
 
           <MenuItem onClick={() => setDownloadDialogOpen(true)}>
@@ -213,11 +219,11 @@ const MainMenu = (props: Props): JSX.Element => {
         <DownloadDialog
           open={downloadDialogOpen}
           sections={props.appState.sections}
-          closeDialogAfterCancel={() => {
+          closeDialogOnCancel={() => {
             setDownloadDialogOpen(false)
             setAnchorEl(null)
           }}
-          closeDialogAfterSave={() => {
+          closeDialogOnSave={() => {
             setDownloadDialogOpen(false)
             setAnchorEl(null)
             props.cleanAppState()
@@ -228,6 +234,51 @@ const MainMenu = (props: Props): JSX.Element => {
           dialogState={alertDialogState}
           closeDialog={closeAlertDialog}
           t={t}
+        />
+        <AcceptDialog
+          open={acceptNewDialogOpen}
+          title={t('discardChanges')}
+          message={t('discardUnsavedChangesAndCreateNew')}
+          cancelButtonKey="cancel"
+          acceptButtonKey="discardAndCreateNew"
+          closeDialogOnCancel={() => {
+            setAcceptNewDialogOpen(false)
+            setAnchorEl(null)
+          }}
+          closeDialogOnAccept={() => {
+            setAcceptNewDialogOpen(false)
+            setAnchorEl(null)
+            createNewRubric()
+          }}
+          t={t}
+        />
+        <AcceptDialog
+          open={acceptOpenDialogOpen}
+          title={t('discardChanges')}
+          message={t('discardUnsavedChangesAndOpen')}
+          cancelButtonKey="cancel"
+          acceptButtonKey="discardAndOpen"
+          closeDialogOnCancel={() => {
+            setAcceptOpenDialogOpen(false)
+            setAnchorEl(null)
+          }}
+          closeDialogOnAccept={() => {
+            setAcceptOpenDialogOpen(false)
+            setAnchorEl(null)
+            uploaderRefObject.current.click()
+          }}
+          t={t}
+        />
+        <input
+          type="file"
+          accept="text/json,.json"
+          multiple={false}
+          ref={uploaderRefObject}
+          style={{ display: 'none' }}
+          onChange={uploadRubric}
+          onClick={(event: React.MouseEvent<HTMLInputElement>) =>
+            (event.currentTarget.value = '')
+          }
         />
         <Snackbar
           anchorOrigin={{

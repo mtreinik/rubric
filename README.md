@@ -15,11 +15,10 @@ an easy and efficient tool.
 
 ## TODO
 
-- alert user that new rubric or open rubric discards any changes
-- support enter key in save dialog 
 - create example rubrics
-- after adding move focus to added field
+- after adding files move focus to added field
 - add documentation
+- aria tags for accessibility
 
 ## Developing and building Rubric
 
