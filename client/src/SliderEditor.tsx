@@ -7,7 +7,6 @@ interface Props {
   criterion: SliderCriterionType
   criterionIndex: number
   removeCriterion: (criterionIndex: number) => () => void
-  // editCriterion: (criterionTitle: string) => void
   addOption: () => void
   removeOption: (optionIndex: number) => void
   editOption: (optionIndex: number) => (optionTitle: string) => void
