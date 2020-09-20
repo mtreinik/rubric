@@ -1,12 +1,11 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { shallow } from 'enzyme'
 import InfoView from '../src/InfoView'
 
 describe('InfoView renders correctly with', () => {
   const expectValidComponentWithTitle = (title: string): void => {
-    const component = renderer.create(<InfoView title={title} />)
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
+    const component = shallow(<InfoView title={title} />)
+    expect(component).toMatchSnapshot()
   }
   it('empty title', () => {
     expectValidComponentWithTitle('')

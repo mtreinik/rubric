@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextAreaView renders correctly with no selection and empty title and empty value 1`] = `
+exports[`TextAreaView renders correctly when no selection and empty title and empty value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -11,9 +11,7 @@ exports[`TextAreaView renders correctly with no selection and empty title and em
       >
         <div
           className="criterionTitle"
-        >
-          
-        </div>
+        />
         <div>
           <textarea
             cols={80}
@@ -28,7 +26,7 @@ exports[`TextAreaView renders correctly with no selection and empty title and em
 </table>
 `;
 
-exports[`TextAreaView renders correctly with no selection and text title and empty value 1`] = `
+exports[`TextAreaView renders correctly when no selection and text title and empty value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -56,7 +54,7 @@ exports[`TextAreaView renders correctly with no selection and text title and emp
 </table>
 `;
 
-exports[`TextAreaView renders correctly with no selection and text title and text value 1`] = `
+exports[`TextAreaView renders correctly when no selection and text title and text value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -84,7 +82,7 @@ exports[`TextAreaView renders correctly with no selection and text title and tex
 </table>
 `;
 
-exports[`TextAreaView renders correctly with no selection and text title and value with XSS attack 1`] = `
+exports[`TextAreaView renders correctly when no selection and text title and value with XSS attack 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -113,7 +111,7 @@ XSS attack</span>"
 </table>
 `;
 
-exports[`TextAreaView renders correctly with no selection and text title and value with newlines 1`] = `
+exports[`TextAreaView renders correctly when no selection and text title and value with newlines 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -143,7 +141,7 @@ baz"
 </table>
 `;
 
-exports[`TextAreaView renders correctly with selection and empty title and empty value 1`] = `
+exports[`TextAreaView renders correctly when selection and empty title and empty value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -154,9 +152,7 @@ exports[`TextAreaView renders correctly with selection and empty title and empty
       >
         <div
           className="criterionTitle"
-        >
-          
-        </div>
+        />
         <div>
           <span
             dangerouslySetInnerHTML={
@@ -172,7 +168,7 @@ exports[`TextAreaView renders correctly with selection and empty title and empty
 </table>
 `;
 
-exports[`TextAreaView renders correctly with selection and text title and empty value 1`] = `
+exports[`TextAreaView renders correctly when selection and text title and empty value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -201,7 +197,7 @@ exports[`TextAreaView renders correctly with selection and text title and empty 
 </table>
 `;
 
-exports[`TextAreaView renders correctly with selection and text title and text value 1`] = `
+exports[`TextAreaView renders correctly when selection and text title and text value 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -230,7 +226,7 @@ exports[`TextAreaView renders correctly with selection and text title and text v
 </table>
 `;
 
-exports[`TextAreaView renders correctly with selection and text title and value with XSS attack 1`] = `
+exports[`TextAreaView renders correctly when selection and text title and value with XSS attack 1`] = `
 <table
   className="textAreaCriterion"
 >
@@ -259,7 +255,7 @@ exports[`TextAreaView renders correctly with selection and text title and value 
 </table>
 `;
 
-exports[`TextAreaView renders correctly with selection and text title and value with newlines 1`] = `
+exports[`TextAreaView renders correctly when selection and text title and value with newlines 1`] = `
 <table
   className="textAreaCriterion"
 >
