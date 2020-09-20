@@ -207,6 +207,7 @@ const SectionEditor = (props: Props): JSX.Element => {
             helperText={t('sectionTitleHelperText')}
             onChange={handleSectionTitleChange}
             fullWidth
+            autoFocus
           />
         </Grid>
         {props.section.criterions.map((criterionAndType, criterionIndex) => {

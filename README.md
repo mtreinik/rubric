@@ -16,7 +16,6 @@ an easy and efficient tool.
 ## TODO
 
 - create example rubrics
-- after adding files move focus to added field
 - add documentation
 - aria tags for accessibility
 

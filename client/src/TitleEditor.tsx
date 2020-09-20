@@ -35,6 +35,7 @@ const TitleEditor = (props: Props): JSX.Element => {
           : ''
       }
       onChange={handleCriterionTitleChange}
+      autoFocus
     />
   )
 }

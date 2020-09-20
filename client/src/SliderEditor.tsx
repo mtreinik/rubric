@@ -43,6 +43,7 @@ const SliderEditor = (props: Props): JSX.Element => {
         value={option}
         helperText={t('sliderOptionHelperText')}
         onChange={handleOptionTitleChange(optionIndex)}
+        autoFocus
       />
     </Grid>
   ))
@@ -61,6 +62,7 @@ const SliderEditor = (props: Props): JSX.Element => {
           value={slider.title}
           helperText={t('sliderRowHelperText')}
           onChange={handleSliderRowTitleChange(rowIndex)}
+          autoFocus
         />
       </Grid>
     )

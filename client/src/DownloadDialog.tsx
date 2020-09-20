@@ -40,6 +40,7 @@ const DownloadDialog = (props: Props): JSX.Element => {
               value={filename}
               label={t('filename')}
               onChange={handleFilenameChange}
+              autoFocus
             />
           </Grid>
           <Grid item>{extension}</Grid>

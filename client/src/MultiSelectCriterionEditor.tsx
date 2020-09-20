@@ -39,6 +39,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
       <TextField
         value={option}
         onChange={handleOptionTitleChange(optionIndex)}
+        autoFocus
       />
     </Grid>
   ))
@@ -50,6 +51,7 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
           helperText={t('multiSelectTitleHelperText')}
           onChange={handleCriterionTitleChange}
           fullWidth
+          autoFocus
         />
       </Grid>
       <Grid item xs={6}>
