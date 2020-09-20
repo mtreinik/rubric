@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextAreaView renders correctly with no selection and empty title and empty value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          
+        </div>
+        <div>
+          <textarea
+            cols={80}
+            onChange={[Function]}
+            rows={4}
+            value=""
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with no selection and text title and empty value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          xyzzy
+        </div>
+        <div>
+          <textarea
+            cols={80}
+            onChange={[Function]}
+            rows={4}
+            value=""
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with no selection and text title and text value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          foo
+        </div>
+        <div>
+          <textarea
+            cols={80}
+            onChange={[Function]}
+            rows={4}
+            value="bar"
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with no selection and text title and value with XSS attack 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          title
+        </div>
+        <div>
+          <textarea
+            cols={80}
+            onChange={[Function]}
+            rows={4}
+            value="<span onmouseover=\\"alert(document.cookie)\\">this is an
+XSS attack</span>"
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with no selection and text title and value with newlines 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          foo
+        </div>
+        <div>
+          <textarea
+            cols={80}
+            onChange={[Function]}
+            rows={4}
+            value="bar
+
+baz"
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with selection and empty title and empty value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          
+        </div>
+        <div>
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "",
+              }
+            }
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with selection and text title and empty value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          xyzzy
+        </div>
+        <div>
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "",
+              }
+            }
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with selection and text title and text value 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          foo
+        </div>
+        <div>
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "bar",
+              }
+            }
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with selection and text title and value with XSS attack 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          title
+        </div>
+        <div>
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "&lt;span onmouseover=\\"alert(document.cookie)\\"&gt;this is an<br>XSS attack&lt;/span&gt;",
+              }
+            }
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`TextAreaView renders correctly with selection and text title and value with newlines 1`] = `
+<table
+  className="textAreaCriterion"
+>
+  <tbody>
+    <tr>
+      <td
+        className="textAreaCriterionCell"
+      >
+        <div
+          className="criterionTitle"
+        >
+          foo
+        </div>
+        <div>
+          <span
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "bar<br><br>baz",
+              }
+            }
+          />
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

@@ -5,10 +5,11 @@ import DOMPurify from 'dompurify'
 interface Props {
   title: string
   selection: SelectionType
+  value?: string
 }
 
 const TextAreaView = (props: Props): JSX.Element => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(props.value || '')
 
   const handleValueChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -24,14 +25,14 @@ const TextAreaView = (props: Props): JSX.Element => {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
 
-  const getSanitizedHTMLValue = (value: string) =>
+  const replaceNewlinesAndEscapeHtml = (value: string) =>
     DOMPurify.sanitize(escapeHtml(value).replace(/\n/g, '<br />'))
 
   const valueComponent =
     props.selection === 'select' ? (
       <span
         dangerouslySetInnerHTML={{
-          __html: getSanitizedHTMLValue(value),
+          __html: replaceNewlinesAndEscapeHtml(value),
         }}
       />
     ) : (
