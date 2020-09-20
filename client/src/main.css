@@ -36,6 +36,10 @@
   border: 1px solid black;
 }
 
+.textArea {
+  font-size: x-small;
+}
+
 .sliderTable td,
 .sliderTable th {
   border: 1px solid black;

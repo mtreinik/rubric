@@ -36,7 +36,13 @@ const TextAreaView = (props: Props): JSX.Element => {
         }}
       />
     ) : (
-      <textarea rows={4} cols={80} value={value} onChange={handleValueChange} />
+      <textarea
+        rows={4}
+        cols={50}
+        value={value}
+        onChange={handleValueChange}
+        className="textArea"
+      />
     )
 
   return (
