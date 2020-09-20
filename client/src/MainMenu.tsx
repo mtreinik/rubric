@@ -132,46 +132,6 @@ const MainMenu = (props: Props): JSX.Element => {
         >
           <MenuItem
             onClick={() => {
-              setAnchorEl(null)
-              props.toggleRubricEditor()
-            }}
-          >
-            <ListItemIcon>
-              <Icon>
-                {props.appState.showRubricEditor ? (
-                  <Icon>close</Icon>
-                ) : (
-                  <Icon>edit</Icon>
-                )}
-              </Icon>
-            </ListItemIcon>
-            <ListItemText>
-              {props.appState.showRubricEditor
-                ? t('closeRubricEditor')
-                : t('editRubric')}
-            </ListItemText>
-          </MenuItem>
-
-          <Divider />
-
-          <MenuItem
-            onClick={() => {
-              if (props.appState.dirty) {
-                setAcceptNewDialogOpen(true)
-              } else {
-                createNewRubric()
-              }
-              setAnchorEl(null)
-            }}
-          >
-            <ListItemIcon>
-              <Icon>add</Icon>
-            </ListItemIcon>
-            <ListItemText>{t('newRubric')}</ListItemText>
-          </MenuItem>
-
-          <MenuItem
-            onClick={() => {
               if (props.appState.dirty) {
                 setAcceptOpenDialogOpen(true)
               } else {
@@ -190,6 +150,46 @@ const MainMenu = (props: Props): JSX.Element => {
               <Icon>save_alt</Icon>
             </ListItemIcon>
             <ListItemText>{t('saveRubricEllipsis')}</ListItemText>
+          </MenuItem>
+
+          <MenuItem
+            onClick={() => {
+              if (props.appState.dirty) {
+                setAcceptNewDialogOpen(true)
+              } else {
+                createNewRubric()
+              }
+              setAnchorEl(null)
+            }}
+          >
+            <ListItemIcon>
+              <Icon>add</Icon>
+            </ListItemIcon>
+            <ListItemText>{t('newRubric')}</ListItemText>
+          </MenuItem>
+
+          <Divider />
+
+          <MenuItem
+            onClick={() => {
+              setAnchorEl(null)
+              props.toggleRubricEditor()
+            }}
+          >
+            <ListItemIcon>
+              <Icon>
+                {props.appState.showRubricEditor ? (
+                  <Icon>close</Icon>
+                ) : (
+                  <Icon>edit</Icon>
+                )}
+              </Icon>
+            </ListItemIcon>
+            <ListItemText>
+              {props.appState.showRubricEditor
+                ? t('closeRubricEditor')
+                : t('editRubric')}
+            </ListItemText>
           </MenuItem>
 
           <Divider />
