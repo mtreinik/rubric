@@ -2,7 +2,6 @@
   "name": "rubric",
   "version": "1.0.0",
   "description": "A tool for creating interactive assessment rubrics",
-  "main": "index.js",
   "repository": "git@github.com:mtreinik/rubric.git",
   "author": "Mikko Reinikainen <mikko.reinikainen@iki.fi>",
   "license": "MIT",

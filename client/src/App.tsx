@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Icon, CssBaseline, Grid } from '@material-ui/core/'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import RubricEditor from './RubricEditor'
@@ -82,7 +82,7 @@ const selectElement = (elementId: string) => () => {
   document.execCommand('copy')
 }
 
-const App = (): ReactNode => {
+const App = (): JSX.Element => {
   const [appState, setAppState] = useState(emptyAppState)
   const { t } = useTranslation()
 
