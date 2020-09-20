@@ -9,10 +9,7 @@
     "browser": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "prettier",
-    "@typescript-eslint"
-  ],
+  "plugins": ["prettier", "@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:prettier/recommended",
@@ -22,13 +19,14 @@
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended"
   ],
-  "ignorePatterns": [
-    "node_modules",
-    "dist",
-    "client"
-  ],
+  "ignorePatterns": ["node_modules", "dist", "client"],
   "rules": {
     "prettier/prettier": "error",
     "import/no-commonjs": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx", "*.jsx", "*.json"]
+    }
+  ]
 }

@@ -24,7 +24,10 @@
   padding-right: 1em;
 }
 
-.criterion, .infoCriterion, .textAreaCriterion, .sliderTable {
+.criterion,
+.infoCriterion,
+.textAreaCriterion,
+.sliderTable {
   padding-left: 2em;
   padding-bottom: 0.4em;
 }
@@ -33,7 +36,8 @@
   border: 1px solid black;
 }
 
-.sliderTable td, .sliderTable th {
+.sliderTable td,
+.sliderTable th {
   border: 1px solid black;
 }
 

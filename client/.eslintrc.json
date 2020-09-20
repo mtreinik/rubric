@@ -36,9 +36,7 @@
     "jest/expect-expect": [
       "error",
       {
-        "assertFunctionNames": [
-          "expect*"
-        ]
+        "assertFunctionNames": ["expect*"]
       }
     ]
   },
@@ -46,5 +44,10 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx", "*.jsx", "*.json"]
+    }
+  ]
 }

@@ -48,24 +48,16 @@
                   }
                 }
               },
-              "required": [
-                "title"
-              ],
+              "required": ["title"],
               "additionalProperties": false
             }
           },
-          "required": [
-            "type",
-            "criterion"
-          ],
+          "required": ["type", "criterion"],
           "additionalProperties": false
         }
       }
     },
-    "required": [
-      "title",
-      "criterions"
-    ],
+    "required": ["title", "criterions"],
     "additionalProperties": false
   }
 }
