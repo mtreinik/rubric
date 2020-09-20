@@ -36,7 +36,9 @@
     "jest/expect-expect": [
       "error",
       {
-        "assertFunctionNames": ["expect", "expectValidComponentWithTitle", "expectValidComponent"]
+        "assertFunctionNames": [
+          "expect*"
+        ]
       }
     ]
   },
