@@ -25,7 +25,7 @@ const TextAreaView = (props: Props): JSX.Element => {
       .replace(/'/g, '&#039;')
 
   const getSanitizedHTMLValue = (value: string) =>
-    DOMPurify.sanitize(escapeHtml(value).replaceAll(/\n/g, '<br />'))
+    DOMPurify.sanitize(escapeHtml(value).replace(/\n/g, '<br />'))
 
   const valueComponent =
     props.selection === 'select' ? (
