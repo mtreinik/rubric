@@ -2,7 +2,6 @@ import React from 'react'
 import MultiSelectCriterionView from './MultiSelectCriterionView'
 import TextAreaView from './TextAreaView'
 
-import SectionTitle from './SectionTitle'
 import { Grid } from '@material-ui/core'
 import {
   MultiSelectCriterionType,
@@ -35,7 +34,10 @@ const RubricView = (props: Props): JSX.Element => (
     {props.sections.map((section, sectionIndex: number) => {
       return (
         <Grid item xs={12} key={sectionIndex}>
-          <SectionTitle title={section.title} />
+          <div className="sectionTitle">
+            <br />
+            {section.title}
+          </div>
           {section.criterions.map((criterionAndType, criterionIndex) => {
             const type = criterionAndType.type
             const criterion = criterionAndType.criterion
