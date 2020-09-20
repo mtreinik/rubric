@@ -10,7 +10,7 @@ interface Props {
   addOption: () => void
   removeOption: (optionIndex: number) => void
   editOption: (optionIndex: number) => (optionTitle: string) => void
-  addRow: () => void
+  addSliderRow: () => void
   removeRow: (rowIndex: number) => void
   editRowTitle: (rowIndex: number) => (rowTitle: string) => void
   t: TFunction
@@ -85,7 +85,7 @@ const SliderEditor = (props: Props): JSX.Element => {
       <Grid item>
         <Button
           style={{ marginLeft: '0.1em' }}
-          onClick={props.addRow}
+          onClick={props.addSliderRow}
           size="small"
           startIcon={<Icon>add_circle</Icon>}
         >

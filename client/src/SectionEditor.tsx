@@ -51,9 +51,9 @@ const sliderRowPrism = (criterionIndex: number, rowIndex: number) =>
     .path(['criterion', 'rows'])
     .index(rowIndex)
 
-const emptySlider = {
+const emptySliderRow = {
   title: '',
-  value: 0,
+  value: -1,
 }
 
 const optionPrism = (criterionIndex: number, optionIndex: number) =>
@@ -168,13 +168,13 @@ const SectionEditor = (props: Props): JSX.Element => {
 
   const t = props.t
 
-  const addSlider = (criterionIndex: number) => (): void => {
+  const addSliderRow = (criterionIndex: number) => (): void => {
     const newSliderSetter = sliderCriterionPrism(criterionIndex)
       .prop('criterion')
       .prop('rows')
       .appendTo()
     props.editSection(
-      O.set(newSliderSetter)(emptySlider)(
+      O.set(newSliderSetter)(emptySliderRow)(
         props.section as SliderCriterionSectionType
       )
     )
@@ -283,7 +283,7 @@ const SectionEditor = (props: Props): JSX.Element => {
                       addOption={addOption(criterionIndex)}
                       removeOption={removeOption(criterionIndex)}
                       editOption={editOption(criterionIndex)}
-                      addRow={addSlider(criterionIndex)}
+                      addSliderRow={addSliderRow(criterionIndex)}
                       removeRow={removeSlider(criterionIndex)}
                       editRowTitle={editSliderTitle(criterionIndex)}
                       t={t}
@@ -313,7 +313,7 @@ const SectionEditor = (props: Props): JSX.Element => {
                 size="small"
                 startIcon={<Icon>add_circle</Icon>}
               >
-                {t('addSlider')}
+                {t('addSliderRow')}
               </Button>
             </Grid>
             <Grid item>
