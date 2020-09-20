@@ -11,7 +11,8 @@ interface Props {
 }
 
 const selectedSymbol = '✖'
-//const deselectedSymbol = '·'
+
+// alternate deselectedSymbol for testing: '·'
 const deselectedSymbol = <span>&nbsp;</span>
 
 const SliderCell = (props: Props): JSX.Element => (
