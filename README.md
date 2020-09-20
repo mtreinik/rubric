@@ -22,6 +22,7 @@ an easy and efficient tool.
 
 ## TODO
 
+- localize app title
 - create example rubrics
 - create 10 minute presentation on Rubric 
 - add documentation
