@@ -30,7 +30,7 @@ const MultiSelectCriterionView = (props: Props): JSX.Element => {
   )
   return (
     <div className="criterion">
-      <span className="criterionTitle">{props.title}</span> {clickables}
+      <span className="multiSelectCriterionTitle">{props.title}</span> {clickables}
       <Snackbar
         anchorOrigin={{
           vertical: 'top',

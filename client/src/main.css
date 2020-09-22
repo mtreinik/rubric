@@ -25,6 +25,10 @@
   padding-right: 1em;
 }
 
+.multiSelectCriterionTitle {
+  font-weight: bold;
+}
+
 .criterion,
 .infoCriterion,
 .textAreaCriterion,
