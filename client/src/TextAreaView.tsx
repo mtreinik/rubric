@@ -38,25 +38,29 @@ const TextAreaView = (props: Props): JSX.Element => {
     ) : (
       <textarea
         rows={4}
-        cols={50}
+        cols={80}
         value={value}
         onChange={handleValueChange}
         className="textArea"
       />
     )
 
-  return (
-    <table className="textAreaCriterion">
-      <tbody>
-        <tr>
-          <td className="textAreaCriterionCell">
-            <div className="criterionTitle">{props.title}</div>
-            <div>{valueComponent}</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  )
+  if (props.selection === 'select' && !value) {
+    return <span></span>
+  } else {
+    return (
+      <table className="textAreaCriterion">
+        <tbody>
+          <tr>
+            <td className="textAreaCriterionCell">
+              <div className="criterionTitle">{props.title}</div>
+              <div>{valueComponent}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )
+  }
 }
 
 export default TextAreaView

@@ -14,6 +14,7 @@ exports[`TextAreaView renders correctly when no selection and empty title and em
         />
         <div>
           <textarea
+            className="textArea"
             cols={80}
             onChange={[Function]}
             rows={4}
@@ -42,6 +43,7 @@ exports[`TextAreaView renders correctly when no selection and text title and emp
         </div>
         <div>
           <textarea
+            className="textArea"
             cols={80}
             onChange={[Function]}
             rows={4}
@@ -70,6 +72,7 @@ exports[`TextAreaView renders correctly when no selection and text title and tex
         </div>
         <div>
           <textarea
+            className="textArea"
             cols={80}
             onChange={[Function]}
             rows={4}
@@ -98,6 +101,7 @@ exports[`TextAreaView renders correctly when no selection and text title and val
         </div>
         <div>
           <textarea
+            className="textArea"
             cols={80}
             onChange={[Function]}
             rows={4}
@@ -127,6 +131,7 @@ exports[`TextAreaView renders correctly when no selection and text title and val
         </div>
         <div>
           <textarea
+            className="textArea"
             cols={80}
             onChange={[Function]}
             rows={4}
@@ -141,61 +146,9 @@ baz"
 </table>
 `;
 
-exports[`TextAreaView renders correctly when selection and empty title and empty value 1`] = `
-<table
-  className="textAreaCriterion"
->
-  <tbody>
-    <tr>
-      <td
-        className="textAreaCriterionCell"
-      >
-        <div
-          className="criterionTitle"
-        />
-        <div>
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "",
-              }
-            }
-          />
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-`;
+exports[`TextAreaView renders correctly when selection and empty title and empty value 1`] = `<span />`;
 
-exports[`TextAreaView renders correctly when selection and text title and empty value 1`] = `
-<table
-  className="textAreaCriterion"
->
-  <tbody>
-    <tr>
-      <td
-        className="textAreaCriterionCell"
-      >
-        <div
-          className="criterionTitle"
-        >
-          xyzzy
-        </div>
-        <div>
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "",
-              }
-            }
-          />
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-`;
+exports[`TextAreaView renders correctly when selection and text title and empty value 1`] = `<span />`;
 
 exports[`TextAreaView renders correctly when selection and text title and text value 1`] = `
 <table

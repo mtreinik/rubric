@@ -37,6 +37,7 @@
 }
 
 .textArea {
+  font-family: Times, "Times New Roman", Serif;
   font-size: x-small;
 }
 
@@ -64,7 +65,7 @@
 .sliderRowHeader {
   font-size: 0.8em;
   line-height: 0.8;
-  padding: 0em;
+  padding: 0.1em;
 }
 
 .sliderColumn {
