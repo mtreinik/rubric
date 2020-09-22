@@ -37,6 +37,10 @@
   border: 1px solid black;
 }
 
+.clickable {
+  font-family: Times, "Times New Roman", Serif;
+}
+
 .textArea {
   font-family: Times, "Times New Roman", Serif;
   font-size: x-small;
