@@ -62,6 +62,7 @@ const SliderEditor = (props: Props): JSX.Element => {
           helperText={t('sliderRowHelperText')}
           onChange={handleSliderRowTitleChange(rowIndex)}
           autoFocus
+          fullWidth
         />
       </Grid>
     )
