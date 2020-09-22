@@ -313,7 +313,7 @@ const SectionEditor = (props: Props): JSX.Element => {
                 size="small"
                 startIcon={<Icon>add_circle</Icon>}
               >
-                {t('addSliderRow')}
+                {t('addSlider')}
               </Button>
             </Grid>
             <Grid item>
