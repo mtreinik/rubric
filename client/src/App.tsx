@@ -162,6 +162,10 @@ const App = (): JSX.Element => {
     }
   }, [appState.selection])
 
+  useEffect(() => {
+    document.title = t('appTagline')
+  }, [appState.language])
+
   const changeLanguage = (language: LanguageCode): void => {
     i18n.changeLanguage(language)
     setAppState(O.set(languageLens)(language)(appState))
