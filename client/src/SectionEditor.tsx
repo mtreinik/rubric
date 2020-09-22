@@ -49,9 +49,15 @@ const emptySliderRow = {
   value: -1,
 }
 
-const optionPrism = (criterionIndex: number, optionIndex: number) =>
+const multiSelectOptionPrism = (criterionIndex: number, optionIndex: number) =>
   criterionPrism(criterionIndex)
     .guard(isMultiSelectCriterionAndType)
+    .path(['criterion', 'options'])
+    .index(optionIndex)
+
+const sliderOptionPrism = (criterionIndex: number, optionIndex: number) =>
+  criterionPrism(criterionIndex)
+    .guard(isSliderCriterionAndType)
     .path(['criterion', 'options'])
     .index(optionIndex)
 
@@ -128,7 +134,7 @@ const SectionEditor = (props: Props): JSX.Element => {
     props.editSection(O.remove(criterionPrism(criterionIndex))(props.section))
   }
 
-  const addOption = (criterionIndex: number) => (): void => {
+  const addMultiSelectOption = (criterionIndex: number) => (): void => {
     const newOptionSetter = criterionPrism(criterionIndex)
       .guard(isMultiSelectCriterionAndType)
       .prop('criterion')
@@ -137,19 +143,48 @@ const SectionEditor = (props: Props): JSX.Element => {
     props.editSection(O.set(newOptionSetter)('')(props.section))
   }
 
-  const removeOption = (criterionIndex: number) => (
+  const removeMultiSelectOption = (criterionIndex: number) => (
     optionIndex: number
   ): void => {
     props.editSection(
-      O.remove(optionPrism(criterionIndex, optionIndex))(props.section)
+      O.remove(multiSelectOptionPrism(criterionIndex, optionIndex))(
+        props.section
+      )
     )
   }
 
-  const editOption = (criterionIndex: number) => (optionIndex: number) => (
-    optionTitle: string
+  const editMultiSelectOption = (criterionIndex: number) => (
+    optionIndex: number
+  ) => (optionTitle: string): void => {
+    props.editSection(
+      O.set(multiSelectOptionPrism(criterionIndex, optionIndex))(optionTitle)(
+        props.section
+      )
+    )
+  }
+
+  const addSliderOption = (criterionIndex: number) => (): void => {
+    const newOptionSetter = criterionPrism(criterionIndex)
+      .guard(isSliderCriterionAndType)
+      .prop('criterion')
+      .prop('options')
+      .appendTo()
+    props.editSection(O.set(newOptionSetter)('')(props.section))
+  }
+
+  const removeSliderOption = (criterionIndex: number) => (
+    optionIndex: number
   ): void => {
     props.editSection(
-      O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
+      O.remove(sliderOptionPrism(criterionIndex, optionIndex))(props.section)
+    )
+  }
+
+  const editSliderOption = (criterionIndex: number) => (
+    optionIndex: number
+  ) => (optionTitle: string): void => {
+    props.editSection(
+      O.set(sliderOptionPrism(criterionIndex, optionIndex))(optionTitle)(
         props.section
       )
     )
@@ -249,9 +284,9 @@ const SectionEditor = (props: Props): JSX.Element => {
                       removeCriterion={removeCriterion}
                       editCriterion={editCriterionTitle(criterionIndex)}
                       criterion={criterion as MultiSelectCriterionType}
-                      addOption={addOption(criterionIndex)}
-                      removeOption={removeOption(criterionIndex)}
-                      editOption={editOption(criterionIndex)}
+                      addOption={addMultiSelectOption(criterionIndex)}
+                      removeOption={removeMultiSelectOption(criterionIndex)}
+                      editOption={editMultiSelectOption(criterionIndex)}
                       t={t}
                     />
                   )}
@@ -260,9 +295,9 @@ const SectionEditor = (props: Props): JSX.Element => {
                       criterionIndex={criterionIndex}
                       removeCriterion={removeCriterion}
                       criterion={criterion as SliderCriterionType}
-                      addOption={addOption(criterionIndex)}
-                      removeOption={removeOption(criterionIndex)}
-                      editOption={editOption(criterionIndex)}
+                      addOption={addSliderOption(criterionIndex)}
+                      removeOption={removeSliderOption(criterionIndex)}
+                      editOption={editSliderOption(criterionIndex)}
                       addSliderRow={addSliderRow(criterionIndex)}
                       removeRow={removeSlider(criterionIndex)}
                       editRowTitle={editSliderTitle(criterionIndex)}

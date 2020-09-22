@@ -50,20 +50,26 @@ const SliderEditor = (props: Props): JSX.Element => {
   const rows = props.criterion.rows.map(
     (slider: SliderRowType, rowIndex: number) => (
       <Grid item key={'slider-' + rowIndex}>
-        <IconButton
-          onClick={() => props.removeRow(rowIndex)}
-          color="secondary"
-          size="small"
-        >
-          <Icon fontSize="small">remove_circle</Icon>
-        </IconButton>{' '}
-        <TextField
-          value={slider.title}
-          helperText={t('sliderRowHelperText')}
-          onChange={handleSliderRowTitleChange(rowIndex)}
-          autoFocus
-          fullWidth
-        />
+        <Grid container>
+          <Grid item xs={1}>
+            <IconButton
+              onClick={() => props.removeRow(rowIndex)}
+              color="secondary"
+              size="small"
+            >
+              <Icon fontSize="small">remove_circle</Icon>
+            </IconButton>
+          </Grid>
+          <Grid item xs={11}>
+            <TextField
+              value={slider.title}
+              helperText={t('sliderRowHelperText')}
+              onChange={handleSliderRowTitleChange(rowIndex)}
+              autoFocus
+              fullWidth
+            />
+          </Grid>
+        </Grid>
       </Grid>
     )
   )
