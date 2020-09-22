@@ -1,6 +1,6 @@
-# Rubric
+# Rubric - simplify giving formative feedback
 
-A tool for creating interactive assessment rubrics.
+Rubric is a tool for creating interactive assessment rubrics.
 
 # Assessment rubrics
 
@@ -12,11 +12,12 @@ Here the emphasis is not on grading but giving feedback to the student with
 an easy and efficient tool.
 
 # Design principles
-
-- User can create, load and save their own rubrics.
-- User can export filled rubric to Google Docs.
-- Works in a browser.
-- No server needed.
+ 
+- User can create, save and open their own rubrics
+- User can create feedback based on a rubric
+- User can export feedback to Google Docs
+- Works in a browser
+- No server needed
 
 # Development
 

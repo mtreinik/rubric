@@ -41,52 +41,57 @@ const RubricView = (props: Props): JSX.Element => (
           {section.criterions.map((criterionAndType, criterionIndex) => {
             const type = criterionAndType.type
             const criterion = criterionAndType.criterion
-            if (type === 'MultiSelectCriterion') {
-              const multiSelectCriterion = criterion as MultiSelectCriterionType
-              return (
-                <MultiSelectCriterionView
-                  key={'criterion-' + props.version + '-' + criterionIndex}
-                  title={multiSelectCriterion.title}
-                  options={multiSelectCriterion.options}
-                  selection={props.selection}
-                  t={props.t}
-                />
-              )
-            } else if (type === 'TextAreaCriterion') {
-              const textAreaCriterion = criterion as TextAreaCriterionType
-              return (
-                <TextAreaView
-                  key={'criterion-' + props.version + '-' + criterionIndex}
-                  title={textAreaCriterion.title}
-                  selection={props.selection}
-                />
-              )
-            } else if (type === 'InfoCriterion') {
-              const infoCriterion = criterion as InfoCriterionType
-              return (
-                <InfoView
-                  key={'criterion-' + criterionIndex}
-                  title={infoCriterion.title}
-                />
-              )
-            } else if (type === 'SliderCriterion') {
-              const sliderCriterion = criterion as SliderCriterionType
-              return (
-                <SliderView
-                  key={'slider-' + criterionIndex}
-                  title={sliderCriterion.title}
-                  options={sliderCriterion.options}
-                  rows={sliderCriterion.rows}
-                  setSliderRowValue={props.setSliderRowValue(
-                    sectionIndex,
-                    criterionIndex
-                  )}
-                  selection={props.selection}
-                  t={props.t}
-                />
-              )
-            } else {
-              console.error(`unsupported criterion type '${type}'`)
+            switch (type) {
+              case 'MultiSelectCriterion': {
+                const multiSelectCriterion = criterion as MultiSelectCriterionType
+                return (
+                  <MultiSelectCriterionView
+                    key={'criterion-' + props.version + '-' + criterionIndex}
+                    title={multiSelectCriterion.title}
+                    options={multiSelectCriterion.options}
+                    selection={props.selection}
+                    t={props.t}
+                  />
+                )
+              }
+              case 'TextAreaCriterion': {
+                const textAreaCriterion = criterion as TextAreaCriterionType
+                return (
+                  <TextAreaView
+                    key={'criterion-' + props.version + '-' + criterionIndex}
+                    title={textAreaCriterion.title}
+                    selection={props.selection}
+                  />
+                )
+              }
+              case 'InfoCriterion': {
+                const infoCriterion = criterion as InfoCriterionType
+                return (
+                  <InfoView
+                    key={'criterion-' + criterionIndex}
+                    title={infoCriterion.title}
+                  />
+                )
+              }
+              case 'SliderCriterion': {
+                const sliderCriterion = criterion as SliderCriterionType
+                return (
+                  <SliderView
+                    key={'slider-' + criterionIndex}
+                    title={sliderCriterion.title}
+                    options={sliderCriterion.options}
+                    rows={sliderCriterion.rows}
+                    setSliderRowValue={props.setSliderRowValue(
+                      sectionIndex,
+                      criterionIndex
+                    )}
+                    selection={props.selection}
+                    t={props.t}
+                  />
+                )
+              }
+              default:
+                console.error(`unsupported criterion type '${type}'`)
             }
           })}
         </Grid>

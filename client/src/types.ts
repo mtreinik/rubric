@@ -1,7 +1,3 @@
-export type EditSectionType = (
-  sectionIndex: number
-) => (section: SectionType) => void
-
 export type MultiSelectCriterionType = {
   title: string
   options: string[]
@@ -38,37 +34,30 @@ export interface CriterionAndType {
 }
 
 export interface MultiSelectCriterionAndType {
-  type: string
+  type: 'MultiSelectCriterion'
   criterion: MultiSelectCriterionType
+}
+
+export function isMultiSelectCriterionAndType(
+  criterionAndType: CriterionAndType
+): criterionAndType is MultiSelectCriterionAndType {
+  return criterionAndType.type === 'MultiSelectCriterion'
+}
+
+export interface SliderCriterionAndType {
+  type: 'SliderCriterion'
+  criterion: SliderCriterionType
+}
+
+export function isSliderCriterionAndType(
+  criterionAndType: CriterionAndType
+): criterionAndType is SliderCriterionAndType {
+  return criterionAndType.type === 'SliderCriterion'
 }
 
 export interface SectionType {
   title: string
   criterions: CriterionAndType[]
-}
-
-export interface MultiSelectCriterionSectionType {
-  title: string
-  criterions: MultiSelectCriterionAndType[]
-}
-
-export interface SliderCriterionAndType {
-  type: string
-  criterion: SliderCriterionType
-}
-
-export interface SliderCriterionSectionType {
-  title: string
-  criterions: SliderCriterionAndType[]
-}
-
-export type SliderCriterionAppState = {
-  sections: SliderCriterionSectionType[]
-  selection: SelectionType
-  language: string
-  showRubricEditor: boolean
-  version: number
-  dirty: boolean
 }
 
 export type SelectionType = string

@@ -6,11 +6,10 @@ import RubricView from './RubricView'
 import * as O from 'optics-ts'
 import {
   AppState,
+  isSliderCriterionAndType,
   LanguageCode,
   SectionType,
   SelectionType,
-  SliderCriterionAppState,
-  SliderCriterionType,
 } from './types'
 import { useTranslation } from 'react-i18next'
 import i18n from './i18n'
@@ -36,6 +35,17 @@ const selectionLens = O.optic<AppState>().prop('selection')
 const sectionPrism = (sectionIndex: number) => sectionsLens.index(sectionIndex)
 
 const newSectionSetter = O.optic<AppState>().prop('sections').appendTo()
+
+const sliderRowValuesTraversal = O.optic<AppState>()
+  .prop('sections')
+  .elems()
+  .prop('criterions')
+  .elems()
+  .guard(isSliderCriterionAndType)
+  .prop('criterion')
+  .prop('rows')
+  .elems()
+  .prop('value')
 
 const theme = createMuiTheme({
   palette: {
@@ -163,21 +173,21 @@ const App = (): JSX.Element => {
     )
   }
 
-  // TODO this function contains ugly hack
   const setSliderRowValue = (sectionIndex: number, criterionIndex: number) => (
     rowIndex: number,
     value: number
   ): void => {
-    const valuePrism = O.optic<SliderCriterionAppState>()
+    const valuePrism = O.optic<AppState>()
       .prop('sections')
       .index(sectionIndex)
       .prop('criterions')
       .index(criterionIndex)
+      .guard(isSliderCriterionAndType)
       .prop('criterion')
       .prop('rows')
       .index(rowIndex)
       .prop('value')
-    setAppState(O.set(valuePrism)(value)(appState as SliderCriterionAppState))
+    setAppState(O.set(valuePrism)(value)(appState))
   }
 
   const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
@@ -188,21 +198,14 @@ const App = (): JSX.Element => {
     )
   }
 
-  // TODO please implement this function with lenses
   const reset = (): void => {
-    const appStateWithUpdatedVersion = O.set(versionLens)(appState.version + 1)(
-      appState
+    setAppState(
+      O.set(sliderRowValuesTraversal)(-1)(
+        O.set(selectionLens)('deselect')(
+          O.set(versionLens)(appState.version + 1)(appState)
+        )
+      )
     )
-    appStateWithUpdatedVersion.selection = 'deselect'
-    appStateWithUpdatedVersion.sections.forEach((section: SectionType) =>
-      section.criterions.forEach((criterion) => {
-        if (criterion.type === 'SliderCriterion') {
-          const sliderCriterion = criterion.criterion as SliderCriterionType
-          sliderCriterion.rows.forEach((row) => (row.value = -1))
-        }
-      })
-    )
-    setAppState(appStateWithUpdatedVersion)
   }
 
   return (

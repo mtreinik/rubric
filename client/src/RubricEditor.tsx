@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Grid, Icon, IconButton, Typography } from '@material-ui/core'
-import { AppState, EditSectionType, SectionType } from './types'
+import { AppState, SectionType } from './types'
 import SectionEditor from './SectionEditor'
 import { TFunction } from 'i18next'
 import { swapElements } from './array-utils'
@@ -14,7 +14,7 @@ interface Props {
   removeSection: (sectionIndex: number) => void
   moveSectionUp: (sectionIndex: number) => void
   moveSectionDown: (sectionIndex: number) => void
-  editSection: EditSectionType
+  editSection: (sectionIndex: number) => (section: SectionType) => void
   t: TFunction
   toggleRubricEditor: () => void
 }
