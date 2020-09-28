@@ -33,15 +33,18 @@ export interface CriterionAndType {
   criterion: CriterionType
 }
 
-export interface MultiSelectCriterionAndType {
-  type: 'MultiSelectCriterion'
-  criterion: MultiSelectCriterionType
+export interface CriterionWithOptionsAndType {
+  type: 'MultiSelectCriterion' | 'SliderCriterion'
+  criterion: MultiSelectCriterionType | SliderCriterionType
 }
 
-export function isMultiSelectCriterionAndType(
+export function isCriterionWithOptionsAndType(
   criterionAndType: CriterionAndType
-): criterionAndType is MultiSelectCriterionAndType {
-  return criterionAndType.type === 'MultiSelectCriterion'
+): criterionAndType is CriterionWithOptionsAndType {
+  return (
+    criterionAndType.type === 'MultiSelectCriterion' ||
+    criterionAndType.type === 'SliderCriterion'
+  )
 }
 
 export interface SliderCriterionAndType {
