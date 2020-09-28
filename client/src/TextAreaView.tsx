@@ -54,7 +54,7 @@ const TextAreaView = (props: Props): JSX.Element => {
           <tr>
             <td
               className={
-                props.selection === 'select' ? 'textAreaCriterionCell' : ''
+                props.selection === 'select' ? 'textAreaCriterionCell withBorder' : 'textAreaCriterionCell'
               }
             >
               <div className="criterionTitle">{props.title}</div>

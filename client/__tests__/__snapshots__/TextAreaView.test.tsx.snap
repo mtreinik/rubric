@@ -157,7 +157,7 @@ exports[`TextAreaView renders correctly when selection and text title and text v
   <tbody>
     <tr>
       <td
-        className="textAreaCriterionCell"
+        className="textAreaCriterionCell withBorder"
       >
         <div
           className="criterionTitle"
@@ -186,7 +186,7 @@ exports[`TextAreaView renders correctly when selection and text title and value 
   <tbody>
     <tr>
       <td
-        className="textAreaCriterionCell"
+        className="textAreaCriterionCell withBorder"
       >
         <div
           className="criterionTitle"
@@ -215,7 +215,7 @@ exports[`TextAreaView renders correctly when selection and text title and value 
   <tbody>
     <tr>
       <td
-        className="textAreaCriterionCell"
+        className="textAreaCriterionCell withBorder"
       >
         <div
           className="criterionTitle"
