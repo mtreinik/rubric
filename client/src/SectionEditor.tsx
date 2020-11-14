@@ -20,6 +20,7 @@ import * as O from 'optics-ts'
 import TitleEditor from './TitleEditor'
 import { TFunction } from 'i18next'
 import SliderEditor from './SliderEditor'
+import { swapElements } from './array-utils'
 
 const sectionTitlePrism = O.optic<SectionType>().prop('title')
 
@@ -38,11 +39,14 @@ const sliderCriterionPrism = (criterionIndex: number) =>
     .guard(isSliderCriterionAndType)
     .prop('criterion')
 
+const sliderRowsPrism = (criterionIndex: number) =>
+  sliderCriterionPrism(criterionIndex).prop('rows')
+
 const newSliderSetter = (criterionIndex: number) =>
-  sliderCriterionPrism(criterionIndex).prop('rows').appendTo()
+  sliderRowsPrism(criterionIndex).appendTo()
 
 const sliderRowPrism = (criterionIndex: number, rowIndex: number) =>
-  sliderCriterionPrism(criterionIndex).prop('rows').index(rowIndex)
+  sliderRowsPrism(criterionIndex).index(rowIndex)
 
 const emptySliderRow = {
   title: '',
@@ -145,9 +149,9 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
-  const editOption = (criterionIndex: number) => (
-    optionIndex: number
-  ) => (optionTitle: string): void => {
+  const editOption = (criterionIndex: number) => (optionIndex: number) => (
+    optionTitle: string
+  ): void => {
     props.editSection(
       O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
         props.section
@@ -163,9 +167,31 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
-  const removeSlider = (criterionIndex: number) => (rowIndex: number): void => {
+  const removeSliderRow = (criterionIndex: number) => (
+    rowIndex: number
+  ): void => {
     props.editSection(
       O.remove(sliderRowPrism(criterionIndex, rowIndex))(props.section)
+    )
+  }
+
+  const moveSliderRowUp = (criterionIndex: number) => (
+    rowIndex: number
+  ): void => {
+    moveSliderRowDown(criterionIndex)(rowIndex - 1)
+  }
+
+  const moveSliderRowDown = (criterionIndex: number) => (
+    rowIndex: number
+  ): void => {
+    const sliderRows = O.preview(sliderRowsPrism(criterionIndex))(props.section)
+    if (!sliderRows || rowIndex >= sliderRows.length) {
+      console.error(`Cannot move down slider row at ${rowIndex}`)
+      return
+    }
+    const newSliderRows = swapElements(rowIndex, sliderRows)
+    props.editSection(
+      O.set(sliderRowsPrism(criterionIndex))(newSliderRows)(props.section)
     )
   }
 
@@ -264,8 +290,10 @@ const SectionEditor = (props: Props): JSX.Element => {
                       removeOption={removeOption(criterionIndex)}
                       editOption={editOption(criterionIndex)}
                       addSliderRow={addSliderRow(criterionIndex)}
-                      removeRow={removeSlider(criterionIndex)}
+                      removeRow={removeSliderRow(criterionIndex)}
                       editRowTitle={editSliderTitle(criterionIndex)}
+                      moveSliderRowUp={moveSliderRowUp(criterionIndex)}
+                      moveSliderRowDown={moveSliderRowDown(criterionIndex)}
                       t={t}
                     />
                   )}

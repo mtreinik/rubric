@@ -13,6 +13,8 @@ interface Props {
   addSliderRow: () => void
   removeRow: (rowIndex: number) => void
   editRowTitle: (rowIndex: number) => (rowTitle: string) => void
+  moveSliderRowUp: (rowIndex: number) => void
+  moveSliderRowDown: (rowIndex: number) => void
   t: TFunction
 }
 
@@ -49,8 +51,26 @@ const SliderEditor = (props: Props): JSX.Element => {
 
   const rows = props.criterion.rows.map(
     (slider: SliderRowType, rowIndex: number) => (
-      <Grid item key={'slider-' + rowIndex}>
+      <Grid item xs={12} key={'slider-' + rowIndex}>
         <Grid container>
+          <Grid item xs={1}>
+            <IconButton
+              onClick={() => props.moveSliderRowUp(rowIndex)}
+              disabled={rowIndex <= 0}
+              size="small"
+            >
+              <Icon>arrow_upward</Icon>
+            </IconButton>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              onClick={() => props.moveSliderRowDown(rowIndex)}
+              disabled={rowIndex >= props.criterion.rows.length - 1}
+              size="small"
+            >
+              <Icon>arrow_downward</Icon>
+            </IconButton>
+          </Grid>
           <Grid item xs={1}>
             <IconButton
               onClick={() => props.removeRow(rowIndex)}
@@ -60,7 +80,7 @@ const SliderEditor = (props: Props): JSX.Element => {
               <Icon fontSize="small">remove_circle</Icon>
             </IconButton>
           </Grid>
-          <Grid item xs={11}>
+          <Grid item xs={9}>
             <TextField
               value={slider.title}
               helperText={t('sliderRowHelperText')}

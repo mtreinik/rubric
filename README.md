@@ -23,6 +23,8 @@ an easy and efficient tool.
 
 ## TODO
 
+- rename app on heroku
+- unselect after copy-pasting
 - add documentation
 - aria tags for accessibility
 

@@ -29,18 +29,25 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
 
   const clickables = props.criterion.options.map((option, optionIndex) => (
     <Grid item key={'option-' + optionIndex}>
-      <IconButton
-        onClick={() => props.removeOption(optionIndex)}
-        color="secondary"
-        size="small"
-      >
-        <Icon fontSize="small">remove_circle</Icon>
-      </IconButton>{' '}
-      <TextField
-        value={option}
-        onChange={handleOptionTitleChange(optionIndex)}
-        autoFocus
-      />
+      <Grid container>
+        <Grid item xs={2}>
+          <IconButton
+            onClick={() => props.removeOption(optionIndex)}
+            color="secondary"
+            size="small"
+          >
+            <Icon fontSize="small">remove_circle</Icon>
+          </IconButton>
+        </Grid>
+        <Grid item xs={10}>
+          <TextField
+            value={option}
+            onChange={handleOptionTitleChange(optionIndex)}
+            autoFocus
+            fullWidth
+          />
+        </Grid>
+      </Grid>
     </Grid>
   ))
   return (

@@ -20,7 +20,7 @@
     "start": "node dist/server.js",
     "build": "yarn build-server && yarn build-client",
     "build-server": "tsc",
-    "build-client": "cd client/ && yarn install --production=false && yarn build",
+    "build-client": "cd client/ && yarn install --production=false && yarn build && cd ..",
     "heroku-postbuild": "yarn build"
   },
   "cacheDirectories": [
