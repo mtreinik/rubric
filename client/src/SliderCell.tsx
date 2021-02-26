@@ -10,7 +10,7 @@ interface Props {
   warnAboutSelection: () => void
 }
 
-const selectedSymbol = '✖'
+const selectedSymbol = '✕'
 
 // alternate deselectedSymbol for testing: '·'
 const deselectedSymbol = <span>&nbsp;</span>

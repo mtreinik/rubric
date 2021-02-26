@@ -87,6 +87,7 @@
   font-size: 1em;
   padding: 0em;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 button.clickable {
