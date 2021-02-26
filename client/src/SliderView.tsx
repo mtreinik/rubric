@@ -50,27 +50,30 @@ const SliderView = (props: Props): JSX.Element => {
   ))
 
   return (
-    <table className="sliderTable">
-      <thead>
-        <tr className="sliderHeaderRow">
-          <td className="sliderHeaderHeader">
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-              open={snackbarOpen}
-              autoHideDuration={4000}
-              onClose={() => setSnackbarOpen(false)}
-            >
-              <Alert severity="info">{t('deselectBeforeUsingSlider')}</Alert>
-            </Snackbar>
-          </td>
-          {optionHeaders}
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <div>
+      <table className="sliderTable">
+        <thead>
+          <tr className="sliderHeaderRow">
+            <td className="sliderHeaderHeader">
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={() => setSnackbarOpen(false)}
+              >
+                <Alert severity="info">{t('deselectBeforeUsingSlider')}</Alert>
+              </Snackbar>
+            </td>
+            {optionHeaders}
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+      <br />
+    </div>
   )
 }
 
