@@ -45,6 +45,13 @@ yarn install
 yarn start
 ```
 
+Run UI tests:
+
+```
+cd client
+yarn test
+```
+
 Build production site:
 
 ```
