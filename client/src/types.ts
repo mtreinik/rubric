@@ -63,7 +63,7 @@ export interface SectionType {
   criterions: CriterionAndType[]
 }
 
-export type SelectionType = string
+export type SelectionType = 'select' | 'deselect' | undefined
 
 export type AppState = {
   sections: SectionType[]

@@ -18,7 +18,7 @@ import MainMenu from './MainMenu'
 
 const emptyAppState: AppState = {
   sections: [],
-  selection: '',
+  selection: undefined,
   language: '',
   showRubricEditor: false,
   version: 1,
@@ -156,7 +156,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     if (appState.selection === 'deselect') {
       deselectAll()
-      setSelection('')
+      setSelection(undefined)
     } else if (appState.selection === 'select') {
       selectElement('content')()
     }
@@ -198,7 +198,7 @@ const App = (): JSX.Element => {
     setAppState(
       O.pipe(
         appState,
-        O.set(selectionLens)('deselect'),
+        O.set(selectionLens)('deselect' as const),
         O.set(dirtyLens)(false),
         O.set(sectionsLens)(sections)
       )
@@ -210,7 +210,7 @@ const App = (): JSX.Element => {
       O.pipe(
         appState,
         O.set(versionLens)(appState.version + 1),
-        O.set(selectionLens)('deselect'),
+        O.set(selectionLens)('deselect' as const),
         O.set(sliderRowValuesTraversal)(-1)
       )
     )
