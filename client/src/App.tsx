@@ -196,18 +196,22 @@ const App = (): JSX.Element => {
 
   const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
     setAppState(
-      O.set(sectionsLens)(sections)(
-        O.set(dirtyLens)(false)(O.set(selectionLens)('deselect')(appState))
+      O.pipe(
+        appState,
+        O.set(selectionLens)('deselect'),
+        O.set(dirtyLens)(false),
+        O.set(sectionsLens)(sections)
       )
     )
   }
 
   const reset = (): void => {
     setAppState(
-      O.set(sliderRowValuesTraversal)(-1)(
-        O.set(selectionLens)('deselect')(
-          O.set(versionLens)(appState.version + 1)(appState)
-        )
+      O.pipe(
+        appState,
+        O.set(versionLens)(appState.version + 1),
+        O.set(selectionLens)('deselect'),
+        O.set(sliderRowValuesTraversal)(-1)
       )
     )
   }
