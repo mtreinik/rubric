@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify'
 
 interface Props {
   title: string
-  selection: SelectionType
+  selection?: SelectionType
   value?: string
 }
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import TextAreaView from '../src/TextAreaView'
+import { SelectionType } from '../src/types'
 
 describe('TextAreaView', () => {
   describe('renders correctly when', () => {
     const expectValidComponent = (
       title: string,
       value: string,
-      selection = ''
+      selection?: SelectionType
     ): void => {
       const component = shallow(
         <TextAreaView title={title} value={value} selection={selection} />
@@ -35,7 +36,7 @@ describe('TextAreaView', () => {
         )
       })
       it('editing the value', () => {
-        const component = mount(<TextAreaView title="title" selection="" />)
+        const component = mount(<TextAreaView title="title" />)
         expect(component.find('textarea').props().value).toEqual('')
         component
           .find('textarea')
@@ -68,7 +69,7 @@ describe('TextAreaView', () => {
   })
   describe('behaves correctly when', () => {
     it('editing the value and turning selection on/off', () => {
-      const component = mount(<TextAreaView title="title" selection="" />)
+      const component = mount(<TextAreaView title="title" />)
       expect(component.find('textarea').props().value).toEqual('')
       expect(component.find('span')).toEqual({})
 
