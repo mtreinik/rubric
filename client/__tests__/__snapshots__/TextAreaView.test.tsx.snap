@@ -4,7 +4,6 @@ exports[`TextAreaView renders correctly when no selection and empty title and em
 <div
   className="textAreaCriterionCell"
 >
-  <br />
   <div
     className="criterionTitle"
   />
@@ -24,7 +23,6 @@ exports[`TextAreaView renders correctly when no selection and text title and emp
 <div
   className="textAreaCriterionCell"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -46,7 +44,6 @@ exports[`TextAreaView renders correctly when no selection and text title and tex
 <div
   className="textAreaCriterionCell"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -68,7 +65,6 @@ exports[`TextAreaView renders correctly when no selection and text title and val
 <div
   className="textAreaCriterionCell"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -91,7 +87,6 @@ exports[`TextAreaView renders correctly when no selection and text title and val
 <div
   className="textAreaCriterionCell"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -119,7 +114,6 @@ exports[`TextAreaView renders correctly when selection and text title and text v
 <div
   className="textAreaCriterionCell withBorder"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -141,7 +135,6 @@ exports[`TextAreaView renders correctly when selection and text title and value 
 <div
   className="textAreaCriterionCell withBorder"
 >
-  <br />
   <div
     className="criterionTitle"
   >
@@ -163,7 +156,6 @@ exports[`TextAreaView renders correctly when selection and text title and value 
 <div
   className="textAreaCriterionCell withBorder"
 >
-  <br />
   <div
     className="criterionTitle"
   >
