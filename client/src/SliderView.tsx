@@ -72,7 +72,6 @@ const SliderView = (props: Props): JSX.Element => {
         </thead>
         <tbody>{rows}</tbody>
       </table>
-      <br />
     </div>
   )
 }
