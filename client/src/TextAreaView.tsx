@@ -56,6 +56,7 @@ const TextAreaView = (props: Props): JSX.Element => {
             : 'textAreaCriterionCell'
         }
       >
+        <br />
         <div className="criterionTitle">{props.title}</div>
         <div>{valueComponent}</div>
       </div>
