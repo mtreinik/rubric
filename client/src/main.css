@@ -8,7 +8,7 @@
 
 #content {
   padding-bottom: 1em;
-  font-family: Times, "Times New Roman", Serif;
+  font-family: Times, 'Times New Roman', Serif;
 }
 
 .rubricTitle {
@@ -42,11 +42,11 @@
 }
 
 .clickable {
-  font-family: Times, "Times New Roman", Serif;
+  font-family: Times, 'Times New Roman', Serif;
 }
 
 .textArea {
-  font-family: Times, "Times New Roman", Serif;
+  font-family: Times, 'Times New Roman', Serif;
   font-size: x-small;
 }
 

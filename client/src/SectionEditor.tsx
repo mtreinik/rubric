@@ -79,13 +79,15 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
-  const editCriterionTitle = (criterionIndex: number) => (
-    criterionTitle: string
-  ): void => {
-    props.editSection(
-      O.set(criterionTitlePrism(criterionIndex))(criterionTitle)(props.section)
-    )
-  }
+  const editCriterionTitle =
+    (criterionIndex: number) =>
+    (criterionTitle: string): void => {
+      props.editSection(
+        O.set(criterionTitlePrism(criterionIndex))(criterionTitle)(
+          props.section
+        )
+      )
+    }
 
   const addCriterion = (criterionType: string) => (): void => {
     if (criterionType === 'MultiSelectCriterion') {
@@ -141,23 +143,24 @@ const SectionEditor = (props: Props): JSX.Element => {
     props.editSection(O.set(newOptionSetter)('')(props.section))
   }
 
-  const removeOption = (criterionIndex: number) => (
-    optionIndex: number
-  ): void => {
-    props.editSection(
-      O.remove(optionPrism(criterionIndex, optionIndex))(props.section)
-    )
-  }
-
-  const editOption = (criterionIndex: number) => (optionIndex: number) => (
-    optionTitle: string
-  ): void => {
-    props.editSection(
-      O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
-        props.section
+  const removeOption =
+    (criterionIndex: number) =>
+    (optionIndex: number): void => {
+      props.editSection(
+        O.remove(optionPrism(criterionIndex, optionIndex))(props.section)
       )
-    )
-  }
+    }
+
+  const editOption =
+    (criterionIndex: number) =>
+    (optionIndex: number) =>
+    (optionTitle: string): void => {
+      props.editSection(
+        O.set(optionPrism(criterionIndex, optionIndex))(optionTitle)(
+          props.section
+        )
+      )
+    }
 
   const t = props.t
 
@@ -167,43 +170,46 @@ const SectionEditor = (props: Props): JSX.Element => {
     )
   }
 
-  const removeSliderRow = (criterionIndex: number) => (
-    rowIndex: number
-  ): void => {
-    props.editSection(
-      O.remove(sliderRowPrism(criterionIndex, rowIndex))(props.section)
-    )
-  }
-
-  const moveSliderRowUp = (criterionIndex: number) => (
-    rowIndex: number
-  ): void => {
-    moveSliderRowDown(criterionIndex)(rowIndex - 1)
-  }
-
-  const moveSliderRowDown = (criterionIndex: number) => (
-    rowIndex: number
-  ): void => {
-    const sliderRows = O.preview(sliderRowsPrism(criterionIndex))(props.section)
-    if (!sliderRows || rowIndex >= sliderRows.length) {
-      console.error(`Cannot move down slider row at ${rowIndex}`)
-      return
+  const removeSliderRow =
+    (criterionIndex: number) =>
+    (rowIndex: number): void => {
+      props.editSection(
+        O.remove(sliderRowPrism(criterionIndex, rowIndex))(props.section)
+      )
     }
-    const newSliderRows = swapElements(rowIndex, sliderRows)
-    props.editSection(
-      O.set(sliderRowsPrism(criterionIndex))(newSliderRows)(props.section)
-    )
-  }
 
-  const editSliderTitle = (criterionIndex: number) => (rowIndex: number) => (
-    sliderTitle: string
-  ): void => {
-    props.editSection(
-      O.set(sliderRowTitlePrism(criterionIndex, rowIndex))(sliderTitle)(
+  const moveSliderRowUp =
+    (criterionIndex: number) =>
+    (rowIndex: number): void => {
+      moveSliderRowDown(criterionIndex)(rowIndex - 1)
+    }
+
+  const moveSliderRowDown =
+    (criterionIndex: number) =>
+    (rowIndex: number): void => {
+      const sliderRows = O.preview(sliderRowsPrism(criterionIndex))(
         props.section
       )
-    )
-  }
+      if (!sliderRows || rowIndex >= sliderRows.length) {
+        console.error(`Cannot move down slider row at ${rowIndex}`)
+        return
+      }
+      const newSliderRows = swapElements(rowIndex, sliderRows)
+      props.editSection(
+        O.set(sliderRowsPrism(criterionIndex))(newSliderRows)(props.section)
+      )
+    }
+
+  const editSliderTitle =
+    (criterionIndex: number) =>
+    (rowIndex: number) =>
+    (sliderTitle: string): void => {
+      props.editSection(
+        O.set(sliderRowTitlePrism(criterionIndex, rowIndex))(sliderTitle)(
+          props.section
+        )
+      )
+    }
 
   return (
     <div>

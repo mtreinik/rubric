@@ -43,7 +43,8 @@ const RubricView = (props: Props): JSX.Element => (
             const criterion = criterionAndType.criterion
             switch (type) {
               case 'MultiSelectCriterion': {
-                const multiSelectCriterion = criterion as MultiSelectCriterionType
+                const multiSelectCriterion =
+                  criterion as MultiSelectCriterionType
                 return (
                   <MultiSelectCriterionView
                     key={'criterion-' + props.version + '-' + criterionIndex}

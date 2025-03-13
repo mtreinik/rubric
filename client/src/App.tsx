@@ -177,22 +177,21 @@ const App = (): JSX.Element => {
     )
   }
 
-  const setSliderRowValue = (sectionIndex: number, criterionIndex: number) => (
-    rowIndex: number,
-    value: number
-  ): void => {
-    const valuePrism = O.optic<AppState>()
-      .prop('sections')
-      .index(sectionIndex)
-      .prop('criterions')
-      .index(criterionIndex)
-      .guard(isSliderCriterionAndType)
-      .prop('criterion')
-      .prop('rows')
-      .index(rowIndex)
-      .prop('value')
-    setAppState(O.set(valuePrism)(value)(appState))
-  }
+  const setSliderRowValue =
+    (sectionIndex: number, criterionIndex: number) =>
+    (rowIndex: number, value: number): void => {
+      const valuePrism = O.optic<AppState>()
+        .prop('sections')
+        .index(sectionIndex)
+        .prop('criterions')
+        .index(criterionIndex)
+        .guard(isSliderCriterionAndType)
+        .prop('criterion')
+        .prop('rows')
+        .index(rowIndex)
+        .prop('value')
+      setAppState(O.set(valuePrism)(value)(appState))
+    }
 
   const setSectionsAndCleanAppState = (sections: SectionType[]): void => {
     setAppState(

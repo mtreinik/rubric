@@ -22,19 +22,20 @@ interface Props {
 const RubricEditor = (props: Props): JSX.Element => {
   const t = props.t
 
-  const moveCriterionUp = (sectionIndex: number) => (
-    criterionIndex: number
-  ): void => moveCriterionDown(sectionIndex)(criterionIndex - 1)
+  const moveCriterionUp =
+    (sectionIndex: number) =>
+    (criterionIndex: number): void =>
+      moveCriterionDown(sectionIndex)(criterionIndex - 1)
 
-  const moveCriterionDown = (sectionIndex: number) => (
-    criterionIndex: number
-  ): void => {
-    const section = props.appState.sections[sectionIndex]
-    const newCriterions = swapElements(criterionIndex, section.criterions)
-    props.editSection(sectionIndex)(
-      O.set(criterionsLens)(newCriterions)(section)
-    )
-  }
+  const moveCriterionDown =
+    (sectionIndex: number) =>
+    (criterionIndex: number): void => {
+      const section = props.appState.sections[sectionIndex]
+      const newCriterions = swapElements(criterionIndex, section.criterions)
+      props.editSection(sectionIndex)(
+        O.set(criterionsLens)(newCriterions)(section)
+      )
+    }
 
   return (
     <Grid

@@ -20,16 +20,16 @@ interface Props {
 
 const SliderEditor = (props: Props): JSX.Element => {
   const t = props.t
-  const handleOptionTitleChange = (optionIndex: number) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    props.editOption(optionIndex)(event.target.value)
-  }
-  const handleSliderRowTitleChange = (rowIndex: number) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    props.editRowTitle(rowIndex)(event.target.value)
-  }
+  const handleOptionTitleChange =
+    (optionIndex: number) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      props.editOption(optionIndex)(event.target.value)
+    }
+  const handleSliderRowTitleChange =
+    (rowIndex: number) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      props.editRowTitle(rowIndex)(event.target.value)
+    }
 
   const options = props.criterion.options.map((option, optionIndex) => (
     <Grid item key={'option-' + optionIndex}>

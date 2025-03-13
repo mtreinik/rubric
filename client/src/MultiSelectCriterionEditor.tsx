@@ -21,11 +21,11 @@ const MultiSelectCriterionEditor = (props: Props): JSX.Element => {
   ): void => {
     props.editCriterion(event.target.value)
   }
-  const handleOptionTitleChange = (optionIndex: number) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    props.editOption(optionIndex)(event.target.value)
-  }
+  const handleOptionTitleChange =
+    (optionIndex: number) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      props.editOption(optionIndex)(event.target.value)
+    }
 
   const clickables = props.criterion.options.map((option, optionIndex) => (
     <Grid item key={'option-' + optionIndex}>
