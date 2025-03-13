@@ -11,6 +11,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
+    hashFunction: 'sha256'
   },
 
   resolve: {

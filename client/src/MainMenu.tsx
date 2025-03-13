@@ -101,7 +101,14 @@ const MainMenu = (props: Props): JSX.Element => {
           setAnchorEl(null)
           setSnackbarOpen(true)
         } catch (error) {
-          warnAndCloseMenu(t('invalidJSONFile'), error)
+          let errorMessage = 'Unknown error'
+
+          if (error instanceof Error) {
+            errorMessage = error.message
+          } else if (typeof error === 'string') {
+            errorMessage = error
+          }
+          warnAndCloseMenu(t('invalidJSONFile'), errorMessage)
         }
       }
       reader.onerror = () => {
