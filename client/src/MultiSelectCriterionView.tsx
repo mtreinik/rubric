@@ -30,6 +30,7 @@ const MultiSelectCriterionView = (props: Props): JSX.Element => {
   )
   return (
     <div className="criterion">
+      <br />
       <span className="multiSelectCriterionTitle">{props.title}</span>{' '}
       {clickables}
       <Snackbar
